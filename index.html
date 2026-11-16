@@ -360,6 +360,28 @@
             height: 100%;
             object-fit: contain;
         }
+
+        /* KHUNG HỖ TRỢ NỔI (ZALO / HOTLINE) */
+        .support-box {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .support-item {
+            color: #facc15;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
     </style>
 </head>
 <body>
@@ -389,9 +411,14 @@
                 Chưa có tài khoản? <a onclick="showRegister()">Đăng ký ngay</a>
             </div>
 
+            <div class="support-box">
+                <a href="tel:0918106821" class="support-item">📞 Gọi: 0918.106.821</a>
+                <a href="https://zalo.me/0918106821" target="_blank" class="support-item">💬 Zalo Hỗ Trợ</a>
+            </div>
+
             <div class="footer">
                 <span>HIẾU LIVE CLOUD</span>
-                <a href="#" onclick="alert('Liên hệ Admin qua Telegram!')">Hỗ trợ 24/7</a>
+                <span>Hỗ trợ 24/7</span>
             </div>
         </div>
 
@@ -419,9 +446,14 @@
                 Đã có tài khoản? <a onclick="showLogin()">Đăng nhập</a>
             </div>
 
+            <div class="support-box">
+                <a href="tel:0918106821" class="support-item">📞 Gọi: 0918.106.821</a>
+                <a href="https://zalo.me/0918106821" target="_blank" class="support-item">💬 Zalo Hỗ Trợ</a>
+            </div>
+
             <div class="footer">
                 <span>HIẾU LIVE CLOUD</span>
-                <a href="#" onclick="alert('Liên hệ Admin qua Telegram!')">Hỗ trợ 24/7</a>
+                <span>Hỗ trợ 24/7</span>
             </div>
         </div>
 
@@ -498,9 +530,15 @@
                 </div>
             </div>
 
+            <!-- KHUNG HỖ TRỢ ZALO / HOTLINE -->
+            <div class="support-box">
+                <a href="tel:0918106821" class="support-item">📞 Gọi: 0918.106.821</a>
+                <a href="https://zalo.me/0918106821" target="_blank" class="support-item">💬 Zalo Hỗ Trợ</a>
+            </div>
+
             <div class="footer" style="margin-top: 15px;">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Auto 24/7 v17.0</span>
+                <span>Auto 24/7 v18.0</span>
             </div>
         </div>
 
@@ -566,6 +604,11 @@
                 </div>
                 <button class="btn-primary" onclick="submitCard()">Gửi Thẻ Nạp Tự Động</button>
                 <div id="card-status" class="status-text"></div>
+            </div>
+
+            <div class="support-box">
+                <a href="tel:0918106821" class="support-item">📞 Gọi: 0918.106.821</a>
+                <a href="https://zalo.me/0918106821" target="_blank" class="support-item">💬 Zalo Hỗ Trợ</a>
             </div>
 
             <div class="footer" style="margin-top: 15px;">
