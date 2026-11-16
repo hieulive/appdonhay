@@ -100,6 +100,9 @@
             box-shadow: 0 4px 20px rgba(234, 179, 8, 0.35);
             margin-top: 6px;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
         }
 
         .btn-primary:hover {
@@ -565,7 +568,7 @@
 
             <div class="tab-nạp">
                 <button id="tab-banking" class="tab-nạp-btn active" onclick="switchDepositTab('banking')">Chuyển Khoản QR</button>
-                <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Thẻ Cào (Hỗ trợ Zalo)</button>
+                <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Nạp Thẻ Cào</button>
             </div>
 
             <!-- CHUYỂN KHOẢN QR -->
@@ -589,35 +592,15 @@
                 <button class="btn-primary" onclick="alert('Hệ thống tự động cộng tiền sau 15-30 giây khi nhận được chuyển khoản!')">Tôi Đã Chuyển Khoản</button>
             </div>
 
-            <!-- GẠCH THẺ (IB ZALO HIẾU LIVE) -->
-            <div id="content-card" style="display: none;">
-                <div class="input-group">
-                    <label class="input-label">Nhà Mạng</label>
-                    <select id="card-telco" class="input-field">
-                        <option value="Viettel">Viettel</option>
-                        <option value="Mobifone">Mobifone</option>
-                        <option value="Vinafone">Vinafone</option>
-                    </select>
+            <!-- NẠP THẺ CÀO (IB ZALO ADMIN) -->
+            <div id="content-card" style="text-align: center; display: none;">
+                <div style="background: #18181b; border: 1px solid #27272a; border-radius: 14px; padding: 20px; margin-bottom: 12px;">
+                    <p style="font-size: 13px; color: #facc15; font-weight: 800; margin-bottom: 10px;">NẠP THẺ CÀO THỦ CÔNG</p>
+                    <p style="font-size: 12px; color: #d1d5db; line-height: 1.5; margin-bottom: 15px;">
+                        Vui lòng bấm nút bên dưới để nhắn tin trực tiếp mã thẻ, số seri và tên tài khoản của bạn qua Zalo cho Admin Hiếu Live để được hỗ trợ cộng tiền vào ví ngay lập tức!
+                    </p>
+                    <a href="https://zalo.me/0918106821" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #0068ff, #0084ff); color: white;">💬 Ib Zalo Admin Hỗ Trợ</a>
                 </div>
-                <div class="input-group">
-                    <label class="input-label">Mệnh Giá</label>
-                    <select id="card-amount" class="input-field">
-                        <option value="50000">50.000 đ</option>
-                        <option value="100000">100.000 đ</option>
-                        <option value="200000">200.000 đ</option>
-                        <option value="500000">500.000 đ</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Mã PIN Thẻ</label>
-                    <input type="text" id="card-pin" class="input-field" placeholder="Nhập mã PIN thẻ cào...">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Số Seri Thẻ</label>
-                    <input type="text" id="card-serial" class="input-field" placeholder="Nhập số Seri thẻ cào...">
-                </div>
-                <button class="btn-primary" onclick="submitCardZalo()">Gửi Thẻ &amp; Nhắn Zalo Duyệt Nhanh</button>
-                <div id="card-status" class="status-text"></div>
             </div>
 
             <div class="footer">
@@ -655,8 +638,8 @@
         let currentUserData = null;
         let currentUsername = "";
 
-        // Định nghĩa tên tài khoản của bạn là Admin (Hãy thay chữ 'hieulive' bằng tài khoản đăng nhập thực tế của bạn)
-        const ADMIN_USERNAME = "hieulive"; 
+        // TÀI KHOẢN ADMIN CỦA BẠN
+        const ADMIN_USERNAME = "hieuadmin"; 
 
         window.onload = async function() {
             let savedUser = localStorage.getItem('hl_logged_user');
@@ -669,7 +652,6 @@
                     document.getElementById('welcome-title').innerText = `Hi, ${savedUser}`;
                     document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance || 0) + " đ";
                     
-                    // Nếu là tài khoản Admin thì hiện nút quản trị
                     if (currentUsername.toLowerCase() === ADMIN_USERNAME) {
                         document.getElementById('admin-menu-btn').style.display = 'inline-block';
                     }
@@ -973,31 +955,6 @@
                 document.getElementById('content-banking').style.display = 'none';
                 document.getElementById('content-card').style.display = 'block';
             }
-        }
-
-        // HÀM GỬI THẺ CÁO CHUYỂN QUA ZALO
-        function submitCardZalo() {
-            let telco = document.getElementById('card-telco').value;
-            let amount = document.getElementById('card-amount').value;
-            let pin = document.getElementById('card-pin').value.trim();
-            let serial = document.getElementById('card-serial').value.trim();
-            let status = document.getElementById('card-status');
-
-            if (!pin || !serial) {
-                status.innerText = 'Vui lòng nhập đầy đủ mã PIN và số Seri!';
-                status.style.color = '#f87171';
-                return;
-            }
-
-            let message = `Xin chào Hiếu Live, tôi muốn nạp thẻ cào:\n- Tài khoản: ${currentUsername}\n- Nhà mạng: ${telco}\n- Mệnh giá: ${amount}đ\n- Mã PIN: ${pin}\n- Seri: ${serial}`;
-            let zaloUrl = `https://zalo.me/0918106821?text=${encodeURIComponent(message)}`;
-
-            status.innerText = 'Đang chuyển hướng sang Zalo để gửi thẻ...';
-            status.style.color = '#4ade80';
-
-            setTimeout(() => {
-                window.open(zaloUrl, '_blank');
-            }, 800);
         }
 
         // HÀM ADMIN CỘNG TIỀN CHO KHÁCH TRỰC TIẾP
