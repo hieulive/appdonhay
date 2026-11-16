@@ -2,7 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CHỐNG ZOOM WEB TRÊN IOS / ANDROID -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hiếu Live Shop - Hệ Thống Mua Bán Config FF Tự Động</title>
     <style>
         * {
@@ -10,6 +11,7 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -71,6 +73,7 @@
             letter-spacing: 0.5px;
         }
 
+        /* FONT-SIZE >= 16PX ĐỂ NGĂN SAFARI ZOOM KHI FOCUS */
         .input-field {
             width: 100%;
             background: #18181b;
@@ -78,7 +81,7 @@
             border-radius: 14px;
             padding: 12px 16px;
             color: #ffffff;
-            font-size: 14px;
+            font-size: 16px; 
             outline: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -415,6 +418,13 @@
             100% { transform: rotate(360deg) scale(1); }
         }
 
+        .note-text {
+            font-size: 11px;
+            color: #f87171;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
         .qty-box {
             display: flex;
             align-items: center;
@@ -450,18 +460,20 @@
             font-size: 14px;
         }
 
+        /* Ô nhập số lượng gõ trực tiếp */
         .qty-input {
-            width: 36px;
-            background: transparent;
-            border: none;
+            width: 45px;
+            background: #18181b;
+            border: 1px solid #3f3f46;
+            border-radius: 6px;
             color: #ffffff;
             text-align: center;
             font-weight: 900;
-            font-size: 14px;
+            font-size: 15px;
             outline: none;
+            padding: 2px 0;
         }
 
-        /* --- ĐỔI NÚT MUA NGAY SANG MÀU CAM LỬA RỰC RỠ --- */
         .btn-buy-item {
             width: 100%;
             background: linear-gradient(135deg, #f97316, #ea580c);
@@ -481,18 +493,6 @@
         .btn-buy-item:hover {
             filter: brightness(1.1);
             box-shadow: 0 6px 20px rgba(249, 115, 22, 0.6);
-        }
-
-        .btn-owned {
-            background: #27272a;
-            color: #facc15;
-            border: 1px solid #facc15;
-            text-align: center;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 900;
-            display: block;
         }
 
         .tab-nạp {
@@ -727,14 +727,14 @@
                         <div id="buy-btn-ios" class="os-btn active" onclick="playClickSound(); setBuyOS('iOS')">📱 iOS</div>
                         <div id="buy-btn-adr" class="os-btn" onclick="playClickSound(); setBuyOS('Android')">🤖 Android</div>
                     </div>
-                    <input type="text" id="buy-device-input" class="input-field" placeholder="Nhập tên máy của bạn (VD: iPhone 13)..." style="padding: 10px 14px; font-size: 12px; margin-bottom: 6px;">
+                    <input type="text" id="buy-device-input" class="input-field" placeholder="Nhập tên máy của bạn (VD: iPhone 13)..." style="padding: 10px 14px; font-size: 16px; margin-bottom: 6px;">
                 </div>
 
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="playClickSound(); changeQty('nhetam', -1)">-</button>
-                        <input type="text" id="qty-nhetam" class="qty-input" value="1" readonly>
+                        <input type="text" id="qty-nhetam" class="qty-input" value="1" oninput="handleDirectInput('nhetam', this.value)">
                         <button class="qty-btn" onclick="playClickSound(); changeQty('nhetam', 1)">+</button>
                     </div>
                 </div>
@@ -753,17 +753,18 @@
                     <li><span class="tick-icon">✔️</span> Định tâm tự động bám sát vùng cổ</li>
                     <li><span class="tick-icon">✔️</span> Chống khóa acc, an toàn tuyệt đối</li>
                 </ul>
+                <p class="note-text">⚠️ Lưu ý: Mỗi file chỉ cài được đúng 1 máy duy nhất!</p>
                 
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="playClickSound(); changeQty('aimneck', -1)">-</button>
-                        <input type="text" id="qty-aimneck" class="qty-input" value="1" readonly>
+                        <input type="text" id="qty-aimneck" class="qty-input" value="1" oninput="handleDirectInput('aimneck', this.value)">
                         <button class="qty-btn" onclick="playClickSound(); changeQty('aimneck', 1)">+</button>
                     </div>
                 </div>
 
-                <div id="product-2-action">
+                <div>
                     <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimneck', 'File Aimneck (Ngắm Cổ)', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
@@ -779,17 +780,18 @@
                     <li><span class="tick-icon">✔️</span> Hỗ trợ lực kéo tâm nhẹ nhàng</li>
                     <li><span class="tick-icon">✔️</span> Không bị bay tâm lên trời</li>
                 </ul>
+                <p class="note-text">⚠️ Lưu ý: Mỗi file chỉ cài được đúng 1 máy duy nhất!</p>
                 
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="playClickSound(); changeQty('aimdrag', -1)">-</button>
-                        <input type="text" id="qty-aimdrag" class="qty-input" value="1" readonly>
+                        <input type="text" id="qty-aimdrag" class="qty-input" value="1" oninput="handleDirectInput('aimdrag', this.value)">
                         <button class="qty-btn" onclick="playClickSound(); changeQty('aimdrag', 1)">+</button>
                     </div>
                 </div>
 
-                <div id="product-3-action">
+                <div>
                     <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimdrag', 'File Aim Drag (Kéo Tâm)', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
@@ -805,24 +807,25 @@
                     <li><span class="tick-icon">✔️</span> Chuyên dụng bắt trọn tâm vào thân</li>
                     <li><span class="tick-icon">✔️</span> Cực kỳ ổn định và bền bỉ</li>
                 </ul>
+                <p class="note-text">⚠️ Lưu ý: Mỗi file chỉ cài được đúng 1 máy duy nhất!</p>
                 
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
                     <div class="qty-controls">
                         <button class="qty-btn" onclick="playClickSound(); changeQty('aimbody', -1)">-</button>
-                        <input type="text" id="qty-aimbody" class="qty-input" value="1" readonly>
+                        <input type="text" id="qty-aimbody" class="qty-input" value="1" oninput="handleDirectInput('aimbody', this.value)">
                         <button class="qty-btn" onclick="playClickSound(); changeQty('aimbody', 1)">+</button>
                     </div>
                 </div>
 
-                <div id="product-4-action">
+                <div>
                     <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimbody', 'File Aim Body (Thân Người)', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
 
             <div class="footer">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Pro v20.4</span>
+                <span>Pro v20.5</span>
             </div>
         </div>
 
@@ -892,7 +895,7 @@
                     
                     <div class="input-group" style="text-align: left; margin-bottom: 10px;">
                         <label class="input-label" style="font-size: 10px;">Số tiền nạp (VNĐ)</label>
-                        <input type="number" id="deposit-amount-input" class="input-field" placeholder="100000" value="100000" oninput="updateQRCode()" style="padding: 10px 14px; font-size: 13px;">
+                        <input type="number" id="deposit-amount-input" class="input-field" placeholder="100000" value="100000" oninput="updateQRCode()" style="padding: 10px 14px; font-size: 16px;">
                     </div>
 
                     <div class="qr-img-box">
@@ -930,11 +933,11 @@
             </div>
             <div class="input-group">
                 <label class="input-label">Tài khoản khách cần cộng</label>
-                <input type="text" id="admin-target-user" class="input-field" placeholder="Nhập username của khách...">
+                <input type="text" id="admin-target-user" class="input-field" placeholder="Nhập username của khách..." style="font-size: 16px;">
             </div>
             <div class="input-group">
                 <label class="input-label">Số tiền muốn cộng (VNĐ)</label>
-                <input type="number" id="admin-add-amount" class="input-field" placeholder="Ví dụ: 100000">
+                <input type="number" id="admin-add-amount" class="input-field" placeholder="Ví dụ: 100000" style="font-size: 16px;">
             </div>
             <button class="btn-primary" onclick="playClickSound(); adminAddMoney()">Cộng Tiền Vào Ví Khách</button>
             <div id="admin-status" class="status-text"></div>
@@ -1006,7 +1009,6 @@
                     }
 
                     updateQRCode();
-                    updateShopUI();
                 }
             }
         };
@@ -1138,8 +1140,23 @@
             if (quantities[productId] > 99) quantities[productId] = 99;
 
             document.getElementById(`qty-${productId}`).value = quantities[productId];
-            let totalPrice = quantities[productId] * unitPrices[productId];
+            updateButtonPrices(productId);
+        }
 
+        function handleDirectInput(productId, val) {
+            let num = parseInt(val);
+            if (isNaN(num) || num < 1) {
+                quantities[productId] = 1;
+            } else if (num > 99) {
+                quantities[productId] = 99;
+            } else {
+                quantities[productId] = num;
+            }
+            updateButtonPrices(productId);
+        }
+
+        function updateButtonPrices(productId) {
+            let totalPrice = quantities[productId] * unitPrices[productId];
             if (productId === 'nhetam') {
                 document.querySelector('button[onclick*="buyNheTam"]').innerText = `📥 Tải Xuống File Nhẹ Tâm (${formatMoney(totalPrice)} đ)`;
             } else {
@@ -1250,6 +1267,10 @@
             let qty = quantities['nhetam'];
             let price = unitPrices['nhetam'] * qty;
 
+            // BẢNG XÁC NHẬN TRƯỚC KHI MUA
+            let confirmMsg = `🔔 XÁC NHẬN MUA HÀNG\n\n- Sản phẩm: File Nhẹ Tâm Theo Máy\n- Thiết bị: ${buySelectedOS} - ${deviceName}\n- Số lượng: ${qty}\n- Tổng tiền: ${formatMoney(price)} đ\n\nBạn có chắc chắn muốn thanh toán không?`;
+            if (!confirm(confirmMsg)) return;
+
             await fetchUserData(currentUsername);
             let currentBalance = currentUserData.balance || 0;
 
@@ -1259,36 +1280,38 @@
                 return;
             }
 
-            if (confirm(`Xác nhận thanh toán ${formatMoney(price)} đ để tải File Nhẹ Tâm [SL: ${qty}] cho máy [${buySelectedOS} - ${deviceName}]?`)) {
-                currentUserData.balance = currentBalance - price;
-                if (!currentUserData.history) currentUserData.history = [];
-                currentUserData.history.push({
-                    productName: `File Nhẹ Tâm (${buySelectedOS} - ${deviceName})`,
-                    qty: qty,
-                    price: price,
-                    date: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN')
+            currentUserData.balance = currentBalance - price;
+            if (!currentUserData.history) currentUserData.history = [];
+            currentUserData.history.push({
+                productName: `File Nhẹ Tâm (${buySelectedOS} - ${deviceName})`,
+                qty: qty,
+                price: price,
+                date: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN')
+            });
+
+            try {
+                await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(currentUserData)
                 });
 
-                try {
-                    await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(currentUserData)
-                    });
+                document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
+                alert('Thanh toán thành công! Đang chuyển hướng đến file tải xuống...');
+                window.open('https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file', '_blank');
 
-                    document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
-                    alert('Thanh toán thành công! Đang chuyển hướng đến file tải xuống...');
-                    window.open('https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file', '_blank');
-
-                } catch (e) {
-                    alert('Lỗi giao dịch, vui lòng thử lại!');
-                }
+            } catch (e) {
+                alert('Lỗi giao dịch, vui lòng thử lại!');
             }
         }
 
         async function buyProduct(productId, productName, basePrice) {
             let qty = quantities[productId];
             let price = basePrice * qty;
+
+            // BẢNG XÁC NHẬN TRƯỚC KHI MUA
+            let confirmMsg = `🔔 XÁC NHẬN MUA HÀNG\n\n- Sản phẩm: ${productName}\n- Số lượng: ${qty}\n- Tổng tiền: ${formatMoney(price)} đ\n⚠️ Lưu ý: Mỗi file chỉ cài được đúng 1 máy duy nhất!\n\nBạn có chắc chắn muốn thanh toán không?`;
+            if (!confirm(confirmMsg)) return;
 
             await fetchUserData(currentUsername);
             let currentBalance = currentUserData.balance || 0;
@@ -1299,51 +1322,35 @@
                 return;
             }
 
-            if (confirm(`Xác nhận mua [SL: ${qty}] ${productName} với tổng giá ${formatMoney(price)} đ?\n(Lưu ý: Mỗi file chỉ cài được 1 máy duy nhất)`)) {
-                currentUserData.balance = currentBalance - price;
-                if (!currentUserData.purchased) currentUserData.purchased = {};
-                currentUserData.purchased[productId] = true;
+            currentUserData.balance = currentBalance - price;
+            if (!currentUserData.history) currentUserData.history = [];
+            currentUserData.history.push({
+                productName: productName,
+                qty: qty,
+                price: price,
+                date: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN')
+            });
 
-                if (!currentUserData.history) currentUserData.history = [];
-                currentUserData.history.push({
-                    productName: productName,
-                    qty: qty,
-                    price: price,
-                    date: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN')
+            try {
+                await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(currentUserData)
                 });
 
-                try {
-                    await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(currentUserData)
-                    });
+                document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
+                alert('Thanh toán thành công! Tải xuống tệp file ngay bên dưới.');
+                
+                // Mở link tải file tương ứng cho phép mua liên tục
+                let downloadLinks = {
+                    'aimneck': 'https://www.mediafire.com/file/example/Aimneck.crt/file',
+                    'aimdrag': 'https://www.mediafire.com/file/example/Aimdrag.crt/file',
+                    'aimbody': 'https://www.mediafire.com/file/example/Aimbody.crt/file'
+                };
+                window.open(downloadLinks[productId], '_blank');
 
-                    document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
-                    updateShopUI();
-                    alert('Thanh toán thành công! Bạn có thể tải file ngay bây giờ.');
-                } catch (e) {
-                    alert('Lỗi giao dịch, vui lòng thử lại!');
-                }
-            }
-        }
-
-        function updateShopUI() {
-            if (!currentUserData.purchased) currentUserData.purchased = {};
-
-            let pList = ['aimneck', 'aimdrag', 'aimbody'];
-            let links = {
-                'aimneck': 'https://www.mediafire.com/file/example/Aimneck.crt/file',
-                'aimdrag': 'https://www.mediafire.com/file/example/Aimdrag.crt/file',
-                'aimbody': 'https://www.mediafire.com/file/example/Aimbody.crt/file'
-            };
-
-            for (let i = 0; i < pList.length; i++) {
-                let pId = pList[i];
-                let area = document.getElementById(`product-${i+2}-action`);
-                if (area && currentUserData.purchased[pId]) {
-                    area.innerHTML = `<a href="${links[pId]}" target="_blank" class="btn-owned">📥 Tải Xuống File (Đã Mở Khóa - 1 Máy)</a>`;
-                }
+            } catch (e) {
+                alert('Lỗi giao dịch, vui lòng thử lại!');
             }
         }
 
@@ -1412,7 +1419,6 @@
                     email: email,
                     password: pass,
                     balance: 0,
-                    purchased: { aimneck: false, aimdrag: false, aimbody: false },
                     history: [],
                     createdAt: new Date().toISOString()
                 };
@@ -1474,7 +1480,6 @@
                         }
 
                         updateQRCode();
-                        updateShopUI();
                     }, 600);
                 } else {
                     status.innerText = 'Sai tài khoản hoặc mật khẩu!';
