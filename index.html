@@ -13,7 +13,7 @@
         }
 
         body {
-            background: radial-gradient(circle at center, #18181b 0%, #09090b 100%);
+            background: radial-gradient(circle at center, #1e1b4b 0%, #09090b 100%);
             color: #ffffff;
             display: flex;
             justify-content: center;
@@ -25,12 +25,12 @@
         .container {
             width: 100%;
             max-width: 440px;
-            background: rgba(18, 18, 20, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 28px;
+            background: rgba(15, 15, 18, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            border-radius: 30px;
             padding: 24px 20px;
-            box-shadow: 0 0 50px rgba(234, 179, 8, 0.18);
+            box-shadow: 0 0 60px rgba(250, 204, 21, 0.15), inset 0 0 20px rgba(250, 204, 21, 0.05);
             position: relative;
         }
 
@@ -40,19 +40,21 @@
         }
 
         .header-title h2 {
-            font-size: 20px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #facc15, #ca8a04);
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fef08a, #facc15, #ca8a04);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             margin-bottom: 4px;
             text-transform: uppercase;
+            filter: drop-shadow(0 2px 10px rgba(250, 204, 21, 0.3));
         }
 
         .header-title p {
             font-size: 12px;
             color: #9ca3af;
+            letter-spacing: 0.5px;
         }
 
         .input-group {
@@ -63,7 +65,7 @@
             display: block;
             font-size: 11px;
             font-weight: 700;
-            color: #d1d5db;
+            color: #e5e7eb;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -78,43 +80,51 @@
             color: #ffffff;
             font-size: 14px;
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .input-field:focus {
             border-color: #facc15;
-            box-shadow: 0 0 12px rgba(234, 179, 8, 0.25);
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.3);
+            background: #202024;
         }
 
-        /* --- HIỆU ỨNG CHẠM BẬP BÊNH --- */
+        /* --- HIỆU ỨNG CHẠM BẬP BÊNH & NEON --- */
         .btn-primary, .btn-buy-item, .product-card, .os-btn, .tab-nạp-btn, .btn-deposit, .menu-toggle-btn, .dropdown-item, #admin-menu-btn, .qty-btn {
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, opacity 0.2s ease;
+            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background 0.2s ease;
         }
 
         .btn-primary:active, .btn-buy-item:active, .product-card:active, .os-btn:active, .tab-nạp-btn:active, .btn-deposit:active, .menu-toggle-btn:active, .dropdown-item:active, #admin-menu-btn:active, .qty-btn:active {
-            transform: scale(0.93) rotate(-1deg);
+            transform: scale(0.92) rotate(-0.5deg);
         }
 
         .product-card:hover {
-            transform: translateY(-2px) scale(1.01);
-            border-color: rgba(234, 179, 8, 0.4);
+            transform: translateY(-3px);
+            border-color: rgba(250, 204, 21, 0.6);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
         .btn-primary {
             width: 100%;
-            background: linear-gradient(135deg, #facc15, #ca8a04);
+            background: linear-gradient(135deg, #fef08a, #facc15, #ca8a04);
             border: none;
             color: #000000;
             padding: 14px;
             border-radius: 14px;
             font-size: 15px;
-            font-weight: 800;
+            font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(234, 179, 8, 0.35);
+            box-shadow: 0 4px 20px rgba(250, 204, 21, 0.4);
             margin-top: 6px;
             text-decoration: none;
             display: block;
             text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 6px 25px rgba(250, 204, 21, 0.6);
         }
 
         .status-text {
@@ -145,7 +155,7 @@
             align-items: center;
             font-size: 11px;
             color: #6b7280;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid rgba(255,255,255,0.08);
             padding-top: 14px;
             margin-top: 18px;
         }
@@ -160,7 +170,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             padding-bottom: 12px;
         }
 
@@ -170,7 +180,6 @@
             gap: 8px;
         }
 
-        /* Nút 3 GẠCH RÕ RÀNG */
         .menu-wrapper {
             position: relative;
         }
@@ -179,31 +188,36 @@
             background: linear-gradient(135deg, #facc15, #ca8a04);
             border: none;
             color: #000000;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
             font-size: 18px;
             cursor: pointer;
             font-weight: 900;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 10px rgba(234, 179, 8, 0.3);
+            box-shadow: 0 3px 15px rgba(250, 204, 21, 0.4);
         }
 
-        /* MENU THẢ XUỐNG */
         .dropdown-menu-box {
             display: none;
             position: absolute;
             right: 0;
-            top: 44px;
+            top: 46px;
             background: #18181b;
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-            width: 160px;
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            width: 170px;
             z-index: 9999;
             overflow: hidden;
+            animation: fadeInMenu 0.2s ease;
+        }
+
+        @keyframes fadeInMenu {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .dropdown-menu-box.show {
@@ -213,7 +227,7 @@
         .dropdown-item {
             padding: 12px 16px;
             font-size: 13px;
-            color: #d1d5db;
+            color: #e5e7eb;
             text-decoration: none;
             display: block;
             border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -222,48 +236,51 @@
         }
 
         .dropdown-item:hover {
-            background: rgba(234, 179, 8, 0.15);
+            background: rgba(250, 204, 21, 0.2);
             color: #facc15;
         }
 
         .dropdown-item.danger {
-            color: #ef4444;
+            color: #f87171;
         }
 
         .wallet-box {
-            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(24, 24, 27, 0.9));
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 16px;
-            padding: 14px 16px;
+            background: linear-gradient(135deg, rgba(250, 204, 21, 0.12), rgba(24, 24, 27, 0.95));
+            border: 1px solid rgba(250, 204, 21, 0.35);
+            border-radius: 20px;
+            padding: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
         .wallet-info h4 {
             font-size: 10px;
             color: #9ca3af;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .wallet-info h3 {
-            font-size: 18px;
+            font-size: 20px;
             color: #facc15;
             margin-top: 2px;
-            font-weight: 800;
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
         }
 
         .btn-deposit {
             background: linear-gradient(135deg, #facc15, #ca8a04);
             color: #000000;
             border: none;
-            padding: 9px 14px;
-            border-radius: 10px;
+            padding: 10px 16px;
+            border-radius: 12px;
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(234, 179, 8, 0.3);
+            box-shadow: 0 3px 12px rgba(250, 204, 21, 0.35);
         }
 
         .os-selector {
@@ -277,8 +294,8 @@
             background: #18181b;
             border: 1px solid #27272a;
             color: #9ca3af;
-            padding: 8px;
-            border-radius: 10px;
+            padding: 9px;
+            border-radius: 12px;
             font-size: 11px;
             font-weight: 700;
             cursor: pointer;
@@ -286,16 +303,17 @@
         }
 
         .os-btn.active {
-            background: rgba(234, 179, 8, 0.15);
+            background: rgba(250, 204, 21, 0.2);
             border-color: #facc15;
             color: #facc15;
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
         }
 
         .sens-result-box {
             background: #18181b;
             border: 1px solid #27272a;
-            border-radius: 14px;
-            padding: 14px;
+            border-radius: 16px;
+            padding: 16px;
             margin-top: 14px;
             display: none;
         }
@@ -312,14 +330,14 @@
             justify-content: space-between;
             font-size: 12px;
             color: #d1d5db;
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .btn-action {
             width: 100%;
             padding: 10px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
@@ -335,20 +353,20 @@
             font-size: 12px;
             color: #facc15;
             text-transform: uppercase;
-            font-weight: 800;
+            font-weight: 900;
             margin: 18px 0 10px 0;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
 
         .product-card {
-            background: #18181b;
+            background: linear-gradient(145deg, #18181b, #121215);
             border: 1px solid #27272a;
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 12px;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 14px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .product-info-top {
@@ -358,24 +376,25 @@
         }
 
         .product-name {
-            font-size: 14px;
-            font-weight: 800;
+            font-size: 15px;
+            font-weight: 900;
             color: #ffffff;
         }
 
         .product-price {
-            font-size: 14px;
-            font-weight: 800;
+            font-size: 15px;
+            font-weight: 900;
             color: #4ade80;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
         }
 
         /* Danh sách tính năng tick xanh */
         .feature-list {
             list-style: none;
-            margin: 6px 0;
+            margin: 4px 0;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
         }
 
         .feature-list li {
@@ -383,20 +402,21 @@
             color: #d1d5db;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .tick-icon {
             color: #38bdf8;
-            font-weight: 800;
-            font-size: 12px;
+            font-weight: 900;
+            font-size: 13px;
             display: inline-flex;
             animation: spinTick 3s linear infinite;
         }
 
         @keyframes spinTick {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
         }
 
         /* Chọn số lượng sản phẩm */
@@ -406,8 +426,8 @@
             justify-content: space-between;
             background: #09090b;
             border: 1px solid #27272a;
-            border-radius: 10px;
-            padding: 6px 12px;
+            border-radius: 12px;
+            padding: 8px 14px;
             margin: 6px 0;
         }
 
@@ -427,12 +447,12 @@
             background: #27272a;
             color: #facc15;
             border: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            font-weight: 800;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            font-weight: 900;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .qty-input {
@@ -441,8 +461,8 @@
             border: none;
             color: #ffffff;
             text-align: center;
-            font-weight: 800;
-            font-size: 13px;
+            font-weight: 900;
+            font-size: 14px;
             outline: none;
         }
 
@@ -451,14 +471,14 @@
             background: linear-gradient(135deg, #10b981, #059669);
             color: #ffffff;
             border: none;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 800;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 900;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
             display: block;
         }
 
@@ -467,10 +487,10 @@
             color: #facc15;
             border: 1px solid #facc15;
             text-align: center;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 800;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 900;
             display: block;
         }
 
@@ -486,29 +506,30 @@
             background: #18181b;
             border: 1px solid #27272a;
             color: #9ca3af;
-            padding: 9px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 12px;
             font-size: 11px;
             font-weight: 700;
             cursor: pointer;
         }
 
         .tab-nạp-btn.active {
-            background: rgba(234, 179, 8, 0.15);
+            background: rgba(250, 204, 21, 0.2);
             color: #facc15;
             border-color: #facc15;
         }
 
         .qr-img-box {
             background: #ffffff;
-            padding: 8px;
-            border-radius: 14px;
-            width: 160px;
-            height: 160px;
+            padding: 10px;
+            border-radius: 16px;
+            width: 170px;
+            height: 170px;
             margin: 0 auto 10px auto;
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
 
         .qr-img-box img {
@@ -529,17 +550,17 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 6px 20px rgba(0, 104, 255, 0.4);
+            box-shadow: 0 6px 25px rgba(0, 104, 255, 0.5);
             text-decoration: none;
             font-size: 13px;
-            font-weight: 800;
+            font-weight: 900;
             z-index: 999;
             animation: bounce 2s infinite;
         }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-5px);}
+            40% {transform: translateY(-6px);}
             60% {transform: translateY(-3px);}
         }
     </style>
@@ -547,7 +568,7 @@
 <body>
 
     <!-- NÚT ZALO NỔI -->
-    <a href="https://zalo.me/0918106821" target="_blank" class="zalo-float-btn">
+    <a href="https://zalo.me/0918106821" target="_blank" class="zalo-float-btn" onclick="playClickSound()">
         <span style="background: white; color: #0068ff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 11px;">Zalo</span>
         <span>Hỗ Trợ Nhanh</span>
     </a>
@@ -570,11 +591,11 @@
                 <input type="password" id="login-pass" class="input-field" placeholder="Nhập mật khẩu...">
             </div>
 
-            <button class="btn-primary" onclick="handleLogin()">Đăng Nhập</button>
+            <button class="btn-primary" onclick="playClickSound(); handleLogin()">Đăng Nhập</button>
             <div id="login-status" class="status-text"></div>
 
             <div class="switch-auth">
-                Chưa có tài khoản? <a onclick="showRegister()">Đăng ký ngay</a>
+                Chưa có tài khoản? <a onclick="playClickSound(); showRegister()">Đăng ký ngay</a>
             </div>
 
             <div class="footer">
@@ -605,11 +626,11 @@
                 <input type="password" id="reg-pass" class="input-field" placeholder="Nhập mật khẩu...">
             </div>
 
-            <button class="btn-primary" onclick="handleRegister()">Đăng Ký</button>
+            <button class="btn-primary" onclick="playClickSound(); handleRegister()">Đăng Ký</button>
             <div id="reg-status" class="status-text"></div>
 
             <div class="switch-auth">
-                Đã có tài khoản? <a onclick="showLogin()">Đăng nhập</a>
+                Đã có tài khoản? <a onclick="playClickSound(); showLogin()">Đăng nhập</a>
             </div>
 
             <div class="footer">
@@ -621,19 +642,18 @@
         <!-- 3. TRANG DASHBOARD SHOP CHÍNH -->
         <div id="dashboard-page">
             <div class="dash-header">
-                <h3 id="welcome-title" style="color: #facc15; font-size: 15px; font-weight: 800;">Shop Hiếu Live</h3>
+                <h3 id="welcome-title" style="color: #facc15; font-size: 16px; font-weight: 900;">Shop Hiếu Live</h3>
                 
-                <!-- NHÓM NÚT PHẢI: ADMIN + 3 GẠCH -->
                 <div class="header-right-group">
-                    <button id="admin-menu-btn" onclick="openAdminPanel()" style="background:#facc15; border:none; color:black; padding:8px 10px; border-radius:10px; font-size:11px; cursor:pointer; font-weight:800; display:none;">Admin</button>
+                    <button id="admin-menu-btn" onclick="playClickSound(); openAdminPanel()" style="background:#facc15; border:none; color:black; padding:8px 12px; border-radius:10px; font-size:11px; cursor:pointer; font-weight:900; display:none;">Admin</button>
                     
                     <div class="menu-wrapper">
-                        <button class="menu-toggle-btn" onclick="toggleDropdownMenu(event)">☰</button>
+                        <button class="menu-toggle-btn" onclick="playClickSound(); toggleDropdownMenu(event)">☰</button>
                         <div id="dropdown-menu" class="dropdown-menu-box">
-                            <a class="dropdown-item" onclick="goHome()">🏠 Trang Chủ</a>
-                            <a class="dropdown-item" onclick="goAccount()">👤 Tài Khoản</a>
-                            <a class="dropdown-item" onclick="goDeposit()">💳 Nạp Tiền</a>
-                            <a class="dropdown-item danger" onclick="logoutApp()">🚪 Đăng Xuất</a>
+                            <a class="dropdown-item" onclick="playClickSound(); goHome()">🏠 Trang Chủ</a>
+                            <a class="dropdown-item" onclick="playClickSound(); goAccount()">👤 Tài Khoản</a>
+                            <a class="dropdown-item" onclick="playClickSound(); goDeposit()">💳 Nạp Tiền</a>
+                            <a class="dropdown-item danger" onclick="playClickSound(); logoutApp()">🚪 Đăng Xuất</a>
                         </div>
                     </div>
                 </div>
@@ -645,7 +665,7 @@
                     <h4>Số dư ví của bạn</h4>
                     <h3 id="user-balance">0 đ</h3>
                 </div>
-                <button class="btn-deposit" onclick="goDeposit()">💳 Nạp Tiền</button>
+                <button class="btn-deposit" onclick="playClickSound(); goDeposit()">💳 Nạp Tiền</button>
             </div>
 
             <!-- TRA CỨU ĐỘ NHẠY FREE -->
@@ -653,8 +673,8 @@
             <div class="input-group" style="margin-bottom: 8px;">
                 <label class="input-label">Hệ Điều Hành</label>
                 <div class="os-selector">
-                    <div id="btn-ios" class="os-btn active" onclick="setOS('iOS')">📱 iOS</div>
-                    <div id="btn-adr" class="os-btn" onclick="setOS('Android')">🤖 Android</div>
+                    <div id="btn-ios" class="os-btn active" onclick="playClickSound(); setOS('iOS')">📱 iOS</div>
+                    <div id="btn-adr" class="os-btn" onclick="playClickSound(); setOS('Android')">🤖 Android</div>
                 </div>
             </div>
 
@@ -663,7 +683,7 @@
                 <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 Pro...">
             </div>
 
-            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 11px; font-size: 13px;">Lấy Thông Số Độ Nhạy</button>
+            <button class="btn-primary" onclick="playClickSound(); lookupSensitivity()" style="padding: 12px; font-size: 13px;">Lấy Thông Số Độ Nhạy</button>
             <div id="lookup-status" class="status-text"></div>
 
             <div id="sens-result" class="sens-result-box">
@@ -674,7 +694,7 @@
                 <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="r-scope4">0</b></div>
                 <div class="sens-row"><span>AWM:</span> <b id="r-awm">0</b></div>
                 <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="r-btn-size">45%</b></div>
-                <button class="btn-action btn-copy" onclick="copySens()">📋 Sao chép độ nhạy</button>
+                <button class="btn-action btn-copy" onclick="playClickSound(); copySens()">📋 Sao chép độ nhạy</button>
             </div>
 
             <!-- MUA CONFIG VIP -->
@@ -698,8 +718,8 @@
                 <div style="margin-top: 6px;">
                     <label class="input-label" style="font-size: 9px; margin-bottom: 3px;">Chọn HĐH máy của bạn:</label>
                     <div class="os-selector" style="margin-bottom: 6px;">
-                        <div id="buy-btn-ios" class="os-btn active" onclick="setBuyOS('iOS')">📱 iOS</div>
-                        <div id="buy-btn-adr" class="os-btn" onclick="setBuyOS('Android')">🤖 Android</div>
+                        <div id="buy-btn-ios" class="os-btn active" onclick="playClickSound(); setBuyOS('iOS')">📱 iOS</div>
+                        <div id="buy-btn-adr" class="os-btn" onclick="playClickSound(); setBuyOS('Android')">🤖 Android</div>
                     </div>
                     <input type="text" id="buy-device-input" class="input-field" placeholder="Nhập tên máy của bạn (VD: iPhone 13)..." style="padding: 10px 14px; font-size: 12px; margin-bottom: 6px;">
                 </div>
@@ -707,13 +727,13 @@
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
                     <div class="qty-controls">
-                        <button class="qty-btn" onclick="changeQty('nhetam', -1)">-</button>
+                        <button class="qty-btn" onclick="playClickSound(); changeQty('nhetam', -1)">-</button>
                         <input type="text" id="qty-nhetam" class="qty-input" value="1" readonly>
-                        <button class="qty-btn" onclick="changeQty('nhetam', 1)">+</button>
+                        <button class="qty-btn" onclick="playClickSound(); changeQty('nhetam', 1)">+</button>
                     </div>
                 </div>
 
-                <button class="btn-primary" onclick="buyNheTam()" style="padding: 11px; font-size: 13px; background: linear-gradient(135deg, #10b981, #059669); color: white;">📥 Tải Xuống File Nhẹ Tâm (150k)</button>
+                <button class="btn-primary" onclick="playClickSound(); buyNheTam()" style="padding: 12px; font-size: 13px; background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);">📥 Tải Xuống File Nhẹ Tâm (150k)</button>
             </div>
 
             <!-- SẢN PHẨM 2: AIMNECK -->
@@ -733,14 +753,14 @@
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
                     <div class="qty-controls">
-                        <button class="qty-btn" onclick="changeQty('aimneck', -1)">-</button>
+                        <button class="qty-btn" onclick="playClickSound(); changeQty('aimneck', -1)">-</button>
                         <input type="text" id="qty-aimneck" class="qty-input" value="1" readonly>
-                        <button class="qty-btn" onclick="changeQty('aimneck', 1)">+</button>
+                        <button class="qty-btn" onclick="playClickSound(); changeQty('aimneck', 1)">+</button>
                     </div>
                 </div>
 
                 <div id="product-2-action">
-                    <button class="btn-buy-item" onclick="buyProduct('aimneck', 100000)">Mua Ngay (100.000 đ)</button>
+                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimneck', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
 
@@ -761,14 +781,14 @@
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
                     <div class="qty-controls">
-                        <button class="qty-btn" onclick="changeQty('aimdrag', -1)">-</button>
+                        <button class="qty-btn" onclick="playClickSound(); changeQty('aimdrag', -1)">-</button>
                         <input type="text" id="qty-aimdrag" class="qty-input" value="1" readonly>
-                        <button class="qty-btn" onclick="changeQty('aimdrag', 1)">+</button>
+                        <button class="qty-btn" onclick="playClickSound(); changeQty('aimdrag', 1)">+</button>
                     </div>
                 </div>
 
                 <div id="product-3-action">
-                    <button class="btn-buy-item" onclick="buyProduct('aimdrag', 100000)">Mua Ngay (100.000 đ)</button>
+                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimdrag', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
 
@@ -789,31 +809,31 @@
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
                     <div class="qty-controls">
-                        <button class="qty-btn" onclick="changeQty('aimbody', -1)">-</button>
+                        <button class="qty-btn" onclick="playClickSound(); changeQty('aimbody', -1)">-</button>
                         <input type="text" id="qty-aimbody" class="qty-input" value="1" readonly>
-                        <button class="qty-btn" onclick="changeQty('aimbody', 1)">+</button>
+                        <button class="qty-btn" onclick="playClickSound(); changeQty('aimbody', 1)">+</button>
                     </div>
                 </div>
 
                 <div id="product-4-action">
-                    <button class="btn-buy-item" onclick="buyProduct('aimbody', 100000)">Mua Ngay (100.000 đ)</button>
+                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimbody', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
 
             <div class="footer">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Pro v20.0</span>
+                <span>Pro v20.2</span>
             </div>
         </div>
 
         <!-- 4. TRANG TÀI KHOẢN & ĐỔI MẬT KHẨU -->
         <div id="account-section">
             <div class="dash-header">
-                <h3 style="font-size: 14px; color: #facc15; font-weight: 800;">Thông Tin Tài Khoản</h3>
-                <button onclick="goHome()" style="background:#27272a; border:none; color:white; padding:5px 10px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
+                <h3 style="font-size: 14px; color: #facc15; font-weight: 900;">Thông Tin Tài Khoản</h3>
+                <button onclick="playClickSound(); goHome()" style="background:#27272a; border:none; color:white; padding:6px 12px; border-radius:10px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
             </div>
 
-            <div style="background: #18181b; border: 1px solid #27272a; border-radius: 14px; padding: 16px; margin-bottom: 14px;">
+            <div style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 16px; margin-bottom: 14px;">
                 <p style="font-size: 12px; color: #d1d5db; margin-bottom: 6px;">Tài khoản: <b id="acc-username" style="color: #facc15;">-</b></p>
                 <p style="font-size: 12px; color: #d1d5db; margin-bottom: 6px;">Email: <b id="acc-email" style="color: #4ade80;">-</b></p>
                 <p style="font-size: 12px; color: #d1d5db;">Số dư ví: <b id="acc-balance" style="color: #facc15;">0 đ</b></p>
@@ -828,7 +848,7 @@
                 <label class="input-label">Mật khẩu mới</label>
                 <input type="password" id="new-pass" class="input-field" placeholder="Nhập mật khẩu mới...">
             </div>
-            <button class="btn-primary" onclick="handleChangePassword()">Cập Nhật Mật Khẩu</button>
+            <button class="btn-primary" onclick="playClickSound(); handleChangePassword()">Cập Nhật Mật Khẩu</button>
             <div id="account-status" class="status-text"></div>
 
             <div class="footer">
@@ -840,18 +860,18 @@
         <!-- 5. TRANG NẠP TIỀN -->
         <div id="deposit-section">
             <div class="dash-header">
-                <h3 style="font-size: 14px; color: #facc15; font-weight: 800;">Cổng Nạp Tiền Tự Động</h3>
-                <button onclick="goHome()" style="background:#27272a; border:none; color:white; padding:5px 10px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
+                <h3 style="font-size: 14px; color: #facc15; font-weight: 900;">Cổng Nạp Tiền Tự Động</h3>
+                <button onclick="playClickSound(); goHome()" style="background:#27272a; border:none; color:white; padding:6px 12px; border-radius:10px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
             </div>
 
             <div class="tab-nạp">
-                <button id="tab-banking" class="tab-nạp-btn active" onclick="switchDepositTab('banking')">Chuyển Khoản QR</button>
-                <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Nạp Thẻ Cào</button>
+                <button id="tab-banking" class="tab-nạp-btn active" onclick="playClickSound(); switchDepositTab('banking')">Chuyển Khoản QR</button>
+                <button id="tab-card" class="tab-nạp-btn" onclick="playClickSound(); switchDepositTab('card')">Nạp Thẻ Cào</button>
             </div>
 
             <div id="content-banking" style="text-align: center;">
-                <div style="background: #18181b; border: 1px solid #27272a; border-radius: 14px; padding: 14px; margin-bottom: 12px;">
-                    <p style="font-size: 12px; color: #facc15; font-weight: 800; margin-bottom: 8px;">QUÉT MÃ QR NẠP VÍ</p>
+                <div style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 16px; margin-bottom: 12px;">
+                    <p style="font-size: 12px; color: #facc15; font-weight: 900; margin-bottom: 8px;">QUÉT MÃ QR NẠP VÍ</p>
                     
                     <div class="input-group" style="text-align: left; margin-bottom: 10px;">
                         <label class="input-label" style="font-size: 10px;">Số tiền nạp (VNĐ)</label>
@@ -864,18 +884,18 @@
 
                     <p style="font-size: 12px; color: #d1d5db; margin: 4px 0;">MB Bank: <b style="color: #4ade80;">423345678</b></p>
                     <p style="font-size: 11px; color: #9ca3af;">Nội dung CK bắt buộc:</p>
-                    <b id="qr-syntax" style="color: #000; font-size: 13px; background: #facc15; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; font-weight: 800;">NAP HIEULIVE</b>
+                    <b id="qr-syntax" style="color: #000; font-size: 13px; background: #facc15; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; font-weight: 900;">NAP HIEULIVE</b>
                 </div>
-                <button class="btn-primary" onclick="alert('Hệ thống tự động cộng tiền sau 15-30 giây khi nhận được chuyển khoản!')">Tôi Đã Chuyển Khoản</button>
+                <button class="btn-primary" onclick="playClickSound(); alert('Hệ thống tự động cộng tiền sau 15-30 giây khi nhận được chuyển khoản!')">Tôi Đã Chuyển Khoản</button>
             </div>
 
             <div id="content-card" style="text-align: center; display: none;">
-                <div style="background: #18181b; border: 1px solid #27272a; border-radius: 14px; padding: 20px; margin-bottom: 12px;">
-                    <p style="font-size: 13px; color: #facc15; font-weight: 800; margin-bottom: 10px;">NẠP THẺ CÀO THỦ CÔNG</p>
+                <div style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; margin-bottom: 12px;">
+                    <p style="font-size: 13px; color: #facc15; font-weight: 900; margin-bottom: 10px;">NẠP THẺ CÀO THỦ CÔNG</p>
                     <p style="font-size: 12px; color: #d1d5db; line-height: 1.5; margin-bottom: 15px;">
                         Vui lòng bấm nút bên dưới để nhắn tin trực tiếp mã thẻ, số seri và tên tài khoản của bạn qua Zalo cho Admin Hiếu Live để được hỗ trợ cộng tiền vào ví ngay lập tức!
                     </p>
-                    <a href="https://zalo.me/0918106821" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #0068ff, #0084ff); color: white;">💬 Ib Zalo Admin Hỗ Trợ</a>
+                    <a href="https://zalo.me/0918106821" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #0068ff, #0084ff); color: white;" onclick="playClickSound()">💬 Ib Zalo Admin Hỗ Trợ</a>
                 </div>
             </div>
 
@@ -888,8 +908,8 @@
         <!-- 6. BẢNG ADMIN -->
         <div id="admin-panel">
             <div class="dash-header">
-                <h3 style="font-size: 14px; color: #facc15; font-weight: 800;">Bảng Quản Trị Admin</h3>
-                <button onclick="goHome()" style="background:#27272a; border:none; color:white; padding:5px 10px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
+                <h3 style="font-size: 14px; color: #facc15; font-weight: 900;">Bảng Quản Trị Admin</h3>
+                <button onclick="playClickSound(); goHome()" style="background:#27272a; border:none; color:white; padding:6px 12px; border-radius:10px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
             </div>
             <div class="input-group">
                 <label class="input-label">Tài khoản khách cần cộng</label>
@@ -899,7 +919,7 @@
                 <label class="input-label">Số tiền muốn cộng (VNĐ)</label>
                 <input type="number" id="admin-add-amount" class="input-field" placeholder="Ví dụ: 100000">
             </div>
-            <button class="btn-primary" onclick="adminAddMoney()">Cộng Tiền Vào Ví Khách</button>
+            <button class="btn-primary" onclick="playClickSound(); adminAddMoney()">Cộng Tiền Vào Ví Khách</button>
             <div id="admin-status" class="status-text"></div>
             <div class="footer">
                 <span>ADMIN PANEL</span>
@@ -931,6 +951,30 @@
 
         const ADMIN_USERNAME = "hieuadmin"; 
 
+        // --- ÂM THANH KHI BẤM NÚT (WEB AUDIO API) ---
+        function playClickSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(580, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(220, audioCtx.currentTime + 0.08);
+                
+                gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch (e) {
+                // Trình duyệt chặn âm thanh tự động nếu chưa tương tác
+            }
+        }
+
         window.onload = async function() {
             let savedUser = localStorage.getItem('hl_logged_user');
             if (savedUser) {
@@ -952,14 +996,12 @@
             }
         };
 
-        // Bật/tắt menu 3 gạch
         function toggleDropdownMenu(event) {
             event.stopPropagation();
             let menu = document.getElementById('dropdown-menu');
             menu.classList.toggle('show');
         }
 
-        // Click ra ngoài tự động ẩn menu
         window.onclick = function() {
             let menu = document.getElementById('dropdown-menu');
             if (menu) menu.classList.remove('show');
@@ -1051,7 +1093,7 @@
             let totalPrice = quantities[productId] * unitPrices[productId];
 
             if (productId === 'nhetam') {
-                document.querySelector('button[onclick="buyNheTam()"]').innerText = `📥 Tải Xuống File Nhẹ Tâm (${formatMoney(totalPrice)} đ)`;
+                document.querySelector('button[onclick*="buyNheTam"]').innerText = `📥 Tải Xuống File Nhẹ Tâm (${formatMoney(totalPrice)} đ)`;
             } else {
                 let btnIdx = productId === 'aimneck' ? 2 : (productId === 'aimdrag' ? 3 : 4);
                 document.querySelector(`#product-${btnIdx}-action button`).innerText = `Mua Ngay (${formatMoney(totalPrice)} đ)`;
