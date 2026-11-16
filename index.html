@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Độ Nhạy Hiếu Live</title>
+    <title>App Độ Nhạy Hiếu Live - Đăng Nhập</title>
     <style>
         * {
             box-sizing: border-box;
@@ -31,11 +31,6 @@
             padding: 28px 20px;
             box-shadow: 0 0 30px rgba(234, 179, 8, 0.15);
             position: relative;
-        }
-
-        /* --- TRANG 1: ĐĂNG NHẬP / KÍCH HOẠT --- */
-        #login-page {
-            display: block;
         }
 
         .header-title {
@@ -92,34 +87,6 @@
             color: #6b7280;
         }
 
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
-
-        .btn {
-            flex: 1;
-            background: #1c1c1c;
-            border: 1px solid #333333;
-            color: #ffffff;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .btn:hover {
-            background: #2a2a2a;
-            border-color: #facc15;
-        }
-
         .btn-primary {
             width: 100%;
             background: linear-gradient(135deg, #eab308, #ca8a04);
@@ -147,6 +114,24 @@
             margin: 16px 0;
         }
 
+        .switch-auth {
+            text-align: center;
+            font-size: 13px;
+            color: #9ca3af;
+            margin-top: 15px;
+        }
+
+        .switch-auth a {
+            color: #facc15;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .switch-auth a:hover {
+            text-decoration: underline;
+        }
+
         .footer {
             display: flex;
             justify-content: space-between;
@@ -163,15 +148,12 @@
             text-decoration: none;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* --- TRANG 2: DASHBOARD CHÍNH --- */
-        #dashboard-page {
+        /* --- CÁC TRANG ẨN/HIỆN --- */
+        #register-section, #dashboard-page {
             display: none;
         }
 
+        /* --- TRANG 2: DASHBOARD CHÍNH --- */
         .dash-header {
             display: flex;
             justify-content: space-between;
@@ -264,51 +246,81 @@
 <body>
 
     <div class="container">
-        <!-- TRANG 1: ĐĂNG NHẬP / KÍCH HOẠT -->
-        <div id="login-page">
+        <!-- 1. TRANG ĐĂNG NHẬP -->
+        <div id="login-section">
             <div class="header-title">
-                <h2>App Độ Nhạy Hiếu Live</h2>
-                <p>Nhập key từ hệ thống Telegram Bot</p>
+                <h2>Đăng Nhập Hệ Thống</h2>
+                <p>App Độ Nhạy Hiếu Live</p>
             </div>
 
             <div class="input-group">
-                <label class="input-label">Mã kích hoạt</label>
-                <input type="text" id="activation-key" class="input-field" placeholder="DÁN KEY-XXXX-XXXX-XXXX">
-            </div>
-
-            <div class="btn-row">
-                <button class="btn" onclick="pasteKey()">📋 Dán</button>
-                <button class="btn" onclick="clearKey()">🗑️ Delete</button>
+                <label class="input-label">Tài khoản</label>
+                <input type="text" id="login-user" class="input-field" placeholder="Nhập tên tài khoản...">
             </div>
 
             <div class="input-group">
-                <label class="input-label">Mã thiết bị (Duy nhất mỗi máy)</label>
-                <input type="text" id="device-id" class="input-field" readonly>
+                <label class="input-label">Mật khẩu</label>
+                <input type="password" id="login-pass" class="input-field" placeholder="Nhập mật khẩu...">
             </div>
 
-            <div class="btn-row">
-                <button class="btn" style="flex: 1;" onclick="copyDeviceID()">📋 Sao chép mã thiết bị</button>
+            <button class="btn-primary" onclick="handleLogin()">Đăng Nhập</button>
+
+            <div id="login-status" class="status-text"></div>
+
+            <div class="switch-auth">
+                Chưa có tài khoản? <a onclick="showRegister()">Đăng ký ngay</a>
             </div>
-
-            <button class="btn" onclick="checkKey()">Kiểm tra</button>
-            <button class="btn-primary" onclick="activateApp()">Kích hoạt (1 thiết bị)</button>
-
-            <div id="status-msg" class="status-text">Chưa kích hoạt</div>
 
             <div class="footer">
                 <span>HIẾU LIVE SYSTEM</span>
-                <a href="#" onclick="alert('Vui lòng liên hệ Admin qua Telegram để nhận hỗ trợ!')">Liên hệ hỗ trợ</a>
+                <a href="#" onclick="alert('Liên hệ Admin qua Telegram để được hỗ trợ!')">Hỗ trợ</a>
             </div>
         </div>
 
-        <!-- TRANG 2: DASHBOARD / GIAO DIỆN CHÍNH -->
+        <!-- 2. TRANG ĐĂNG KÝ -->
+        <div id="register-section">
+            <div class="header-title">
+                <h2>Đăng Ký Tài Khoản</h2>
+                <p>Tạo tài khoản sử dụng phần mềm</p>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Tài khoản mới</label>
+                <input type="text" id="reg-user" class="input-field" placeholder="Chọn tên tài khoản...">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Mật khẩu mới</label>
+                <input type="password" id="reg-pass" class="input-field" placeholder="Nhập mật khẩu...">
+            </div>
+
+            <button class="btn-primary" onclick="handleRegister()">Đăng Ký</button>
+
+            <div id="reg-status" class="status-text"></div>
+
+            <div class="switch-auth">
+                Đã có tài khoản? <a onclick="showLogin()">Đăng nhập</a>
+            </div>
+
+            <div class="footer">
+                <span>HIẾU LIVE SYSTEM</span>
+                <a href="#" onclick="alert('Liên hệ Admin qua Telegram để được hỗ trợ!')">Hỗ trợ</a>
+            </div>
+        </div>
+
+        <!-- 3. TRANG DASHBOARD CHÍNH (Sau khi đăng nhập) -->
         <div id="dashboard-page">
             <div class="dash-header">
                 <h3>Hiếu Live Dashboard</h3>
                 <button class="logout-btn" onclick="logoutApp()">Đăng xuất</button>
             </div>
 
-            <div class="status-text" style="color: #4ade80; margin-bottom: 15px;">🟢 Thiết bị đã kích hoạt thành công</div>
+            <div class="status-text" style="color: #4ade80; margin-bottom: 15px;">🟢 Đăng nhập thành công</div>
+
+            <div class="input-group" style="margin-bottom: 12px;">
+                <label class="input-label">Mã thiết bị của bạn (Duy nhất)</label>
+                <input type="text" id="device-id" class="input-field" readonly style="font-size: 12px; color: #facc15;">
+            </div>
 
             <div class="feature-card">
                 <h4>Điều chỉnh độ nhạy tối ưu (General Sensitivity)</h4>
@@ -334,93 +346,114 @@
 
             <div class="footer">
                 <span>HIẾU LIVE SYSTEM</span>
-                <span>Phiên bản v2.5</span>
+                <span>Phiên bản v3.0</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Tự động tạo hoặc lấy mã thiết bị riêng biệt cho từng máy
-        function getOrCreateDeviceID() {
+        // Chuyển qua lại form Đăng nhập / Đăng ký
+        function showRegister() {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('register-section').style.display = 'block';
+            document.getElementById('reg-status').innerText = '';
+        }
+
+        function showLogin() {
+            document.getElementById('register-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'block';
+            document.getElementById('login-status').innerText = '';
+        }
+
+        // Lấy danh sách tài khoản đã lưu từ bộ nhớ trình duyệt
+        function getSavedAccounts() {
+            let accounts = localStorage.getItem('hl_accounts');
+            return accounts ? JSON.parse(accounts) : {};
+        }
+
+        // Xử lý Đăng ký tài khoản mới
+        function handleRegister() {
+            let user = document.getElementById('reg-user').value.trim();
+            let pass = document.getElementById('reg-pass').value.trim();
+            let status = document.getElementById('reg-status');
+
+            if (!user || !pass) {
+                status.innerText = 'Vui lòng điền đầy đủ tài khoản và mật khẩu!';
+                status.style.color = '#f87171';
+                return;
+            }
+
+            let accounts = getSavedAccounts();
+
+            if (accounts[user]) {
+                status.innerText = 'Tài khoản này đã tồn tại, vui lòng chọn tên khác!';
+                status.style.color = '#f87171';
+                return;
+            }
+
+            // Lưu tài khoản mới vào danh sách
+            accounts[user] = pass;
+            localStorage.setItem('hl_accounts', JSON.stringify(accounts));
+
+            status.innerText = 'Đăng ký thành công! Đang chuyển hướng...';
+            status.style.color = '#4ade80';
+
+            setTimeout(() => {
+                showLogin();
+                document.getElementById('login-user').value = user;
+            }, 1000);
+        }
+
+        // Xử lý Đăng nhập
+        function handleLogin() {
+            let user = document.getElementById('login-user').value.trim();
+            let pass = document.getElementById('login-pass').value.trim();
+            let status = document.getElementById('login-status');
+
+            if (!user || !pass) {
+                status.innerText = 'Vui lòng nhập đầy đủ thông tin!';
+                status.style.color = '#f87171';
+                return;
+            }
+
+            let accounts = getSavedAccounts();
+
+            // Kiểm tra tài khoản có tồn tại và khớp mật khẩu không
+            if (accounts[user] && accounts[user] === pass) {
+                status.innerText = 'Đăng nhập thành công!';
+                status.style.color = '#4ade80';
+
+                setTimeout(() => {
+                    // Chuyển sang trang Dashboard
+                    document.getElementById('login-section').style.display = 'none';
+                    document.getElementById('dashboard-page').style.display = 'block';
+                    loadDeviceID();
+                }, 800);
+            } else {
+                status.innerText = 'Sai tài khoản hoặc mật khẩu!';
+                status.style.color = '#f87171';
+            }
+        }
+
+        // Tạo hoặc lấy mã thiết bị riêng biệt cho từng máy
+        function loadDeviceID() {
             let deviceId = localStorage.getItem('hl_device_id');
             if (!deviceId) {
-                // Tạo chuỗi ngẫu nhiên mô phỏng mã thiết bị riêng cho máy đó
                 const randomPart = Math.random().toString(36).substring(2, 10).toUpperCase();
                 const timePart = Date.now().toString().slice(-8);
                 deviceId = `HL-${randomPart}-${timePart}`;
                 localStorage.setItem('hl_device_id', deviceId);
             }
-            return deviceId;
+            document.getElementById('device-id').value = deviceId;
         }
 
-        // Gán mã thiết bị vào ô input ngay khi mở trang
-        window.onload = function() {
-            document.getElementById('device-id').value = getOrCreateDeviceID();
-        };
-
-        // Xử lý nút Dán
-        async function pasteKey() {
-            try {
-                const text = await navigator.clipboard.readText();
-                document.getElementById('activation-key').value = text;
-            } catch (err) {
-                alert('Không thể đọc bộ nhớ tạm. Vui lòng dán thủ công!');
-            }
-        }
-
-        // Xử lý nút Xóa (Delete)
-        function clearKey() {
-            document.getElementById('activation-key').value = '';
-            document.getElementById('status-msg').innerText = 'Chưa kích hoạt';
-            document.getElementById('status-msg').style.color = '#9ca3af';
-        }
-
-        // Sao chép mã thiết bị
-        function copyDeviceID() {
-            const deviceInput = document.getElementById('device-id');
-            deviceInput.select();
-            navigator.clipboard.writeText(deviceInput.value);
-            alert('Đã sao chép mã thiết bị của bạn!');
-        }
-
-        // Kiểm tra key giả lập
-        function checkKey() {
-            const key = document.getElementById('activation-key').value.trim();
-            const statusMsg = document.getElementById('status-msg');
-            if (key === "") {
-                statusMsg.innerText = 'Vui lòng nhập mã kích hoạt!';
-                statusMsg.style.color = '#f87171';
-            } else {
-                statusMsg.innerText = 'Key hợp lệ, sẵn sàng kích hoạt!';
-                statusMsg.style.color = '#facc15';
-            }
-        }
-
-        // Kích hoạt và chuyển sang trang 2
-        function activateApp() {
-            const key = document.getElementById('activation-key').value.trim();
-            const statusMsg = document.getElementById('status-msg');
-            
-            if (key === "") {
-                statusMsg.innerText = 'Vui lòng nhập mã kích hoạt trước!';
-                statusMsg.style.color = '#f87171';
-                return;
-            }
-
-            statusMsg.innerText = 'Đang xác thực thiết bị...';
-            statusMsg.style.color = '#facc15';
-
-            setTimeout(() => {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('dashboard-page').style.display = 'block';
-            }, 1000);
-        }
-
-        // Đăng xuất quay lại trang 1
+        // Đăng xuất quay lại màn hình đăng nhập
         function logoutApp() {
             document.getElementById('dashboard-page').style.display = 'none';
-            document.getElementById('login-page').style.display = 'block';
-            clearKey();
+            document.getElementById('login-section').style.display = 'block';
+            document.getElementById('login-user').value = '';
+            document.getElementById('login-pass').value = '';
+            document.getElementById('login-status').innerText = '';
         }
     </script>
 </body>
