@@ -346,6 +346,15 @@
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
         let selectedOS = "iOS";
 
+        // Tự động kiểm tra nếu đã đăng nhập trước đó thì giữ nguyên ở Dashboard khi F5
+        window.onload = function() {
+            let savedUser = localStorage.getItem('hl_logged_user');
+            if (savedUser) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard-page').style.display = 'block';
+            }
+        };
+
         function setOS(os) {
             selectedOS = os;
             if (os === 'iOS') {
@@ -441,6 +450,9 @@
                     status.innerText = 'Đăng nhập thành công!';
                     status.style.color = '#4ade80';
 
+                    // Lưu trạng thái đăng nhập vào máy
+                    localStorage.setItem('hl_logged_user', user);
+
                     setTimeout(() => {
                         document.getElementById('login-section').style.display = 'none';
                         document.getElementById('dashboard-page').style.display = 'block';
@@ -466,7 +478,6 @@
                 return;
             }
 
-            // Chuẩn hóa tên thiết bị để lưu dạng key Firebase (không chứa ký tự đặc biệt)
             let deviceKey = deviceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
             let dbPath = `${FIREBASE_URL}/ff_sens/${selectedOS}_${deviceKey}.json`;
 
@@ -474,12 +485,10 @@
             status.style.color = '#facc15';
 
             try {
-                // Kiểm tra xem máy này đã từng có độ nhạy lưu trên Cloud chưa
                 let res = await fetch(dbPath);
                 let sensData = await res.json();
 
                 if (!sensData) {
-                    // Nếu chưa có, tạo ngẫu nhiên bộ độ nhạy chuẩn chuẩn chỉnh trong khoảng từ 100 đến 200
                     sensData = {
                         deviceName: deviceName,
                         os: selectedOS,
@@ -492,7 +501,6 @@
                         btnSize: (Math.floor(Math.random() * (55 - 38 + 1)) + 38) + "%"
                     };
 
-                    // Lưu vĩnh viễn lên Firebase để các lần sau ai nhập tên máy này cũng ra y hệt
                     await fetch(dbPath, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
@@ -500,7 +508,6 @@
                     });
                 }
 
-                // Hiển thị kết quả độ nhạy ra giao diện
                 document.getElementById('result-title').innerText = `Độ Nhạy Free Fire - ${sensData.deviceName} (${sensData.os})`;
                 document.getElementById('r-general').innerText = sensData.general;
                 document.getElementById('r-reddot').innerText = sensData.redDot;
@@ -529,6 +536,9 @@
         }
 
         function logoutApp() {
+            // Xóa bộ nhớ đăng nhập khi người dùng bấm nút Đăng xuất
+            localStorage.removeItem('hl_logged_user');
+
             document.getElementById('dashboard-page').style.display = 'none';
             document.getElementById('login-section').style.display = 'block';
             document.getElementById('login-user').value = '';
