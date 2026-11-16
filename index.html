@@ -507,8 +507,8 @@
                 <button class="btn-deposit" onclick="openDepositSection()">💳 Nạp Tiền</button>
             </div>
 
-            <!-- TRA CỨU ĐỘ NHẠY FREE -->
-            <div class="shop-section-title">🔍 Tra Cứu Độ Nhạy FF (Free)</div>
+            <!-- NHẸ TÂM THEO MÁY / TRA CỨU ĐỘ NHẠY FREE -->
+            <div class="shop-section-title">🔍 Nhẹ Tâm Theo Máy (Độ Nhạy Free)</div>
             <div class="input-group" style="margin-bottom: 8px;">
                 <label class="input-label">Hệ Điều Hành</label>
                 <div class="os-selector">
@@ -518,15 +518,15 @@
             </div>
 
             <div class="input-group" style="margin-bottom: 8px;">
-                <label class="input-label">Tên Thiết Bị</label>
-                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 Pro..." style="padding: 10px 14px;">
+                <label class="input-label">Tên Thiết Bị Của Bạn</label>
+                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 Pro hoặc Samsung A52...">
             </div>
 
-            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 11px; font-size: 13px;">Lấy Thông Số Độ Nhạy</button>
+            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 11px; font-size: 13px;">Lấy Thông Số Nhẹ Tâm Theo Máy</button>
             <div id="lookup-status" class="status-text"></div>
 
             <div id="sens-result" class="sens-result-box">
-                <h5 id="result-title">Thông Số Độ Nhạy</h5>
+                <h5 id="result-title">Thông Số Nhẹ Tâm</h5>
                 <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
                 <div class="sens-row"><span>Cận cảnh (Red Dot):</span> <b id="r-reddot">0</b></div>
                 <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="r-scope2">0</b></div>
@@ -646,7 +646,6 @@
         let currentUserData = null;
         let currentUsername = "";
 
-        // TÀI KHOẢN ADMIN CỦA BẠN
         const ADMIN_USERNAME = "hieuadmin"; 
 
         window.onload = async function() {
@@ -672,12 +671,15 @@
 
         function setOS(os) {
             selectedOS = os;
+            let inputField = document.getElementById('device-name-input');
             if (os === 'iOS') {
                 document.getElementById('btn-ios').className = 'os-btn active';
                 document.getElementById('btn-adr').className = 'os-btn';
+                inputField.placeholder = "Ví dụ: iPhone 13 Pro, iPhone 14 Pro Max...";
             } else {
                 document.getElementById('btn-ios').className = 'os-btn';
                 document.getElementById('btn-adr').className = 'os-btn active';
+                inputField.placeholder = "Ví dụ: Samsung A52, Redmi Note 10...";
             }
         }
 
@@ -686,7 +688,7 @@
             let status = document.getElementById('lookup-status');
 
             if (!deviceName) {
-                status.innerText = 'Vui lòng nhập tên thiết bị!';
+                status.innerText = 'Vui lòng nhập tên thiết bị của bạn!';
                 status.style.color = '#f87171';
                 return;
             }
@@ -694,7 +696,7 @@
             let deviceKey = deviceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
             let dbPath = `${FIREBASE_URL}/ff_sens/${selectedOS}_${deviceKey}.json`;
 
-            status.innerText = 'Đang đồng bộ Cloud...';
+            status.innerText = 'Đang tìm thông số nhẹ tâm theo máy...';
             status.style.color = '#facc15';
 
             try {
@@ -720,7 +722,7 @@
                     });
                 }
 
-                document.getElementById('result-title').innerText = `Độ Nhạy - ${sensData.deviceName}`;
+                document.getElementById('result-title').innerText = `Nhẹ Tâm Theo Máy - ${sensData.deviceName} (${sensData.os})`;
                 document.getElementById('r-general').innerText = sensData.general;
                 document.getElementById('r-reddot').innerText = sensData.redDot;
                 document.getElementById('r-scope2').innerText = sensData.scope2;
@@ -729,7 +731,7 @@
                 document.getElementById('r-btn-size').innerText = sensData.btnSize;
 
                 document.getElementById('sens-result').style.display = 'block';
-                status.innerText = 'Tra cứu thành công!';
+                status.innerText = 'Đã tìm thấy độ nhạy phù hợp!';
                 status.style.color = '#4ade80';
 
             } catch (err) {
@@ -742,7 +744,7 @@
             let title = document.getElementById('result-title').innerText;
             let text = `${title}\n- Nhìn xung quanh: ${document.getElementById('r-general').innerText}\n- Red Dot: ${document.getElementById('r-reddot').innerText}\n- Scope 2x: ${document.getElementById('r-scope2').innerText}\n- Scope 4x: ${document.getElementById('r-scope4').innerText}\n- AWM: ${document.getElementById('r-awm').innerText}\n- Nút bắn: ${document.getElementById('r-btn-size').innerText}`;
             navigator.clipboard.writeText(text);
-            alert('Đã sao chép độ nhạy thành công!');
+            alert('Đã sao chép độ nhạy nhẹ tâm thành công!');
         }
 
         function updateQRCode() {
@@ -999,8 +1001,8 @@
 
                 status.innerText = `Đã cộng thành công ${formatMoney(amountToAdd)} đ cho tài khoản "${targetUser}"!`;
                 status.style.color = '#4ade80';
-                document.getElementById('admin-target-user').value = '';
-                document.getElementById('admin-add-amount').value = '';
+                document.getElementById('admin-target-user').value = ``;
+                document.getElementById('admin-add-amount').value = ``;
 
             } catch (err) {
                 status.innerText = 'Lỗi kết nối máy chủ!';
