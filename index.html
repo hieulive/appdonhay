@@ -315,6 +315,13 @@
             line-height: 1.4;
         }
 
+        .note-text {
+            font-size: 10px;
+            color: #f87171;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
         /* Chọn số lượng sản phẩm */
         .qty-box {
             display: flex;
@@ -504,7 +511,7 @@
             </div>
         </div>
 
-        <!-- 2. TRANG ĐĂNG KÝ (CÓ THÊM EMAIL) -->
+        <!-- 2. TRANG ĐĂNG KÝ -->
         <div id="register-section">
             <div class="header-title">
                 <h2>Đăng Ký Tài Khoản</h2>
@@ -590,16 +597,16 @@
             <!-- MUA CONFIG VIP -->
             <div class="shop-section-title">🛒 Kho Sản Phẩm Config VIP</div>
 
-            <!-- SẢN PHẨM 1: MỞ KHÓA FILE NHẸ TÂM VIP THEO MÁY -->
+            <!-- SẢN PHẨM 1: GỬI YÊU CẦU MỞ KHÓA NHẸ TÂM MÁY HỌ NHẬP -->
             <div class="product-card">
                 <div class="product-info-top">
-                    <span class="product-name">🔥 Mở Khóa File Nhẹ Tâm VIP Theo Máy</span>
-                    <span class="product-price" id="price-nhetam">150.000 đ</span>
+                    <span class="product-name">🔥 Mở Khóa Nhẹ Tâm Theo Máy</span>
+                    <span class="product-price">150.000 đ</span>
                 </div>
-                <p class="product-desc">Cấu hình nhẹ tâm tinh chỉnh chuẩn xác riêng theo từng dòng máy của bạn.</p>
+                <p class="product-desc">Cấu hình nhẹ tâm tinh chỉnh chuẩn xác riêng theo dòng máy của bạn.</p>
                 
                 <div style="margin-top: 6px;">
-                    <label class="input-label" style="font-size: 9px; margin-bottom: 3px;">Chọn HĐH máy mua:</label>
+                    <label class="input-label" style="font-size: 9px; margin-bottom: 3px;">Chọn HĐH máy của bạn:</label>
                     <div class="os-selector" style="margin-bottom: 6px;">
                         <div id="buy-btn-ios" class="os-btn active" onclick="setBuyOS('iOS')">📱 iOS</div>
                         <div id="buy-btn-adr" class="os-btn" onclick="setBuyOS('Android')">🤖 Android</div>
@@ -607,27 +614,17 @@
                     <input type="text" id="buy-device-input" class="input-field" placeholder="Nhập tên máy của bạn (VD: iPhone 13)..." style="padding: 10px 14px; font-size: 12px; margin-bottom: 6px;">
                 </div>
 
-                <div class="qty-box">
-                    <span class="qty-label">Số lượng mua:</span>
-                    <div class="qty-controls">
-                        <button class="qty-btn" onclick="changeQty('nhetam', -1)">-</button>
-                        <input type="text" id="qty-nhetam" class="qty-input" value="1" readonly>
-                        <button class="qty-btn" onclick="changeQty('nhetam', 1)">+</button>
-                    </div>
-                </div>
-
-                <div id="product-1-action">
-                    <button class="btn-buy-item" onclick="buyNheTam()">Mở Khóa File Nhẹ Tâm VIP (150.000 đ)</button>
-                </div>
+                <button class="btn-primary" onclick="requestUnlockNheTam()" style="padding: 11px; font-size: 13px;">Gửi Yêu Cầu Mở Khóa Nhẹ Tâm (150k)</button>
             </div>
 
-            <!-- SẢN PHẨM 2: AIMNECK -->
+            <!-- SẢN PHẨM 2: AIMNECK (CÓ SỐ LƯỢNG + GHI CHÚ 1 MÁY) -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">🎯 File Aimneck (Ngắm Cổ)</span>
                     <span class="product-price" id="price-aimneck">100.000 đ</span>
                 </div>
                 <p class="product-desc">Cấu hình định tâm tự động bám sát vùng cổ cực dính.</p>
+                <p class="note-text">⚠️ Lưu ý: Mỗi file chỉ cài được đúng 1 máy duy nhất!</p>
                 
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
@@ -643,13 +640,14 @@
                 </div>
             </div>
 
-            <!-- SẢN PHẨM 3: AIM DRAG -->
+            <!-- SẢN PHẨM 3: AIM DRAG (CÓ SỐ LƯỢNG + GHI CHÚ 1 MÁY) -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">⚡ File Aim Drag (Kéo Tâm)</span>
                     <span class="product-price" id="price-aimdrag">100.000 đ</span>
                 </div>
                 <p class="product-desc">Hỗ trợ lực kéo tâm nhẹ nhàng, không bị bay tâm lên trời.</p>
+                <p class="note-text">⚠️ Lưu ý: Mỗi file chỉ cài được đúng 1 máy duy nhất!</p>
                 
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
@@ -665,13 +663,14 @@
                 </div>
             </div>
 
-            <!-- SẢN PHẨM 4: AIM BODY -->
+            <!-- SẢN PHẨM 4: AIM BODY (CÓ SỐ LƯỢNG + GHI CHÚ 1 MÁY) -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">🛡️ File Aim Body (Thân Người)</span>
                     <span class="product-price" id="price-aimbody">100.000 đ</span>
                 </div>
                 <p class="product-desc">Chuyên dụng bắt trọn tâm vào thân người cực ổn định.</p>
+                <p class="note-text">⚠️ Lưu ý: Mỗi file chỉ cài được đúng 1 máy duy nhất!</p>
                 
                 <div class="qty-box">
                     <span class="qty-label">Số lượng mua:</span>
@@ -773,16 +772,13 @@
         let currentUserData = null;
         let currentUsername = "";
 
-        // Quản lý số lượng động cho từng sản phẩm
         let quantities = {
-            nhetam: 1,
             aimneck: 1,
             aimdrag: 1,
             aimbody: 1
         };
 
         const unitPrices = {
-            nhetam: 150000,
             aimneck: 100000,
             aimdrag: 100000,
             aimbody: 100000
@@ -819,14 +815,9 @@
             document.getElementById(`qty-${productId}`).value = quantities[productId];
             let totalPrice = quantities[productId] * unitPrices[productId];
 
-            if (productId === 'nhetam') {
-                document.getElementById('price-nhetam').innerText = formatMoney(totalPrice) + " đ";
-                document.querySelector('#product-1-action button').innerText = `Mở Khóa File Nhẹ Tâm VIP (${formatMoney(totalPrice)} đ)`;
-            } else {
-                document.getElementById(`price-${productId}`).innerText = formatMoney(totalPrice) + " đ";
-                let btnIdx = productId === 'aimneck' ? 2 : (productId === 'aimdrag' ? 3 : 4);
-                document.querySelector(`#product-${btnIdx}-action button`).innerText = `Mua Ngay (${formatMoney(totalPrice)} đ)`;
-            }
+            document.getElementById(`price-${productId}`).innerText = formatMoney(totalPrice) + " đ";
+            let btnIdx = productId === 'aimneck' ? 2 : (productId === 'aimdrag' ? 3 : 4);
+            document.querySelector(`#product-${btnIdx}-action button`).innerText = `Mua Ngay (${formatMoney(totalPrice)} đ)`;
         }
 
         function setOS(os) {
@@ -986,7 +977,7 @@
                     email: email,
                     password: pass,
                     balance: 0,
-                    purchased: { nhetam: false, aimneck: false, aimdrag: false, aimbody: false },
+                    purchased: { aimneck: false, aimdrag: false, aimbody: false },
                     createdAt: new Date().toISOString()
                 };
 
@@ -1059,12 +1050,46 @@
             }
         }
 
+        async function requestUnlockNheTam() {
+            let deviceName = document.getElementById('buy-device-input').value.trim();
+            if (!deviceName) {
+                alert('Vui lòng nhập tên thiết bị của bạn để gửi yêu cầu mở khóa nhẹ tâm!');
+                return;
+            }
+
+            let price = 150000;
+            await fetchUserData(currentUsername);
+            let currentBalance = currentUserData.balance || 0;
+
+            if (currentBalance < price) {
+                alert('Số dư ví không đủ (150.000 đ)! Vui lòng nạp thêm tiền để gửi yêu cầu.');
+                openDepositSection();
+                return;
+            }
+
+            if (confirm(`Gửi yêu cầu mở khóa Nhẹ Tâm cho máy [${buySelectedOS} - ${deviceName}] với giá ${formatMoney(price)} đ?`)) {
+                currentUserData.balance = currentBalance - price;
+
+                try {
+                    await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(currentUserData)
+                    });
+
+                    document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
+                    alert('Đã gửi yêu cầu mở khóa nhẹ tâm thành công! Admin sẽ kiểm tra và gửi file riêng cho máy của bạn qua Zalo.');
+                } catch (e) {
+                    alert('Lỗi giao dịch, vui lòng thử lại!');
+                }
+            }
+        }
+
         function updateShopUI() {
             if (!currentUserData.purchased) currentUserData.purchased = {};
 
-            let pList = ['nhetam', 'aimneck', 'aimdrag', 'aimbody'];
+            let pList = ['aimneck', 'aimdrag', 'aimbody'];
             let links = {
-                'nhetam': 'https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file',
                 'aimneck': 'https://www.mediafire.com/file/example/Aimneck.crt/file',
                 'aimdrag': 'https://www.mediafire.com/file/example/Aimdrag.crt/file',
                 'aimbody': 'https://www.mediafire.com/file/example/Aimbody.crt/file'
@@ -1072,25 +1097,14 @@
 
             for (let i = 0; i < pList.length; i++) {
                 let pId = pList[i];
-                let area = document.getElementById(`product-${i+1}-action`);
+                let area = document.getElementById(`product-${i+2}-action`);
                 if (area && currentUserData.purchased[pId]) {
-                    area.innerHTML = `<a href="${links[pId]}" target="_blank" class="btn-owned">📥 Tải Xuống File (Đã Mở Khóa)</a>`;
+                    area.innerHTML = `<a href="${links[pId]}" target="_blank" class="btn-owned">📥 Tải Xuống File (Đã Mở Khóa - 1 Máy)</a>`;
                 }
             }
         }
 
-        async function buyNheTam() {
-            let deviceName = document.getElementById('buy-device-input').value.trim();
-            if (!deviceName) {
-                alert('Vui lòng nhập tên thiết bị của bạn để mở khóa file nhẹ tâm theo máy!');
-                return;
-            }
-            let qty = quantities['nhetam'];
-            let total = qty * unitPrices['nhetam'];
-            await buyProduct('nhetam', total, `${qty} cái - ${buySelectedOS} - ${deviceName}`);
-        }
-
-        async function buyProduct(productId, basePrice, deviceExtra = '') {
+        async function buyProduct(productId, basePrice) {
             let qty = quantities[productId];
             let price = basePrice * qty;
 
@@ -1103,15 +1117,10 @@
                 return;
             }
 
-            let confirmMsg = deviceExtra ? `Xác nhận mở khóa File Nhẹ Tâm [SL: ${qty}] cho máy [${deviceExtra}] với giá ${formatMoney(price)} đ?` : `Xác nhận mua [SL: ${qty}] sản phẩm với tổng giá ${formatMoney(price)} đ?`;
-
-            if (confirm(confirmMsg)) {
+            if (confirm(`Xác nhận mua [SL: ${qty}] sản phẩm với tổng giá ${formatMoney(price)} đ?\n(Lưu ý: Mỗi file chỉ cài được 1 máy duy nhất)`)) {
                 currentUserData.balance = currentBalance - price;
                 if (!currentUserData.purchased) currentUserData.purchased = {};
                 currentUserData.purchased[productId] = true;
-                if (deviceExtra) {
-                    currentUserData.buyDevice = deviceExtra;
-                }
 
                 try {
                     await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
