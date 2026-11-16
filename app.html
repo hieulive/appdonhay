@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensitivity Pro - Gaming App</title>
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #151b26;
+            --accent-color: #ff334b;
+            --text-main: #ffffff;
+            --text-sub: #8a99ad;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 51, 75, 0.2);
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: #1e2636;
+            border: 1px solid #2d3b50;
+            color: white;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        input:focus {
+            border-color: var(--accent-color);
+        }
+        .os-grid {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .os-btn {
+            flex: 1;
+            padding: 20px;
+            background: #1e2636;
+            border: 2px solid #2d3b50;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .os-btn:hover, .os-btn.selected {
+            border-color: var(--accent-color);
+            background: rgba(255, 51, 75, 0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff334b, #cc1128);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 51, 75, 0.4);
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-sub);
+            border: 1px solid #2d3b50;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .error-msg {
+            color: #ff334b;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 8px;
+            display: none;
+        }
+        .result-card {
+            background: #19212f;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 16px;
+            border: 1px solid #232f42;
+        }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #232f42;
+            font-size: 14px;
+        }
+        .result-row:last-child {
+            border-bottom: none;
+        }
+        .result-row span:last-child {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        .device-title {
+            text-align: center;
+            color: #4cd137;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <h2>🔥 Sensitivity Pro</h2>
+
+    <!-- MÀN HÌNH 1: NHẬP MẬT KHẨU -->
+    <div id="screen-login" class="screen active">
+        <div class="form-group">
+            <label>NHẬP MẬT KHẨU TRUY CẬP</label>
+            <input type="password" id="passwordInput" placeholder="Nhập mật khẩu của bạn...">
+        </div>
+        <button class="btn-primary" onclick="checkPassword()">Đăng Nhập</button>
+        <div id="errorMsg" class="error-msg">Mật khẩu không đúng! Vui lòng thử lại.</div>
+    </div>
+
+    <!-- MÀN HÌNH 2: CHỌN HỆ ĐIỀU HÀNH -->
+    <div id="screen-os" class="screen">
+        <label style="margin-bottom: 12px;">CHỌN HỆ ĐIỀU HÀNH HỆ THỐNG</label>
+        <div class="os-grid">
+            <button class="os-btn" onclick="selectOS('iOS')"> iOS<br><span style="font-size:11px; color:#8a99ad;">iPhone / iPad</span></button>
+            <button class="os-btn" onclick="selectOS('Android')">🤖 Android<br><span style="font-size:11px; color:#8a99ad;">Samsung, Xiaomi...</span></button>
+        </div>
+    </div>
+
+    <!-- MÀN HÌNH 3: NHẬP TÊN MÁY VÀ LẤY ĐỘ NHẠY -->
+    <div id="screen-device" class="screen">
+        <div class="form-group">
+            <label id="os-label">NHẬP TÊN ĐIỆN THOẠI</label>
+            <input type="text" id="deviceNameInput" placeholder="Ví dụ: iPhone 14 Pro, Poco X3...">
+        </div>
+        <button class="btn-primary" onclick="getSensitivity()">Lấy Độ Nhạy</button>
+        
+        <div id="resultContainer" style="display: none;">
+            <div class="result-card">
+                <div id="resultDeviceName" class="device-title"></div>
+                <div class="result-row"><span>Nhìn Xung Quanh (General):</span><span id="res-general">95</span></div>
+                <div class="result-row"><span>Red Dot Sight:</span><span id="res-reddot">90</span></div>
+                <div class="result-row"><span>Scope 2X:</span><span id="res-scope2">85</span></div>
+                <div class="result-row"><span>Scope 4X:</span><span id="res-scope4">80</span></div>
+                <div class="result-row" id="dpi-row"><span>Gợi ý DPI:</span><span id="res-dpi">580</span></div>
+            </div>
+        </div>
+
+        <button class="btn-secondary" onclick="goBackToOS()">Quay Lại Chọn OS</button>
+    </div>
+</div>
+
+<script>
+    // Mật khẩu do bạn tự cài đặt ở đây (Ví dụ: "admin123")
+    const MY_PASSWORD = "123"; 
+
+    let currentOS = '';
+
+    function checkPassword() {
+        const input = document.getElementById('passwordInput').value;
+        const errorMsg = document.getElementById('errorMsg');
+        
+        if (input === MY_PASSWORD) {
+            document.getElementById('screen-login').classList.remove('active');
+            document.getElementById('screen-os').classList.add('active');
+        } else {
+            errorMsg.style.display = 'block';
+        }
+    }
+
+    function selectOS(os) {
+        currentOS = os;
+        document.getElementById('screen-os').classList.remove('active');
+        document.getElementById('screen-device').classList.add('active');
+        document.getElementById('os-label').innerText = `NHẬP TÊN THIẾT BỊ (${os.toUpperCase()})`;
+        
+        // Ẩn/hiện phần DPI vì iOS không chỉnh được DPI trực tiếp như Android
+        if (os === 'iOS') {
+            document.getElementById('dpi-row').style.display = 'none';
+        } else {
+            document.getElementById('dpi-row').style.display = 'flex';
+        }
+        
+        // Reset kết quả cũ nếu có
+        document.getElementById('resultContainer').style.display = 'none';
+        document.getElementById('deviceNameInput').value = '';
+    }
+
+    function getSensitivity() {
+        const deviceName = document.getElementById('deviceNameInput').value.trim();
+        if (!deviceName) {
+            alert("Vui lòng nhập tên điện thoại của bạn!");
+            return;
+        }
+
+        // Random hoặc tạo chỉ số mô phỏng dựa trên tên máy cho sinh động
+        document.getElementById('res-general').innerText = Math.floor(Math.random() * (100 - 85) + 85);
+        document.getElementById('res-reddot').innerText = Math.floor(Math.random() * (95 - 80) + 80);
+        document.getElementById('res-scope2').innerText = Math.floor(Math.random() * (90 - 75) + 75);
+        document.getElementById('res-scope4').innerText = Math.floor(Math.random() * (88 - 70) + 70);
+        document.getElementById('res-dpi').innerText = Math.floor(Math.random() * (700 - 500) + 500);
+
+        document.getElementById('resultDeviceName').innerText = `✨ Cấu hình tối ưu cho: ${deviceName} (${currentOS})`;
+        document.getElementById('resultContainer').style.display = 'block';
+    }
+
+    function goBackToOS() {
+        document.getElementById('screen-device').classList.remove('active');
+        document.getElementById('screen-os').classList.add('active');
+    }
+</script>
+
+</body>
+</html>
