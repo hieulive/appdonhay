@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hiếu Live Shop - Hệ Thống Mua Bán Config FF Tự Động</title>
-    <!-- Thư viện hỗ trợ mã hóa MD5 để tạo chữ ký bảo mật gửi thẻ nếu API yêu cầu -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -142,7 +140,7 @@
             margin-top: 18px;
         }
 
-        #register-section, #dashboard-page, #deposit-section {
+        #register-section, #dashboard-page, #deposit-section, #admin-panel {
             display: none;
         }
 
@@ -483,7 +481,10 @@
         <div id="dashboard-page">
             <div class="dash-header">
                 <h3 id="welcome-title" style="color: #facc15; font-size: 15px; font-weight: 800;">Shop Hiếu Live</h3>
-                <button class="logout-btn" onclick="logoutApp()" style="background:#ef4444; border:none; color:white; padding:5px 10px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">Đăng xuất</button>
+                <div>
+                    <button id="admin-menu-btn" onclick="openAdminPanel()" style="background:#facc15; border:none; color:black; padding:5px 8px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:800; display:none; margin-right: 4px;">Admin</button>
+                    <button class="logout-btn" onclick="logoutApp()" style="background:#ef4444; border:none; color:white; padding:5px 10px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">Đăng xuất</button>
+                </div>
             </div>
 
             <!-- VÍ TIỀN CÁ NHÂN -->
@@ -564,7 +565,7 @@
 
             <div class="tab-nạp">
                 <button id="tab-banking" class="tab-nạp-btn active" onclick="switchDepositTab('banking')">Chuyển Khoản QR</button>
-                <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Thẻ Cào (TranNga)</button>
+                <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Thẻ Cào (Hỗ trợ Zalo)</button>
             </div>
 
             <!-- CHUYỂN KHOẢN QR -->
@@ -588,14 +589,14 @@
                 <button class="btn-primary" onclick="alert('Hệ thống tự động cộng tiền sau 15-30 giây khi nhận được chuyển khoản!')">Tôi Đã Chuyển Khoản</button>
             </div>
 
-            <!-- GẠCH THẺ (TÍCH HỢP CHUẨN TRẦN NGA API) -->
+            <!-- GẠCH THẺ (IB ZALO HIẾU LIVE) -->
             <div id="content-card" style="display: none;">
                 <div class="input-group">
                     <label class="input-label">Nhà Mạng</label>
                     <select id="card-telco" class="input-field">
-                        <option value="VIETTEL">Viettel</option>
-                        <option value="MOBIFONE">Mobifone</option>
-                        <option value="VINAFONE">Vinafone</option>
+                        <option value="Viettel">Viettel</option>
+                        <option value="Mobifone">Mobifone</option>
+                        <option value="Vinafone">Vinafone</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -615,13 +616,35 @@
                     <label class="input-label">Số Seri Thẻ</label>
                     <input type="text" id="card-serial" class="input-field" placeholder="Nhập số Seri thẻ cào...">
                 </div>
-                <button class="btn-primary" onclick="submitCardTrangNga()">Gửi Thẻ Nạp Tự Động</button>
+                <button class="btn-primary" onclick="submitCardZalo()">Gửi Thẻ &amp; Nhắn Zalo Duyệt Nhanh</button>
                 <div id="card-status" class="status-text"></div>
             </div>
 
             <div class="footer">
-                <span>TRANHNGA.VN API</span>
+                <span>HIẾU LIVE SUPPORT</span>
                 <span>Bảo mật 100%</span>
+            </div>
+        </div>
+
+        <!-- 5. BẢNG ADMIN (CỘNG TIỀN CHO KHÁCH) -->
+        <div id="admin-panel">
+            <div class="dash-header">
+                <h3 style="font-size: 14px; color: #facc15; font-weight: 800;">Bảng Quản Trị Admin</h3>
+                <button onclick="closeAdminPanel()" style="background:#27272a; border:none; color:white; padding:5px 10px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Tài khoản khách cần cộng</label>
+                <input type="text" id="admin-target-user" class="input-field" placeholder="Nhập username của khách...">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Số tiền muốn cộng (VNĐ)</label>
+                <input type="number" id="admin-add-amount" class="input-field" placeholder="Ví dụ: 100000">
+            </div>
+            <button class="btn-primary" onclick="adminAddMoney()">Cộng Tiền Vào Ví Khách</button>
+            <div id="admin-status" class="status-text"></div>
+            <div class="footer">
+                <span>ADMIN PANEL</span>
+                <span>Hiếu Live</span>
             </div>
         </div>
     </div>
@@ -631,6 +654,9 @@
         let selectedOS = "iOS";
         let currentUserData = null;
         let currentUsername = "";
+
+        // Định nghĩa tên tài khoản của bạn là Admin (Hãy thay chữ 'hieulive' bằng tài khoản đăng nhập thực tế của bạn)
+        const ADMIN_USERNAME = "hieulive"; 
 
         window.onload = async function() {
             let savedUser = localStorage.getItem('hl_logged_user');
@@ -642,6 +668,12 @@
                     document.getElementById('dashboard-page').style.display = 'block';
                     document.getElementById('welcome-title').innerText = `Hi, ${savedUser}`;
                     document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance || 0) + " đ";
+                    
+                    // Nếu là tài khoản Admin thì hiện nút quản trị
+                    if (currentUsername.toLowerCase() === ADMIN_USERNAME) {
+                        document.getElementById('admin-menu-btn').style.display = 'inline-block';
+                    }
+
                     updateQRCode();
                     updateShopUI();
                 }
@@ -841,6 +873,11 @@
                         document.getElementById('dashboard-page').style.display = 'block';
                         document.getElementById('welcome-title').innerText = `Hi, ${user}`;
                         document.getElementById('user-balance').innerText = formatMoney(userData.balance || 0) + " đ";
+
+                        if (currentUsername.toLowerCase() === ADMIN_USERNAME) {
+                            document.getElementById('admin-menu-btn').style.display = 'inline-block';
+                        }
+
                         updateQRCode();
                         updateShopUI();
                     }, 600);
@@ -913,6 +950,17 @@
             });
         }
 
+        function openAdminPanel() {
+            document.getElementById('dashboard-page').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            document.getElementById('admin-status').innerText = '';
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'block';
+        }
+
         function switchDepositTab(tab) {
             if (tab === 'banking') {
                 document.getElementById('tab-banking').className = 'tab-nạp-btn active';
@@ -927,8 +975,8 @@
             }
         }
 
-        // HÀM GỬI THẺ CÁO TÍCH HỢP CHUẨN API TRẦN NGA
-        async function submitCardTrangNga() {
+        // HÀM GỬI THẺ CÁO CHUYỂN QUA ZALO
+        function submitCardZalo() {
             let telco = document.getElementById('card-telco').value;
             let amount = document.getElementById('card-amount').value;
             let pin = document.getElementById('card-pin').value.trim();
@@ -941,47 +989,57 @@
                 return;
             }
 
-            status.innerText = 'Đang gửi thẻ lên hệ thống Trần Nga...';
+            let message = `Xin chào Hiếu Live, tôi muốn nạp thẻ cào:\n- Tài khoản: ${currentUsername}\n- Nhà mạng: ${telco}\n- Mệnh giá: ${amount}đ\n- Mã PIN: ${pin}\n- Seri: ${serial}`;
+            let zaloUrl = `https://zalo.me/0918106821?text=${encodeURIComponent(message)}`;
+
+            status.innerText = 'Đang chuyển hướng sang Zalo để gửi thẻ...';
+            status.style.color = '#4ade80';
+
+            setTimeout(() => {
+                window.open(zaloUrl, '_blank');
+            }, 800);
+        }
+
+        // HÀM ADMIN CỘNG TIỀN CHO KHÁCH TRỰC TIẾP
+        async function adminAddMoney() {
+            let targetUser = document.getElementById('admin-target-user').value.trim().toLowerCase();
+            let amountToAdd = parseInt(document.getElementById('admin-add-amount').value);
+            let status = document.getElementById('admin-status');
+
+            if (!targetUser || isNaN(amountToAdd) || amountToAdd <= 0) {
+                status.innerText = 'Vui lòng nhập đúng tên tài khoản và số tiền cần cộng!';
+                status.style.color = '#f87171';
+                return;
+            }
+
+            status.innerText = 'Đang cập nhật số dư cho khách...';
             status.style.color = '#facc15';
 
-            // Thông tin kết nối lấy từ tài khoản Trần Nga của bạn
-            const PARTNER_ID = "8560580026";
-            const PARTNER_KEY = "c36a85543d4732e5a17994cc59ca61a5";
-            let requestId = "HL_" + currentUsername.toUpperCase() + "_" + new Date().getTime();
-
-            // Tạo chữ ký (signature) theo chuẩn chung của API gạch thẻ: md5(partner_key + pin + serial) hoặc tương tự tùy docs Trần Nga
-            let signature = md5(PARTNER_KEY + pin + serial);
-
-            let postData = {
-                partner_id: PARTNER_ID,
-                telco: telco,
-                code: pin,
-                serial: serial,
-                amount: amount,
-                request_id: requestId,
-                sign: signature
-            };
-
             try {
-                // Lưu ý: Do chính sách CORS của trình duyệt, việc gọi thẳng API bên thứ ba có thể bị chặn. 
-                // Thường các shop lớn sẽ gọi qua một file proxy PHP/NodeJS trung gian. 
-                let response = await fetch("https://tranhnga.vn/api/charging", { // Thay đổi endpoint chính xác từ tài liệu API Trần Nga nếu có
-                    method: 'POST',
+                let res = await fetch(`${FIREBASE_URL}/users/${targetUser}.json`);
+                let targetData = await res.json();
+
+                if (!targetData) {
+                    status.innerText = `Không tìm thấy tài khoản "${targetUser}"!`;
+                    status.style.color = '#f87171';
+                    return;
+                }
+
+                targetData.balance = (targetData.balance || 0) + amountToAdd;
+
+                await fetch(`${FIREBASE_URL}/users/${targetUser}.json`, {
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(postData)
+                    body: JSON.stringify(targetData)
                 });
 
-                let result = await response.json();
+                status.innerText = `Đã cộng thành công ${formatMoney(amountToAdd)} đ cho tài khoản "${targetUser}"!`;
+                status.style.color = '#4ade80';
+                document.getElementById('admin-target-user').value = '';
+                document.getElementById('admin-add-amount').value = '';
 
-                if (result.status === 1 || result.status === 99) {
-                    status.innerText = 'Gửi thẻ thành công! Đang chờ hệ thống xử lý duyệt (15-30s)...';
-                    status.style.color = '#4ade80';
-                } else {
-                    status.innerText = `Lỗi: ${result.message || 'Thẻ cào không hợp lệ hoặc sai mệnh giá!'}`;
-                    status.style.color = '#f87171';
-                }
             } catch (err) {
-                status.innerText = 'Lỗi kết nối API hoặc bị chặn CORS từ trình duyệt!';
+                status.innerText = 'Lỗi kết nối máy chủ!';
                 status.style.color = '#f87171';
             }
         }
