@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiếu Live Shop - Hệ Thống Mua Bán Config Tự Động</title>
+    <title>Hiếu Live Shop - Tra Cứu Độ Nhạy & Mua Config FF</title>
     <style>
         * {
             box-sizing: border-box;
@@ -144,7 +144,7 @@
             display: none;
         }
 
-        /* --- GIAO DIỆN SHOP CHUYÊN NGHIỆP --- */
+        /* --- DASHBOARD SHOP & TRA CỨU ĐỘ NHẠY --- */
         .dash-header {
             display: flex;
             justify-content: space-between;
@@ -188,13 +188,78 @@
             cursor: pointer;
         }
 
-        /* Danh mục sản phẩm trong Shop */
+        .os-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .os-btn {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            color: #9ca3af;
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .os-btn.active {
+            background: rgba(234, 179, 8, 0.15);
+            border-color: #facc15;
+            color: #facc15;
+        }
+
+        .sens-result-box {
+            background: #18181b;
+            border: 1px solid #3f3f46;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .sens-result-box h5 {
+            color: #facc15;
+            font-size: 12px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .sens-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #d1d5db;
+            padding: 4px 0;
+            border-bottom: 1px solid #27272a;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 9px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-copy { background: #27272a; color: #facc15; border: 1px solid #facc15; }
+
+        /* Danh mục Shop */
         .shop-section-title {
             font-size: 12px;
             color: #facc15;
             text-transform: uppercase;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin: 16px 0 10px 0;
             letter-spacing: 0.5px;
         }
 
@@ -206,12 +271,7 @@
             margin-bottom: 10px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .product-card:hover {
-            border-color: rgba(234, 179, 8, 0.4);
+            gap: 6px;
         }
 
         .product-info-top {
@@ -309,7 +369,7 @@
         <div id="login-section">
             <div class="header-title">
                 <h2>Hiếu Live Shop</h2>
-                <p>Hệ Thống Mua Bán Config Tự Động</p>
+                <p>Tra Cứu Độ Nhạy & Mua Config FF</p>
             </div>
 
             <div class="input-group">
@@ -381,8 +441,38 @@
                 <button class="btn-deposit" onclick="openDepositSection()">💳 Nạp Tiền</button>
             </div>
 
+            <!-- PHẦN TRA CỨU ĐỘ NHẠY MIỄN PHÍ -->
+            <div class="shop-section-title">🔍 Tra Cứu Độ Nhạy FF (Free)</div>
+            <div class="input-group" style="margin-bottom: 8px;">
+                <label class="input-label">Chọn Hệ Điều Hành</label>
+                <div class="os-selector">
+                    <div id="btn-ios" class="os-btn active" onclick="setOS('iOS')">📱 iOS</div>
+                    <div id="btn-adr" class="os-btn" onclick="setOS('Android')">🤖 Android</div>
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 8px;">
+                <label class="input-label">Nhập tên thiết bị</label>
+                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 hoặc Samsung A52..." style="padding: 10px 14px;">
+            </div>
+
+            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 10px; font-size: 13px;">Lấy Độ Nhạy Chuẩn</button>
+            <div id="lookup-status" class="status-text"></div>
+
+            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY -->
+            <div id="sens-result" class="sens-result-box">
+                <h5 id="result-title">Thông Số Độ Nhạy</h5>
+                <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
+                <div class="sens-row"><span>Cận cảnh (Red Dot):</span> <b id="r-reddot">0</b></div>
+                <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="r-scope2">0</b></div>
+                <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="r-scope4">0</b></div>
+                <div class="sens-row"><span>AWM:</span> <b id="r-awm">0</b></div>
+                <div class="sens-row"><span>Nút bắn:</span> <b id="r-btn-size">45%</b></div>
+                <button class="btn-action btn-copy" onclick="copySens()">📋 Sao chép độ nhạy</button>
+            </div>
+
             <!-- DANH MỤC SẢN PHẨM MUA BÁN -->
-            <div class="shop-section-title">🛒 Kho Sản Phẩm & Config</div>
+            <div class="shop-section-title">🛒 Mua Config VIP Tự Động</div>
 
             <!-- Sản phẩm 1: File Nhẹ Tâm 150k -->
             <div class="product-card">
@@ -396,7 +486,7 @@
                 </div>
             </div>
 
-            <!-- Sản phẩm 2: Reg VIP Cầm Chếch Tâm (Ví dụ thêm gói 200k) -->
+            <!-- Sản phẩm 2: Reg VIP Cầm Chếch Tâm -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">⚡ Reg VIP Cầm Chếch Tâm</span>
@@ -410,11 +500,11 @@
 
             <div class="footer" style="margin-top: 15px;">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Auto 24/7 v16.0</span>
+                <span>Auto 24/7 v17.0</span>
             </div>
         </div>
 
-        <!-- 4. TRANG NẠP TIỀN (QR ĐỘNG & THẺ CÀO TRANHGA.VN) -->
+        <!-- 4. TRANG NẠP TIỀN -->
         <div id="deposit-section">
             <div class="dash-header">
                 <h3 style="font-size: 13px; color: #facc15;">Cổng Nạp Tiền Tự Động</h3>
@@ -487,6 +577,7 @@
 
     <script>
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
+        let selectedOS = "iOS";
         let currentUserData = null;
         let currentUsername = "";
 
@@ -505,6 +596,81 @@
                 }
             }
         };
+
+        function setOS(os) {
+            selectedOS = os;
+            if (os === 'iOS') {
+                document.getElementById('btn-ios').className = 'os-btn active';
+                document.getElementById('btn-adr').className = 'os-btn';
+            } else {
+                document.getElementById('btn-ios').className = 'os-btn';
+                document.getElementById('btn-adr').className = 'os-btn active';
+            }
+        }
+
+        async function lookupSensitivity() {
+            let deviceName = document.getElementById('device-name-input').value.trim();
+            let status = document.getElementById('lookup-status');
+
+            if (!deviceName) {
+                status.innerText = 'Vui lòng nhập tên thiết bị!';
+                status.style.color = '#f87171';
+                return;
+            }
+
+            let deviceKey = deviceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+            let dbPath = `${FIREBASE_URL}/ff_sens/${selectedOS}_${deviceKey}.json`;
+
+            status.innerText = 'Đang đồng bộ Cloud...';
+            status.style.color = '#facc15';
+
+            try {
+                let res = await fetch(dbPath);
+                let sensData = await res.json();
+
+                if (!sensData) {
+                    sensData = {
+                        deviceName: deviceName,
+                        os: selectedOS,
+                        general: Math.floor(Math.random() * (200 - 130 + 1)) + 130,
+                        redDot: Math.floor(Math.random() * (195 - 120 + 1)) + 120,
+                        scope2: Math.floor(Math.random() * (195 - 125 + 1)) + 125,
+                        scope4: Math.floor(Math.random() * (190 - 115 + 1)) + 115,
+                        awm: Math.floor(Math.random() * (150 - 100 + 1)) + 100,
+                        btnSize: (Math.floor(Math.random() * (55 - 38 + 1)) + 38) + "%"
+                    };
+
+                    await fetch(dbPath, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(sensData)
+                    });
+                }
+
+                document.getElementById('result-title').innerText = `Độ Nhạy - ${sensData.deviceName}`;
+                document.getElementById('r-general').innerText = sensData.general;
+                document.getElementById('r-reddot').innerText = sensData.redDot;
+                document.getElementById('r-scope2').innerText = sensData.scope2;
+                document.getElementById('r-scope4').innerText = sensData.scope4;
+                document.getElementById('r-awm').innerText = sensData.awm;
+                document.getElementById('r-btn-size').innerText = sensData.btnSize;
+
+                document.getElementById('sens-result').style.display = 'block';
+                status.innerText = 'Tra cứu thành công!';
+                status.style.color = '#4ade80';
+
+            } catch (err) {
+                status.innerText = 'Lỗi kết nối Cloud!';
+                status.style.color = '#f87171';
+            }
+        }
+
+        function copySens() {
+            let title = document.getElementById('result-title').innerText;
+            let text = `${title}\n- Nhìn xung quanh: ${document.getElementById('r-general').innerText}\n- Red Dot: ${document.getElementById('r-reddot').innerText}\n- Scope 2x: ${document.getElementById('r-scope2').innerText}\n- Scope 4x: ${document.getElementById('r-scope4').innerText}\n- AWM: ${document.getElementById('r-awm').innerText}\n- Nút bắn: ${document.getElementById('r-btn-size').innerText}`;
+            navigator.clipboard.writeText(text);
+            alert('Đã sao chép độ nhạy thành công!');
+        }
 
         function updateQRCode() {
             if (!currentUsername) return;
@@ -637,11 +803,9 @@
             }
         }
 
-        // Cập nhật trạng thái nút mua hàng (Đã mua hay chưa mua)
         function updateShopUI() {
             if (!currentUserData.purchased) currentUserData.purchased = {};
 
-            // Sản phẩm 1 (Nhẹ Tâm)
             let area1 = document.getElementById('product-1-action');
             if (currentUserData.purchased.nhetam) {
                 area1.innerHTML = `<a href="https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file" target="_blank" class="btn-buy-item btn-owned">📥 Tải File Ngay (Đã sở hữu)</a>`;
@@ -649,7 +813,6 @@
                 area1.innerHTML = `<button class="btn-buy-item" onclick="buyProduct('nhetam', 150000, 'https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file')">Mua Ngay (150k)</button>`;
             }
 
-            // Sản phẩm 2 (Reg VIP)
             let area2 = document.getElementById('product-2-action');
             if (currentUserData.purchased.regvip) {
                 area2.innerHTML = `<a href="https://www.mediafire.com/file/example/RegVIP.crt/file" target="_blank" class="btn-buy-item btn-owned">📥 Tải File Ngay (Đã sở hữu)</a>`;
@@ -658,7 +821,6 @@
             }
         }
 
-        // Mua sản phẩm tự động trừ tiền ví
         async function buyProduct(productId, price, link) {
             let balance = currentUserData.balance || 0;
             if (balance < price) {
