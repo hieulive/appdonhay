@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Độ Nhạy Hiếu Live - VIP System</title>
+    <title>App Độ Nhạy Hiếu Live - Shop Tự Động 24/7</title>
     <style>
         * {
             box-sizing: border-box;
@@ -28,14 +28,14 @@
             background: #121212;
             border: 1px solid rgba(234, 179, 8, 0.3);
             border-radius: 24px;
-            padding: 28px 20px;
+            padding: 24px 20px;
             box-shadow: 0 0 30px rgba(234, 179, 8, 0.15);
             position: relative;
         }
 
         .header-title {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .header-title h2 {
@@ -43,7 +43,7 @@
             font-weight: 700;
             color: #facc15;
             letter-spacing: 1px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
 
@@ -53,7 +53,7 @@
         }
 
         .input-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .input-label {
@@ -61,7 +61,7 @@
             font-size: 12px;
             font-weight: 600;
             color: #d1d5db;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -71,7 +71,7 @@
             background: #1a1a1a;
             border: 1px solid #333333;
             border-radius: 12px;
-            padding: 14px 16px;
+            padding: 12px 16px;
             color: #ffffff;
             font-size: 14px;
             outline: none;
@@ -106,7 +106,7 @@
             text-align: center;
             font-size: 13px;
             color: #9ca3af;
-            margin: 16px 0;
+            margin: 12px 0;
             min-height: 18px;
         }
 
@@ -131,7 +131,7 @@
             font-size: 12px;
             color: #6b7280;
             border-top: 1px solid #222222;
-            padding-top: 16px;
+            padding-top: 14px;
             margin-top: 16px;
         }
 
@@ -140,39 +140,58 @@
             text-decoration: none;
         }
 
-        #register-section, #dashboard-page {
+        #register-section, #dashboard-page, #deposit-section {
             display: none;
         }
 
-        /* --- Dashboard & VIP System --- */
+        /* --- DASHBOARD & VÍ TIỀN --- */
         .dash-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             border-bottom: 1px solid #222222;
-            padding-bottom: 15px;
+            padding-bottom: 12px;
         }
 
-        .dash-header h3 {
-            font-size: 15px;
+        .wallet-box {
+            background: linear-gradient(135deg, #1f1b10, #18181b);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .wallet-info h4 {
+            font-size: 11px;
+            color: #9ca3af;
+            text-transform: uppercase;
+        }
+
+        .wallet-info h3 {
+            font-size: 18px;
             color: #facc15;
+            margin-top: 2px;
         }
 
-        .logout-btn {
-            background: #ef4444;
+        .btn-deposit {
+            background: #eab308;
+            color: #000000;
             border: none;
-            color: white;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 8px;
             font-size: 12px;
+            font-weight: 700;
             cursor: pointer;
         }
 
         .os-selector {
             display: flex;
             gap: 10px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .os-btn {
@@ -180,9 +199,9 @@
             background: #1a1a1a;
             border: 1px solid #333333;
             color: #9ca3af;
-            padding: 10px;
+            padding: 8px;
             border-radius: 10px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
@@ -199,87 +218,64 @@
             background: #18181b;
             border: 1px solid #3f3f46;
             border-radius: 12px;
-            padding: 14px;
-            margin-top: 14px;
+            padding: 12px;
+            margin-top: 12px;
             display: none;
         }
 
         .sens-result-box h5 {
             color: #facc15;
-            font-size: 13px;
-            margin-bottom: 8px;
+            font-size: 12px;
+            margin-bottom: 6px;
             text-transform: uppercase;
         }
 
         .sens-row {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11px;
             color: #d1d5db;
-            padding: 5px 0;
+            padding: 4px 0;
             border-bottom: 1px solid #27272a;
         }
 
-        .btn-copy-sens {
+        .btn-action {
             width: 100%;
-            background: #27272a;
-            color: #facc15;
-            border: 1px solid #facc15;
             padding: 9px;
             border-radius: 8px;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 12px;
-        }
-
-        .btn-download-file {
-            width: 100%;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #ffffff;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
             margin-top: 8px;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-            text-decoration: none;
-            display: block;
-            text-align: center;
+            border: none;
         }
 
-        /* Khung nhập mã kích hoạt VIP ngay trên Dashboard */
-        .vip-activate-box {
-            background: rgba(234, 179, 8, 0.08);
-            border: 1px dashed rgba(234, 179, 8, 0.5);
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 14px;
-            text-align: center;
-        }
+        .btn-copy { background: #27272a; color: #facc15; border: 1px solid #facc15; }
+        .btn-buy { background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3); }
 
-        .vip-activate-box p {
-            font-size: 12px;
-            color: #fde047;
-            margin-bottom: 8px;
-        }
-
-        .vip-input-row {
+        /* --- TRANG NẠP TIỀN --- */
+        .tab-nạp {
             display: flex;
             gap: 8px;
+            margin-bottom: 14px;
         }
 
-        .btn-unlock {
-            background: #eab308;
-            color: #000;
-            border: none;
-            padding: 8px 12px;
+        .tab-nạp-btn {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            color: #9ca3af;
+            padding: 8px;
             border-radius: 8px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
+        }
+
+        .tab-nạp-btn.active {
+            background: #27272a;
+            color: #facc15;
+            border-color: #facc15;
         }
     </style>
 </head>
@@ -295,7 +291,7 @@
 
             <div class="input-group">
                 <label class="input-label">Tài khoản</label>
-                <input type="text" id="login-user" class="input-field" placeholder="Nhập tên tài khoản...">
+                <input type="text" id="login-user" class="input-field" placeholder="Nhập tài khoản...">
             </div>
 
             <div class="input-group">
@@ -312,7 +308,7 @@
 
             <div class="footer">
                 <span>HIẾU LIVE CLOUD</span>
-                <a href="#" onclick="alert('Liên hệ Admin qua Telegram để mua VIP!')">Hỗ trợ / Mua VIP</a>
+                <a href="#" onclick="alert('Liên hệ Admin qua Telegram!')">Hỗ trợ</a>
             </div>
         </div>
 
@@ -320,11 +316,11 @@
         <div id="register-section">
             <div class="header-title">
                 <h2>Đăng Ký Tài Khoản</h2>
-                <p>Lưu trữ đồng bộ trên tất cả thiết bị</p>
+                <p>Tạo ví nạp tiền tự động 24/7</p>
             </div>
 
             <div class="input-group">
-                <label class="input-label">Tài khoản mới (viết liền không dấu)</label>
+                <label class="input-label">Tài khoản mới (không dấu)</label>
                 <input type="text" id="reg-user" class="input-field" placeholder="Ví dụ: hieulive99">
             </div>
 
@@ -342,18 +338,25 @@
 
             <div class="footer">
                 <span>HIẾU LIVE CLOUD</span>
-                <a href="#" onclick="alert('Liên hệ Admin qua Telegram để mua VIP!')">Hỗ trợ / Mua VIP</a>
+                <a href="#" onclick="alert('Liên hệ Admin qua Telegram!')">Hỗ trợ</a>
             </div>
         </div>
 
         <!-- 3. TRANG DASHBOARD CHÍNH -->
         <div id="dashboard-page">
             <div class="dash-header">
-                <h3 id="welcome-user-title">Kho Độ Nhạy FF</h3>
-                <button class="logout-btn" onclick="logoutApp()">Đăng xuất</button>
+                <h3 id="welcome-title">Kho Độ Nhạy FF</h3>
+                <button class="logout-btn" onclick="logoutApp()" style="background:#ef4444; border:none; color:white; padding:5px 10px; border-radius:6px; font-size:11px; cursor:pointer;">Đăng xuất</button>
             </div>
 
-            <div class="status-text" style="color: #4ade80; margin-bottom: 10px;">🟢 Đã kết nối Cloud Hệ Thống</div>
+            <!-- VÍ TIỀN CÁ NHÂN -->
+            <div class="wallet-box">
+                <div class="wallet-info">
+                    <h4>Số dư ví của bạn</h4>
+                    <h3 id="user-balance">0 đ</h3>
+                </div>
+                <button class="btn-deposit" onclick="openDepositSection()">💳 Nạp Tiền</button>
+            </div>
 
             <label class="input-label">Chọn Hệ Điều Hành</label>
             <div class="os-selector">
@@ -361,15 +364,15 @@
                 <div id="btn-adr" class="os-btn" onclick="setOS('Android')">🤖 Android (Adr)</div>
             </div>
 
-            <div class="input-group">
+            <div class="input-group" style="margin-bottom: 12px;">
                 <label class="input-label">Nhập tên máy của bạn</label>
-                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 hoặc Samsung A52...">
+                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 Pro...">
             </div>
 
-            <button class="btn-primary" onclick="lookupSensitivity()">🔍 Lấy Độ Nhạy </button>
+            <button class="btn-primary" onclick="lookupSensitivity()">🔍 Lấy Độ Nhạy (100 - 200)</button>
             <div id="lookup-status" class="status-text"></div>
 
-            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY -->
+            <!-- KẾT QUẢ ĐỘ NHẠY & MUA FILE 150K -->
             <div id="sens-result" class="sens-result-box">
                 <h5 id="result-title">Cấu Hình Độ Nhạy Free Fire</h5>
                 <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
@@ -377,50 +380,114 @@
                 <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="r-scope2">0</b></div>
                 <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="r-scope4">0</b></div>
                 <div class="sens-row"><span>Ống Ngắm AWM:</span> <b id="r-awm">0</b></div>
-                <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-free-look">0</b></div>
                 <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="r-btn-size">45%</b></div>
                 
-                <button class="btn-copy-sens" onclick="copySens()">📋 Sao chép toàn bộ độ nhạy</button>
+                <button class="btn-action btn-copy" onclick="copySens()">📋 Sao chép độ nhạy</button>
                 
-                <!-- Nút Tải File (Sẽ bị khóa nếu chưa lên VIP) -->
-                <div id="download-container" style="margin-top: 10px;">
-                    <a id="download-btn-link" href="#" onclick="checkVipDownload(event)" class="btn-download-file" style="background: #3f3f46; color: #a1a1aa;">🔒 Tải File Nhẹ Tâm (Cần VIP)</a>
+                <div id="file-purchase-area" style="margin-top: 10px;">
+                    <!-- Nội dung nút mua hoặc link tải file sẽ thay đổi linh hoạt ở đây -->
                 </div>
             </div>
 
-            <!-- Khung nhập mã kích hoạt VIP -->
-            <div class="vip-activate-box">
-                <p id="vip-status-msg">🔒 Tài khoản đang ở bản Thường. Nhập mã để mở khóa tải file!</p>
-                <div class="vip-input-row">
-                    <input type="text" id="vip-key-input" class="input-field" placeholder="Nhập mã VIP..." style="padding: 8px 10px; font-size: 12px; margin-bottom: 0;">
-                    <button class="btn-unlock" onclick="activateVip()">Kích hoạt</button>
-                </div>
+            <div class="footer" style="margin-top: 15px;">
+                <span>HIẾU LIVE SHOP</span>
+                <span>Auto v12.0</span>
+            </div>
+        </div>
+
+        <!-- 4. TRANG NẠP TIỀN -->
+        <div id="deposit-section">
+            <div class="dash-header">
+                <h3>Cổng Nạp Tiền Tự Động</h3>
+                <button onclick="closeDepositSection()" style="background:#333; border:none; color:white; padding:5px 10px; border-radius:6px; font-size:11px; cursor:pointer;">Quay lại</button>
             </div>
 
-            <div class="footer" style="margin-top: 20px;">
-                <span>HIẾU LIVE SYSTEM</span>
-                <span>FF Sensi v11.0 VIP</span>
+            <div class="tab-nạp">
+                <button id="tab-banking" class="tab-nạp-btn active" onclick="switchDepositTab('banking')">Chuyển Khoản QR</button>
+                <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Thẻ Cào Điện Thoại</button>
+            </div>
+
+            <!-- NỘI DUNG CHUYỂN KHOẢN -->
+            <div id="content-banking">
+                <div style="background: #1a1a1a; border: 1px solid #33; border-radius: 12px; padding: 12px; text-align: center; margin-bottom: 12px;">
+                    <p style="font-size: 12px; color: #9ca3af; margin-bottom: 6px;">Quét mã QR hoặc chuyển khoản chính xác nội dung:</p>
+                    <b id="qr-syntax" style="color: #facc15; font-size: 14px; background: #000; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-bottom: 8px;">NAP HIEULIVE</b>
+                    <p style="font-size: 11px; color: #4ade80;">⚡ Hệ thống tự động cộng tiền sau 15 giây khi nhận được tiền.</p>
+                </div>
+                <button class="btn-primary" onclick="alert('Đã tạo lệnh kiểm tra giao dịch!')">Kiểm Tra Lại Số Dư Ví</button>
+            </div>
+
+            <!-- NỘI DUNG GẠCH THẺ CÀO (Kết nối web gạch thẻ của bạn) -->
+            <div id="content-card" style="display: none;">
+                <div class="input-group">
+                    <label class="input-label">Chọn Nhà Mạng</label>
+                    <select id="card-telco" class="input-field">
+                        <option value="VIETTEL">Viettel</option>
+                        <option value="MOBIFONE">Mobifone</option>
+                        <option value="VINAFONE">Vinafone</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Mệnh Giá</label>
+                    <select id="card-amount" class="input-field">
+                        <option value="50000">50.000 đ</option>
+                        <option value="100000">100.000 đ</option>
+                        <option value="200000">200.000 đ</option>
+                        <option value="500000">500.000 đ</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Mã Thẻ Cào</label>
+                    <input type="text" id="card-pin" class="input-field" placeholder="Nhập mã PIN...">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Số Seri</label>
+                    <input type="text" id="card-serial" class="input-field" placeholder="Nhập số Serial...">
+                </div>
+                <button class="btn-primary" onclick="submitCard()">Gửi Thẻ Nạp Tự Động</button>
+                <div id="card-status" class="status-text"></div>
+            </div>
+
+            <div class="footer" style="margin-top: 15px;">
+                <span>HỖ TRỢ 24/7</span>
+                <span>Giao dịch an toàn</span>
             </div>
         </div>
     </div>
 
     <script>
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
-        const MEDIAFIRE_URL = "https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file";
+        const MEDIAFIRE_LINK = "https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file";
+        const FILE_PRICE = 150000; // Giá file 150k
+        
         let selectedOS = "iOS";
-        let currentLoggedInUser = "";
+        let currentUserData = null;
+        let currentUsername = "";
 
-        // Kiểm tra tự động đăng nhập khi mở trang
+        // Tự động khôi phục phiên đăng nhập khi mở lại web
         window.onload = async function() {
             let savedUser = localStorage.getItem('hl_logged_user');
             if (savedUser) {
-                currentLoggedInUser = savedUser;
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('dashboard-page').style.display = 'block';
-                document.getElementById('welcome-user-title').innerText = `Hi, ${savedUser}`;
-                await checkUserVipStatus(savedUser);
+                currentUsername = savedUser;
+                await fetchUserData(savedUser);
+                if (currentUserData) {
+                    document.getElementById('login-section').style.display = 'none';
+                    document.getElementById('dashboard-page').style.display = 'block';
+                    document.getElementById('welcome-title').innerText = `Hi, ${savedUser}`;
+                    document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance || 0) + " đ";
+                    document.getElementById('qr-syntax').innerText = `NAP HIEULIVE ${savedUser.toUpperCase()}`;
+                }
             }
         };
+
+        async function fetchUserData(username) {
+            try {
+                let res = await fetch(`${FIREBASE_URL}/users/${username}.json`);
+                currentUserData = await res.json();
+            } catch (e) {
+                console.log("Lỗi tải thông tin user");
+            }
+        }
 
         function setOS(os) {
             selectedOS = os;
@@ -451,7 +518,7 @@
             let status = document.getElementById('reg-status');
 
             if (!user || !pass) {
-                status.innerText = 'Vui lòng điền đầy đủ tài khoản và mật khẩu!';
+                status.innerText = 'Vui lòng điền đầy đủ thông tin!';
                 status.style.color = '#f87171';
                 return;
             }
@@ -470,25 +537,32 @@
                 let existingUser = await checkRes.json();
 
                 if (existingUser) {
-                    status.innerText = 'Tài khoản này đã có người dùng!';
+                    status.innerText = 'Tài khoản này đã tồn tại!';
                     status.style.color = '#f87171';
                     return;
                 }
 
-                // Đăng ký mới mặc định chưa có VIP (vipUnlocked: false)
+                // Khởi tạo ví tiền balance = 0 và trạng thái mua file = false
+                let newUser = {
+                    password: pass,
+                    balance: 0,
+                    purchasedFile: false,
+                    createdAt: new Date().toISOString()
+                };
+
                 await fetch(`${FIREBASE_URL}/users/${user}.json`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password: pass, vipUnlocked: false, createdAt: new Date().toISOString() })
+                    body: JSON.stringify(newUser)
                 });
 
-                status.innerText = 'Đăng ký thành công! Đang chuyển đăng nhập...';
+                status.innerText = 'Đăng ký thành công! Đang chuyển hướng...';
                 status.style.color = '#4ade80';
 
                 setTimeout(() => {
                     showLogin();
                     document.getElementById('login-user').value = user;
-                }, 1000);
+                }, 900);
 
             } catch (error) {
                 status.innerText = 'Lỗi kết nối máy chủ!';
@@ -518,15 +592,17 @@
                     status.innerText = 'Đăng nhập thành công!';
                     status.style.color = '#4ade80';
 
-                    currentLoggedInUser = user;
                     localStorage.setItem('hl_logged_user', user);
+                    currentUsername = user;
+                    currentUserData = userData;
 
-                    setTimeout(async () => {
+                    setTimeout(() => {
                         document.getElementById('login-section').style.display = 'none';
                         document.getElementById('dashboard-page').style.display = 'block';
-                        document.getElementById('welcome-user-title').innerText = `Hi, ${user}`;
-                        await checkUserVipStatus(user);
-                    }, 800);
+                        document.getElementById('welcome-title').innerText = `Hi, ${user}`;
+                        document.getElementById('user-balance').innerText = formatMoney(userData.balance || 0) + " đ";
+                        document.getElementById('qr-syntax').innerText = `NAP HIEULIVE ${user.toUpperCase()}`;
+                    }, 700);
                 } else {
                     status.innerText = 'Sai tài khoản hoặc mật khẩu!';
                     status.style.color = '#f87171';
@@ -537,82 +613,7 @@
             }
         }
 
-        // Kiểm tra trạng thái VIP của tài khoản trên Firebase
-        async function checkUserVipStatus(username) {
-            try {
-                let res = await fetch(`${FIREBASE_URL}/users/${username}.json`);
-                let userData = await res.json();
-                
-                let downloadBtn = document.getElementById('download-btn-link');
-                let vipMsg = document.getElementById('vip-status-msg');
-
-                if (userData && userData.vipUnlocked === true) {
-                    // Nếu đã là VIP
-                    downloadBtn.href = MEDIAFIRE_URL;
-                    downloadBtn.style.background = "linear-gradient(135deg, #10b981, #059669)";
-                    downloadBtn.style.color = "#ffffff";
-                    downloadBtn.innerHTML = "📥 Tải File Nhẹ Tâm (MediaFire)";
-                    
-                    vipMsg.innerHTML = "👑 Tài khoản đã kích hoạt VIP thành công!";
-                    vipMsg.style.color = "#4ade80";
-                } else {
-                    // Nếu là bản Thường
-                    downloadBtn.href = "#";
-                    downloadBtn.style.background = "#3f3f46";
-                    downloadBtn.style.color = "#a1a1aa";
-                    downloadBtn.innerHTML = "🔒 Tải File Nhẹ Tâm (Cần VIP)";
-                    
-                    vipMsg.innerHTML = "🔒 Tài khoản đang ở bản Thường. Nhập mã để mở khóa tải file!";
-                    vipMsg.style.color = "#fde047";
-                }
-            } catch (err) {
-                console.log("Lỗi kiểm tra VIP");
-            }
-        }
-
-        // Xử lý khi bấm nút tải file
-        function checkVipDownload(event) {
-            let downloadBtn = document.getElementById('download-btn-link');
-            if (downloadBtn.getAttribute('href') === "#") {
-                event.preventDefault();
-                alert("❌ Bạn cần mua gói VIP để tải file Nhẹ Tâm! Vui lòng liên hệ Admin Hiếu Live để mua mã kích hoạt.");
-            }
-        }
-
-        // Kích hoạt mã VIP bằng Key nhập vào
-        async function activateVip() {
-            let key = document.getElementById('vip-key-input').value.trim().toUpperCase();
-            if (!key) {
-                alert("Vui lòng nhập mã kích hoạt VIP!");
-                return;
-            }
-
-            try {
-                // Kiểm tra key trên Firebase mục /vipKeys/[key]
-                let res = await fetch(`${FIREBASE_URL}/vipKeys/${key}.json`);
-                let isValid = await res.json();
-
-                if (isValid === true) {
-                    // Xóa key để tránh dùng lại
-                    await fetch(`${FIREBASE_URL}/vipKeys/${key}.json`, { method: 'DELETE' });
-
-                    // Set vipUnlocked = true cho user hiện tại
-                    await fetch(`${FIREBASE_URL}/users/${currentLoggedInUser}/vipUnlocked.json`, {
-                        method: 'PUT',
-                        body: JSON.stringify(true)
-                    });
-
-                    alert("🎉 Kích hoạt VIP thành công! Bạn đã có thể tải file.");
-                    await checkUserVipStatus(currentLoggedInUser);
-                    document.getElementById('vip-key-input').value = "";
-                } else {
-                    alert("❌ Mã kích hoạt không hợp lệ hoặc đã được sử dụng!");
-                }
-            } catch (err) {
-                alert("Lỗi kết nối máy chủ khi kiểm tra mã!");
-            }
-        }
-
+        // TÌM KIẾM HOẶC TẠO ĐỘ NHẠY LƯU TRÊN CLOUD
         async function lookupSensitivity() {
             let deviceName = document.getElementById('device-name-input').value.trim();
             let status = document.getElementById('lookup-status');
@@ -626,7 +627,7 @@
             let deviceKey = deviceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
             let dbPath = `${FIREBASE_URL}/ff_sens/${selectedOS}_${deviceKey}.json`;
 
-            status.innerText = 'Đang kiểm tra hệ thống Cloud...';
+            status.innerText = 'Đang đồng bộ Cloud...';
             status.style.color = '#facc15';
 
             try {
@@ -642,7 +643,6 @@
                         scope2: Math.floor(Math.random() * (195 - 125 + 1)) + 125,
                         scope4: Math.floor(Math.random() * (190 - 115 + 1)) + 115,
                         awm: Math.floor(Math.random() * (150 - 100 + 1)) + 100,
-                        freeLook: Math.floor(Math.random() * (180 - 110 + 1)) + 110,
                         btnSize: (Math.floor(Math.random() * (55 - 38 + 1)) + 38) + "%"
                     };
 
@@ -653,17 +653,17 @@
                     });
                 }
 
-                document.getElementById('result-title').innerText = `Độ Nhạy Free Fire - ${sensData.deviceName} (${sensData.os})`;
+                document.getElementById('result-title').innerText = `Độ Nhạy Free Fire - ${sensData.deviceName}`;
                 document.getElementById('r-general').innerText = sensData.general;
                 document.getElementById('r-reddot').innerText = sensData.redDot;
                 document.getElementById('r-scope2').innerText = sensData.scope2;
                 document.getElementById('r-scope4').innerText = sensData.scope4;
                 document.getElementById('r-awm').innerText = sensData.awm;
-                document.getElementById('r-free-look').innerText = sensData.freeLook;
                 document.getElementById('r-btn-size').innerText = sensData.btnSize;
 
                 document.getElementById('sens-result').style.display = 'block';
-                status.innerText = 'Đã tải thành công độ nhạy chuẩn xác!';
+                updateFilePurchaseUI();
+                status.innerText = 'Tải thông số thành công!';
                 status.style.color = '#4ade80';
 
             } catch (err) {
@@ -672,25 +672,135 @@
             }
         }
 
+        // CẬP NHẬT GIAO DIỆN NÚT MUA FILE HOẶC TẢI FILE TỰ ĐỘNG
+        function updateFilePurchaseUI() {
+            let area = document.getElementById('file-purchase-area');
+            if (currentUserData && currentUserData.purchasedFile === true) {
+                // Đã mua rồi -> Hiện nút tải file MediaFire trực tiếp
+                area.innerHTML = `<a href="${MEDIAFIRE_LINK}" target="_blank" class="btn-action btn-buy" style="text-decoration:none; display:block; text-align:center;">📥 Tải File Nhẹ Tâm (Đã sở hữu)</a>`;
+            } else {
+                // Chưa mua -> Hiện nút bấm mua tự động 150k trừ tiền ví
+                area.innerHTML = `<button class="btn-action btn-buy" onclick="buyFileAutomatic()">🛒 Mua File Nhẹ Tâm (150.000 đ)</button>`;
+            }
+        }
+
+        // HỆ THỐNG TỰ ĐỘNG TRỪ TIỀN TRONG VÍ & MỞ KHÓA FILE
+        async function buyFileAutomatic() {
+            let currentBalance = currentUserData.balance || 0;
+            if (currentBalance < FILE_PRICE) {
+                alert(`❌ Số dư ví của bạn không đủ (${formatMoney(currentBalance)} đ). Vui lòng nạp thêm tiền để mua file!`);
+                openDepositSection();
+                return;
+            }
+
+            if (confirm(`Xác nhận dùng 150.000 đ từ ví để mua File Nhẹ Tâm vĩnh viễn?`)) {
+                let newBalance = currentBalance - FILE_PRICE;
+                
+                try {
+                    // Cập nhật số dư và trạng thái mua file lên Firebase
+                    await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            balance: newBalance,
+                            purchasedFile: true
+                        })
+                    });
+
+                    // Cập nhật lại dữ liệu cục bộ
+                    currentUserData.balance = newBalance;
+                    currentUserData.purchasedFile = true;
+
+                    document.getElementById('user-balance').innerText = formatMoney(newBalance) + " đ";
+                    updateFilePurchaseUI();
+                    
+                    alert("🎉 Mua file thành công! Link tải MediaFire đã được mở khóa.");
+                } catch (err) {
+                    alert("Lỗi xử lý giao dịch từ máy chủ!");
+                }
+            }
+        }
+
+        // GIAO DIỆN NẠP TIỀN
+        function openDepositSection() {
+            document.getElementById('dashboard-page').style.display = 'none';
+            document.getElementById('deposit-section').style.display = 'block';
+        }
+
+        function closeDepositSection() {
+            document.getElementById('deposit-section').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'block';
+        }
+
+        function switchDepositTab(type) {
+            if (type === 'banking') {
+                document.getElementById('tab-banking').className = 'tab-nạp-btn active';
+                document.getElementById('tab-card').className = 'tab-nạp-btn';
+                document.getElementById('content-banking').style.display = 'block';
+                document.getElementById('content-card').style.display = 'none';
+            } else {
+                document.getElementById('tab-banking').className = 'tab-nạp-btn';
+                document.getElementById('tab-card').className = 'tab-nạp-btn active';
+                document.getElementById('content-banking').style.display = 'none';
+                document.getElementById('content-card').style.display = 'block';
+            }
+        }
+
+        // TÍCH HỢP WEB GẠCH THẺ (Thay link API gạch thẻ thực tế của bạn vào đây)
+        async function submitCard() {
+            let telco = document.getElementById('card-telco').value;
+            let amount = parseInt(document.getElementById('card-amount').value);
+            let pin = document.getElementById('card-pin').value.trim();
+            let serial = document.getElementById('card-serial').value.trim();
+            let status = document.getElementById('card-status');
+
+            if (!pin || !serial) {
+                status.innerText = "Vui lòng nhập đầy đủ mã PIN và Số Seri!";
+                status.style.color = "#f87171";
+                return;
+            }
+
+            status.innerText = "Đang gửi thẻ lên hệ thống gạch thẻ...";
+            status.style.color = "#facc15";
+
+            // GIẢ LẬP GỌI API GẠCH THẺ (Sau này thay code gọi API web gạch thẻ của bạn vào đây)
+            // Khi API gạch thẻ báo thành công, bạn thực hiện cộng tiền vào Firebase cho user:
+            setTimeout(async () => {
+                try {
+                    let newBalance = (currentUserData.balance || 0) + amount;
+                    await fetch(`${FIREBASE_URL}/users/${currentUsername}/balance.json`, {
+                        method: 'PUT',
+                        body: JSON.stringify(newBalance)
+                    });
+
+                    currentUserData.balance = newBalance;
+                    document.getElementById('user-balance').innerText = formatMoney(newBalance) + " đ";
+
+                    status.innerText = `✅ Nạp thành công ${formatMoney(amount)} đ vào ví!`;
+                    status.style.color = "#4ade80";
+                    document.getElementById('card-pin').value = "";
+                    document.getElementById('card-serial').value = "";
+                } catch (err) {
+                    status.innerText = "Lỗi cộng tiền tự động!";
+                    status.style.color = "#f87171";
+                }
+            }, 1200);
+        }
+
         function copySens() {
             let title = document.getElementById('result-title').innerText;
-            let text = `${title}\n- Nhìn xung quanh: ${document.getElementById('r-general').innerText}\n- Red Dot: ${document.getElementById('r-reddot').innerText}\n- Scope 2x: ${document.getElementById('r-scope2').innerText}\n- Scope 4x: ${document.getElementById('r-scope4').innerText}\n- Scope AWM: ${document.getElementById('r-awm').innerText}\n- Nhìn quanh xe: ${document.getElementById('r-free-look').innerText}\n- Nút bắn: ${document.getElementById('r-btn-size').innerText}`;
-            
+            let text = `${title}\n- Nhìn xung quanh: ${document.getElementById('r-general').innerText}\n- Red Dot: ${document.getElementById('r-reddot').innerText}\n- Scope 2x: ${document.getElementById('r-scope2').innerText}\n- Scope 4x: ${document.getElementById('r-scope4').innerText}\n- AWM: ${document.getElementById('r-awm').innerText}\n- Nút bắn: ${document.getElementById('r-btn-size').innerText}`;
             navigator.clipboard.writeText(text);
-            alert('Đã sao chép thông số độ nhạy Free Fire thành công!');
+            alert('Đã sao chép độ nhạy thành công!');
+        }
+
+        function formatMoney(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
         function logoutApp() {
             localStorage.removeItem('hl_logged_user');
-            currentLoggedInUser = "";
-
-            document.getElementById('dashboard-page').style.display = 'none';
-            document.getElementById('login-section').style.display = 'block';
-            document.getElementById('login-user').value = '';
-            document.getElementById('login-pass').value = '';
-            document.getElementById('login-status').innerText = '';
-            document.getElementById('sens-result').style.display = 'none';
-            document.getElementById('device-name-input').value = '';
+            location.reload();
         }
     </script>
 </body>
