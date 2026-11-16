@@ -144,12 +144,12 @@
             display: none;
         }
 
-        /* Dashboard */
+        /* --- Dashboard Mới & Chức năng Lấy Độ Nhạy --- */
         .dash-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             border-bottom: 1px solid #222222;
             padding-bottom: 15px;
         }
@@ -222,6 +222,79 @@
 
         input:checked + .slider { background-color: #eab308; }
         input:checked + .slider:before { transform: translateX(24px); }
+
+        /* Giao diện Lấy độ nhạy Free */
+        .sens-section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #facc15;
+            text-transform: uppercase;
+            margin: 16px 0 10px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .sens-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .sens-btn {
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .sens-btn:hover {
+            border-color: #facc15;
+            background: #252525;
+        }
+
+        .sens-result-box {
+            background: #18181b;
+            border: 1px solid #3f3f46;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 14px;
+            display: none;
+        }
+
+        .sens-result-box h5 {
+            color: #facc15;
+            font-size: 13px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .sens-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #d1d5db;
+            padding: 4px 0;
+            border-bottom: 1px solid #27272a;
+        }
+
+        .btn-copy-sens {
+            width: 100%;
+            background: #27272a;
+            color: #facc15;
+            border: 1px solid #facc15;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -294,11 +367,31 @@
                 <button class="logout-btn" onclick="logoutApp()">Đăng xuất</button>
             </div>
 
-            <div class="status-text" style="color: #4ade80; margin-bottom: 15px;">🟢 Đã kết nối máy chủ Cloud</div>
+            <div class="status-text" style="color: #4ade80; margin-bottom: 12px;">🟢 Đã kết nối máy chủ Cloud</div>
 
             <div class="input-group" style="margin-bottom: 12px;">
                 <label class="input-label">Mã thiết bị của bạn (Duy nhất)</label>
                 <input type="text" id="device-id" class="input-field" readonly style="font-size: 12px; color: #facc15;">
+            </div>
+
+            <!-- CÔNG CỤ LẤY ĐỘ NHẠY FREE -->
+            <div class="sens-section-title">⚡ Kho Lấy Độ Nhạy (Miễn Phí)</div>
+            <div class="sens-grid">
+                <button class="sens-btn" onclick="getSensitivity('freefire')">🔥 Free Fire Max</button>
+                <button class="sens-btn" onclick="getSensitivity('pubg')">🎯 PUBG Mobile</button>
+                <button class="sens-btn" onclick="getSensitivity('cod')">🔫 COD Mobile</button>
+                <button class="sens-btn" onclick="getSensitivity('iphone')">📱 Tổng hợp iPhone</button>
+            </div>
+
+            <!-- BẢNG HIỂN THỊ ĐỘ NHẠY -->
+            <div id="sens-result" class="sens-result-box">
+                <h5 id="sens-title">Độ Nhạy Free Fire</h5>
+                <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="s1">95</b></div>
+                <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="s2">88</b></div>
+                <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="s3">92</b></div>
+                <div class="sens-row"><span>Ống Ngắm AWM:</span> <b id="s4">50</b></div>
+                <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="s5">48%</b></div>
+                <button class="btn-copy-sens" onclick="copySensData()">📋 Sao chép độ nhạy</button>
             </div>
 
             <div class="feature-card">
@@ -325,7 +418,7 @@
 
             <div class="footer">
                 <span>HIẾU LIVE SYSTEM</span>
-                <span>Phiên bản Cloud v4.0</span>
+                <span>Phiên bản Cloud v4.1</span>
             </div>
         </div>
     </div>
@@ -436,6 +529,58 @@
             }
         }
 
+        // Chức năng lấy độ nhạy Free theo từng game
+        function getSensitivity(game) {
+            const box = document.getElementById('sens-result');
+            const title = document.getElementById('sens-title');
+            const s1 = document.getElementById('s1');
+            const s2 = document.getElementById('s2');
+            const s3 = document.getElementById('s3');
+            const s4 = document.getElementById('s4');
+            const s5 = document.getElementById('s5');
+
+            box.style.display = 'block';
+
+            if (game === 'freefire') {
+                title.innerText = "🔥 Độ Nhạy Free Fire Max (Free)";
+                s1.innerText = "96 (Nhìn chung)";
+                s2.innerText = "89 (Red Dot)";
+                s3.innerText = "94 (Scope 2x/4x)";
+                s4.innerText = "55 (Ống ngắm AWM)";
+                s5.innerText = "46% (Nút bắn chuẩn)";
+            } else if (game === 'pubg') {
+                title.innerText = "🎯 Độ Nhạy PUBG Mobile (Free)";
+                s1.innerText = "110 (Camera tự do)";
+                s2.innerText = "95 (Red Dot)";
+                s3.innerText = "85 (Scope 3x/4x)";
+                s4.innerText = "40 (Scope 6x/8x)";
+                s5.innerText = "50% (Nút bắn chuẩn)";
+            } else if (game === 'cod') {
+                title.innerText = "🔫 Độ Nhạy COD Mobile (Free)";
+                s1.innerText = "90 (Góc nhìn)";
+                s2.innerText = "75 (Ngắm bắn)";
+                s3.innerText = "65 (Ống ngắm chiến thuật)";
+                s4.innerText = "45 (Ngắm sniper)";
+                s5.innerText = "48% (Nút bắn chuẩn)";
+            } else if (game === 'iphone') {
+                title.innerText = "📱 Độ Nhạy Tối Ưu iPhone (Free)";
+                s1.innerText = "99 (Mượt màn hình)";
+                s2.innerText = "90 (Red Dot)";
+                s3.innerText = "95 (Kéo tâm nhanh)";
+                s4.innerText = "50 (AWM)";
+                s5.innerText = "45% (Nút bắn chuẩn)";
+            }
+        }
+
+        // Sao chép thông tin độ nhạy
+        function copySensData() {
+            const title = document.getElementById('sens-title').innerText;
+            const text = `${title}\n- ${document.getElementById('s1').previousSibling.textContent}: ${document.getElementById('s1').innerText}\n- ${document.getElementById('s2').previousSibling.textContent}: ${document.getElementById('s2').innerText}\n- ${document.getElementById('s3').previousSibling.textContent}: ${document.getElementById('s3').innerText}\n- ${document.getElementById('s4').previousSibling.textContent}: ${document.getElementById('s4').innerText}\n- Nút bắn: ${document.getElementById('s5').innerText}`;
+            
+            navigator.clipboard.writeText(text);
+            alert('Đã sao chép cấu hình độ nhạy thành công!');
+        }
+
         function loadDeviceID() {
             let deviceId = localStorage.getItem('hl_device_id');
             if (!deviceId) {
@@ -453,6 +598,7 @@
             document.getElementById('login-user').value = '';
             document.getElementById('login-pass').value = '';
             document.getElementById('login-status').innerText = '';
+            document.getElementById('sens-result').style.display = 'none';
         }
     </script>
 </body>
