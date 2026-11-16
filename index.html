@@ -385,13 +385,13 @@
                 <button class="btn-action btn-copy" onclick="copySens()">📋 Sao chép độ nhạy</button>
                 
                 <div id="file-purchase-area" style="margin-top: 10px;">
-                    <!-- Nội dung nút mua hoặc link tải file sẽ thay đổi linh hoạt ở đây -->
+                    <!-- Nút mua hoặc link tải file linh hoạt -->
                 </div>
             </div>
 
             <div class="footer" style="margin-top: 15px;">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Auto v12.0</span>
+                <span>Auto v13.0</span>
             </div>
         </div>
 
@@ -404,20 +404,25 @@
 
             <div class="tab-nạp">
                 <button id="tab-banking" class="tab-nạp-btn active" onclick="switchDepositTab('banking')">Chuyển Khoản QR</button>
-                <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Thẻ Cào Điện Thoại</button>
+                <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Thẻ Cào (TranNga)</button>
             </div>
 
-            <!-- NỘI DUNG CHUYỂN KHOẢN -->
+            <!-- NỘI DUNG CHUYỂN KHOẢN (ĐÃ CẬP NHẬT STK 423345678 MB BANK) -->
             <div id="content-banking">
-                <div style="background: #1a1a1a; border: 1px solid #33; border-radius: 12px; padding: 12px; text-align: center; margin-bottom: 12px;">
-                    <p style="font-size: 12px; color: #9ca3af; margin-bottom: 6px;">Quét mã QR hoặc chuyển khoản chính xác nội dung:</p>
-                    <b id="qr-syntax" style="color: #facc15; font-size: 14px; background: #000; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-bottom: 8px;">NAP HIEULIVE</b>
-                    <p style="font-size: 11px; color: #4ade80;">⚡ Hệ thống tự động cộng tiền sau 15 giây khi nhận được tiền.</p>
+                <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 12px;">
+                    <p style="font-size: 13px; color: #facc15; font-weight: 700; margin-bottom: 8px;">💳 THÔNG TIN CHUYỂN KHOẢN</p>
+                    <p style="font-size: 12px; color: #d1d5db; margin: 4px 0;">Ngân hàng: <b>MB Bank</b></p>
+                    <p style="font-size: 12px; color: #d1d5db; margin: 4px 0;">Số tài khoản: <b style="color: #4ade80; font-size: 15px;">423345678</b></p>
+                    <p style="font-size: 12px; color: #d1d5db; margin: 4px 0;">Chủ tài khoản: <b>HIEU LIVE</b></p>
+                    <hr style="border: 0; border-top: 1px solid #27272a; margin: 10px 0;">
+                    <p style="font-size: 11px; color: #9ca3af; margin-bottom: 4px;">Nội dung chuyển khoản chính xác:</p>
+                    <b id="qr-syntax" style="color: #000; font-size: 14px; background: #facc15; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 6px;">NAP HIEULIVE</b>
+                    <p style="font-size: 11px; color: #4ade80;">⚡ Tự động cộng tiền vào ví sau 15 giây.</p>
                 </div>
-                <button class="btn-primary" onclick="alert('Đã tạo lệnh kiểm tra giao dịch!')">Kiểm Tra Lại Số Dư Ví</button>
+                <button class="btn-primary" onclick="alert('Nếu bạn đã chuyển khoản thành công, hệ thống sẽ tự động ghi nhận sau ít phút!')">Kiểm Tra Lại Số Dư Ví</button>
             </div>
 
-            <!-- NỘI DUNG GẠCH THẺ CÀO (Kết nối web gạch thẻ của bạn) -->
+            <!-- NỘI DUNG GẠCH THẺ (TÍCH HỢP TRANHGA.VN) -->
             <div id="content-card" style="display: none;">
                 <div class="input-group">
                     <label class="input-label">Chọn Nhà Mạng</label>
@@ -437,7 +442,7 @@
                     </select>
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Mã Thẻ Cào</label>
+                    <label class="input-label">Mã Thẻ Cào (PIN)</label>
                     <input type="text" id="card-pin" class="input-field" placeholder="Nhập mã PIN...">
                 </div>
                 <div class="input-group">
@@ -449,8 +454,8 @@
             </div>
 
             <div class="footer" style="margin-top: 15px;">
-                <span>HỖ TRỢ 24/7</span>
-                <span>Giao dịch an toàn</span>
+                <span>TRANHGA.VN API</span>
+                <span>Giao dịch an toàn 24/7</span>
             </div>
         </div>
     </div>
@@ -464,7 +469,6 @@
         let currentUserData = null;
         let currentUsername = "";
 
-        // Tự động khôi phục phiên đăng nhập khi mở lại web
         window.onload = async function() {
             let savedUser = localStorage.getItem('hl_logged_user');
             if (savedUser) {
@@ -475,7 +479,7 @@
                     document.getElementById('dashboard-page').style.display = 'block';
                     document.getElementById('welcome-title').innerText = `Hi, ${savedUser}`;
                     document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance || 0) + " đ";
-                    document.getElementById('qr-syntax').innerText = `NAP HIEULIVE ${savedUser.toUpperCase()}`;
+                    document.getElementById('qr-syntax').innerText = `NAP ${savedUser.toUpperCase()}`;
                 }
             }
         };
@@ -542,7 +546,6 @@
                     return;
                 }
 
-                // Khởi tạo ví tiền balance = 0 và trạng thái mua file = false
                 let newUser = {
                     password: pass,
                     balance: 0,
@@ -601,7 +604,7 @@
                         document.getElementById('dashboard-page').style.display = 'block';
                         document.getElementById('welcome-title').innerText = `Hi, ${user}`;
                         document.getElementById('user-balance').innerText = formatMoney(userData.balance || 0) + " đ";
-                        document.getElementById('qr-syntax').innerText = `NAP HIEULIVE ${user.toUpperCase()}`;
+                        document.getElementById('qr-syntax').innerText = `NAP ${user.toUpperCase()}`;
                     }, 700);
                 } else {
                     status.innerText = 'Sai tài khoản hoặc mật khẩu!';
@@ -613,7 +616,6 @@
             }
         }
 
-        // TÌM KIẾM HOẶC TẠO ĐỘ NHẠY LƯU TRÊN CLOUD
         async function lookupSensitivity() {
             let deviceName = document.getElementById('device-name-input').value.trim();
             let status = document.getElementById('lookup-status');
@@ -672,23 +674,19 @@
             }
         }
 
-        // CẬP NHẬT GIAO DIỆN NÚT MUA FILE HOẶC TẢI FILE TỰ ĐỘNG
         function updateFilePurchaseUI() {
             let area = document.getElementById('file-purchase-area');
             if (currentUserData && currentUserData.purchasedFile === true) {
-                // Đã mua rồi -> Hiện nút tải file MediaFire trực tiếp
                 area.innerHTML = `<a href="${MEDIAFIRE_LINK}" target="_blank" class="btn-action btn-buy" style="text-decoration:none; display:block; text-align:center;">📥 Tải File Nhẹ Tâm (Đã sở hữu)</a>`;
             } else {
-                // Chưa mua -> Hiện nút bấm mua tự động 150k trừ tiền ví
                 area.innerHTML = `<button class="btn-action btn-buy" onclick="buyFileAutomatic()">🛒 Mua File Nhẹ Tâm (150.000 đ)</button>`;
             }
         }
 
-        // HỆ THỐNG TỰ ĐỘNG TRỪ TIỀN TRONG VÍ & MỞ KHÓA FILE
         async function buyFileAutomatic() {
             let currentBalance = currentUserData.balance || 0;
             if (currentBalance < FILE_PRICE) {
-                alert(`❌ Số dư ví của bạn không đủ (${formatMoney(currentBalance)} đ). Vui lòng nạp thêm tiền để mua file!`);
+                alert(`❌ Số dư ví không đủ (${formatMoney(currentBalance)} đ). Vui lòng nạp thêm tiền!`);
                 openDepositSection();
                 return;
             }
@@ -697,7 +695,6 @@
                 let newBalance = currentBalance - FILE_PRICE;
                 
                 try {
-                    // Cập nhật số dư và trạng thái mua file lên Firebase
                     await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
@@ -707,7 +704,6 @@
                         })
                     });
 
-                    // Cập nhật lại dữ liệu cục bộ
                     currentUserData.balance = newBalance;
                     currentUserData.purchasedFile = true;
 
@@ -721,7 +717,6 @@
             }
         }
 
-        // GIAO DIỆN NẠP TIỀN
         function openDepositSection() {
             document.getElementById('dashboard-page').style.display = 'none';
             document.getElementById('deposit-section').style.display = 'block';
@@ -746,10 +741,10 @@
             }
         }
 
-        // TÍCH HỢP WEB GẠCH THẺ (Thay link API gạch thẻ thực tế của bạn vào đây)
+        // KẾT NỐI API GẠCH THẺ TRANHGA.VN
         async function submitCard() {
             let telco = document.getElementById('card-telco').value;
-            let amount = parseInt(document.getElementById('card-amount').value);
+            let amount = document.getElementById('card-amount').value;
             let pin = document.getElementById('card-pin').value.trim();
             let serial = document.getElementById('card-serial').value.trim();
             let status = document.getElementById('card-status');
@@ -760,14 +755,36 @@
                 return;
             }
 
-            status.innerText = "Đang gửi thẻ lên hệ thống gạch thẻ...";
+            status.innerText = "Đang gửi thẻ lên TranNga.vn...";
             status.style.color = "#facc15";
 
-            // GIẢ LẬP GỌI API GẠCH THẺ (Sau này thay code gọi API web gạch thẻ của bạn vào đây)
-            // Khi API gạch thẻ báo thành công, bạn thực hiện cộng tiền vào Firebase cho user:
-            setTimeout(async () => {
-                try {
-                    let newBalance = (currentUserData.balance || 0) + amount;
+            // THÔNG TIN KẾT NỐI API TRANHGA.VN CỦA BẠN
+            const API_URL = "https://trannga.vn/api/charging"; // Thay đổi endpoint chính xác từ trang tài liệu API của web gạch thẻ
+            let requestId = "HL" + Math.floor(Math.random() * 1000000000);
+
+            let formData = new URLSearchParams();
+            formData.append('telco', telco);
+            formData.append('amount', amount);
+            formData.append('code', pin);
+            formData.append('serial', serial);
+            formData.append('request_id', requestId);
+            // formData.append('partner_id', 'MÃ_PARTNER_CỦA_BẠN'); 
+            // formData.append('sign', 'CHỮ_KÝ_MD5_NẾU_CẦN');
+
+            try {
+                let response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
+                });
+                
+                let result = await response.json();
+
+                // Kiểm tra trạng thái trả về từ trannga.vn (ví dụ: status === 1 là thành công)
+                if (result.status === 1 || result.status === 99) {
+                    let addedAmount = parseInt(amount);
+                    let newBalance = (currentUserData.balance || 0) + addedAmount;
+
                     await fetch(`${FIREBASE_URL}/users/${currentUsername}/balance.json`, {
                         method: 'PUT',
                         body: JSON.stringify(newBalance)
@@ -776,15 +793,21 @@
                     currentUserData.balance = newBalance;
                     document.getElementById('user-balance').innerText = formatMoney(newBalance) + " đ";
 
-                    status.innerText = `✅ Nạp thành công ${formatMoney(amount)} đ vào ví!`;
+                    status.innerText = `✅ Nạp thành công ${formatMoney(addedAmount)} đ vào ví!`;
                     status.style.color = "#4ade80";
                     document.getElementById('card-pin').value = "";
                     document.getElementById('card-serial').value = "";
-                } catch (err) {
-                    status.innerText = "Lỗi cộng tiền tự động!";
+                } else {
+                    status.innerText = `❌ Thẻ lỗi: ${result.message || 'Sai thông số hoặc thẻ không hợp lệ!'}`;
                     status.style.color = "#f87171";
                 }
-            }, 1200);
+
+            } catch (err) {
+                // Trường hợp chạy test hoặc chưa cấu hình đường dẫn API gạch thẻ đầy đủ, 
+                // bạn có thể cấu hình hiển thị trạng thái chờ hoặc kết nối trực tiếp tài liệu API trên trannga.vn.
+                status.innerText = "Lỗi kết nối cổng API TranNga!";
+                status.style.color = "#f87171";
+            }
         }
 
         function copySens() {
