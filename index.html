@@ -253,7 +253,7 @@
         .btn-copy { background: #27272a; color: #facc15; border: 1px solid #facc15; }
         .btn-buy { background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3); }
 
-        /* --- TRANG NẠP TIỀN --- */
+        /* --- TRANG NẠP TIỀN & QR CODE --- */
         .tab-nạp {
             display: flex;
             gap: 8px;
@@ -276,6 +276,24 @@
             background: #27272a;
             color: #facc15;
             border-color: #facc15;
+        }
+
+        .qr-img-box {
+            background: #ffffff;
+            padding: 8px;
+            border-radius: 12px;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 8px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -349,7 +367,6 @@
                 <button class="logout-btn" onclick="logoutApp()" style="background:#ef4444; border:none; color:white; padding:5px 10px; border-radius:6px; font-size:11px; cursor:pointer;">Đăng xuất</button>
             </div>
 
-            <!-- VÍ TIỀN CÁ NHÂN -->
             <div class="wallet-box">
                 <div class="wallet-info">
                     <h4>Số dư ví của bạn</h4>
@@ -372,7 +389,6 @@
             <button class="btn-primary" onclick="lookupSensitivity()">🔍 Lấy Độ Nhạy (100 - 200)</button>
             <div id="lookup-status" class="status-text"></div>
 
-            <!-- KẾT QUẢ ĐỘ NHẠY & MUA FILE 150K -->
             <div id="sens-result" class="sens-result-box">
                 <h5 id="result-title">Cấu Hình Độ Nhạy Free Fire</h5>
                 <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
@@ -384,18 +400,16 @@
                 
                 <button class="btn-action btn-copy" onclick="copySens()">📋 Sao chép độ nhạy</button>
                 
-                <div id="file-purchase-area" style="margin-top: 10px;">
-                    <!-- Nút mua hoặc link tải file linh hoạt -->
-                </div>
+                <div id="file-purchase-area" style="margin-top: 10px;"></div>
             </div>
 
             <div class="footer" style="margin-top: 15px;">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Auto v13.0</span>
+                <span>Auto v15.0</span>
             </div>
         </div>
 
-        <!-- 4. TRANG NẠP TIỀN -->
+        <!-- 4. TRANG NẠP TIỀN CÓ Ô NHẬP SỐ TIỀN VÀ QR ĐỘNG -->
         <div id="deposit-section">
             <div class="dash-header">
                 <h3>Cổng Nạp Tiền Tự Động</h3>
@@ -407,22 +421,30 @@
                 <button id="tab-card" class="tab-nạp-btn" onclick="switchDepositTab('card')">Thẻ Cào (TranNga)</button>
             </div>
 
-            <!-- NỘI DUNG CHUYỂN KHOẢN (ĐÃ CẬP NHẬT STK 423345678 MB BANK) -->
-            <div id="content-banking">
-                <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 12px;">
-                    <p style="font-size: 13px; color: #facc15; font-weight: 700; margin-bottom: 8px;">💳 THÔNG TIN CHUYỂN KHOẢN</p>
-                    <p style="font-size: 12px; color: #d1d5db; margin: 4px 0;">Ngân hàng: <b>MB Bank</b></p>
-                    <p style="font-size: 12px; color: #d1d5db; margin: 4px 0;">Số tài khoản: <b style="color: #4ade80; font-size: 15px;">423345678</b></p>
-                    <p style="font-size: 12px; color: #d1d5db; margin: 4px 0;">Chủ tài khoản: <b>HIEU LIVE</b></p>
-                    <hr style="border: 0; border-top: 1px solid #27272a; margin: 10px 0;">
-                    <p style="font-size: 11px; color: #9ca3af; margin-bottom: 4px;">Nội dung chuyển khoản chính xác:</p>
-                    <b id="qr-syntax" style="color: #000; font-size: 14px; background: #facc15; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 6px;">NAP HIEULIVE</b>
-                    <p style="font-size: 11px; color: #4ade80;">⚡ Tự động cộng tiền vào ví sau 15 giây.</p>
+            <!-- NỘI DUNG CHUYỂN KHOẢN QR -->
+            <div id="content-banking" style="text-align: center;">
+                <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+                    <p style="font-size: 12px; color: #facc15; font-weight: 700; margin-bottom: 8px;">QUÉT MÃ QR NẠP TIỀN</p>
+                    
+                    <!-- Ô nhập số tiền muốn nạp -->
+                    <div class="input-group" style="text-align: left; margin-bottom: 10px;">
+                        <label class="input-label" style="font-size: 11px;">Nhập số tiền cần nạp (VNĐ)</label>
+                        <input type="number" id="deposit-amount-input" class="input-field" placeholder="Ví dụ: 150000" value="150000" oninput="updateQRCode()" style="padding: 8px 12px; font-size: 13px;">
+                    </div>
+
+                    <!-- Khung ảnh QR -->
+                    <div class="qr-img-box">
+                        <img id="qr-code-img" src="" alt="Mã QR Chuyển Khoản">
+                    </div>
+
+                    <p style="font-size: 11px; color: #d1d5db; margin: 3px 0;">MB Bank: <b style="color: #4ade80;">423345678</b> (HIEU LIVE)</p>
+                    <p style="font-size: 11px; color: #9ca3af;">Nội dung chuyển khoản:</p>
+                    <b id="qr-syntax" style="color: #000; font-size: 12px; background: #facc15; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px;">NAP HIEULIVE</b>
                 </div>
-                <button class="btn-primary" onclick="alert('Nếu bạn đã chuyển khoản thành công, hệ thống sẽ tự động ghi nhận sau ít phút!')">Kiểm Tra Lại Số Dư Ví</button>
+                <button class="btn-primary" onclick="alert('Đã tạo mã QR nạp tiền! Vui lòng quét mã trên app ngân hàng.')">Xác Nhận Đã Chuyển Khoản</button>
             </div>
 
-            <!-- NỘI DUNG GẠCH THẺ (TÍCH HỢP TRANHGA.VN) -->
+            <!-- NỘI DUNG GẠCH THẺ (TRANHGA.VN) -->
             <div id="content-card" style="display: none;">
                 <div class="input-group">
                     <label class="input-label">Chọn Nhà Mạng</label>
@@ -463,7 +485,7 @@
     <script>
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
         const MEDIAFIRE_LINK = "https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file";
-        const FILE_PRICE = 150000; // Giá file 150k
+        const FILE_PRICE = 150000;
         
         let selectedOS = "iOS";
         let currentUserData = null;
@@ -479,10 +501,23 @@
                     document.getElementById('dashboard-page').style.display = 'block';
                     document.getElementById('welcome-title').innerText = `Hi, ${savedUser}`;
                     document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance || 0) + " đ";
-                    document.getElementById('qr-syntax').innerText = `NAP ${savedUser.toUpperCase()}`;
+                    
+                    updateQRCode();
                 }
             }
         };
+
+        // Hàm cập nhật mã QR động theo số tiền và tên tài khoản
+        function updateQRCode() {
+            if (!currentUsername) return;
+            let amount = document.getElementById('deposit-amount-input').value.trim() || "0";
+            let syntax = `NAP ${currentUsername.toUpperCase()}`;
+            document.getElementById('qr-syntax').innerText = syntax;
+
+            // Link API VietQR tự động sinh mã kèm số tiền và nội dung
+            let qrUrl = `https://img.vietqr.io/image/MB-423345678-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(syntax)}&accountName=HIEU%20LIVE`;
+            document.getElementById('qr-code-img').src = qrUrl;
+        }
 
         async function fetchUserData(username) {
             try {
@@ -604,7 +639,7 @@
                         document.getElementById('dashboard-page').style.display = 'block';
                         document.getElementById('welcome-title').innerText = `Hi, ${user}`;
                         document.getElementById('user-balance').innerText = formatMoney(userData.balance || 0) + " đ";
-                        document.getElementById('qr-syntax').innerText = `NAP ${user.toUpperCase()}`;
+                        updateQRCode();
                     }, 700);
                 } else {
                     status.innerText = 'Sai tài khoản hoặc mật khẩu!';
@@ -751,15 +786,14 @@
 
             if (!pin || !serial) {
                 status.innerText = "Vui lòng nhập đầy đủ mã PIN và Số Seri!";
-                status.style.color = "#f87171";
+                status.style.color = '#f87171';
                 return;
             }
 
             status.innerText = "Đang gửi thẻ lên TranNga.vn...";
-            status.style.color = "#facc15";
+            status.style.color = '#facc15';
 
-            // THÔNG TIN KẾT NỐI API TRANHGA.VN CỦA BẠN
-            const API_URL = "https://trannga.vn/api/charging"; // Thay đổi endpoint chính xác từ trang tài liệu API của web gạch thẻ
+            const API_URL = "https://trannga.vn/api/charging";[cite: 2]
             let requestId = "HL" + Math.floor(Math.random() * 1000000000);
 
             let formData = new URLSearchParams();
@@ -768,8 +802,6 @@
             formData.append('code', pin);
             formData.append('serial', serial);
             formData.append('request_id', requestId);
-            // formData.append('partner_id', 'MÃ_PARTNER_CỦA_BẠN'); 
-            // formData.append('sign', 'CHỮ_KÝ_MD5_NẾU_CẦN');
 
             try {
                 let response = await fetch(API_URL, {
@@ -780,7 +812,6 @@
                 
                 let result = await response.json();
 
-                // Kiểm tra trạng thái trả về từ trannga.vn (ví dụ: status === 1 là thành công)
                 if (result.status === 1 || result.status === 99) {
                     let addedAmount = parseInt(amount);
                     let newBalance = (currentUserData.balance || 0) + addedAmount;
@@ -794,19 +825,16 @@
                     document.getElementById('user-balance').innerText = formatMoney(newBalance) + " đ";
 
                     status.innerText = `✅ Nạp thành công ${formatMoney(addedAmount)} đ vào ví!`;
-                    status.style.color = "#4ade80";
+                    status.style.color = '#4ade80';
                     document.getElementById('card-pin').value = "";
                     document.getElementById('card-serial').value = "";
                 } else {
                     status.innerText = `❌ Thẻ lỗi: ${result.message || 'Sai thông số hoặc thẻ không hợp lệ!'}`;
-                    status.style.color = "#f87171";
+                    status.style.color = '#f87171';
                 }
-
             } catch (err) {
-                // Trường hợp chạy test hoặc chưa cấu hình đường dẫn API gạch thẻ đầy đủ, 
-                // bạn có thể cấu hình hiển thị trạng thái chờ hoặc kết nối trực tiếp tài liệu API trên trannga.vn.
                 status.innerText = "Lỗi kết nối cổng API TranNga!";
-                status.style.color = "#f87171";
+                status.style.color = '#f87171';
             }
         }
 
