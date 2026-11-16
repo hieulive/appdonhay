@@ -310,7 +310,7 @@
             box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
         }
 
-        /* --- HIỆU ỨNG TRƯỢT SANG PHẢI NHƯ DÒNG NƯỚC (SLIDE IN FROM LEFT) --- */
+        /* --- HIỆU ỨNG TRƯỢT SANG PHẢI NHƯ DÒNG NƯỚC --- */
         .sens-result-box {
             background: #18181b;
             border: 1px solid #27272a;
@@ -332,17 +332,49 @@
         .sens-result-box h5 {
             color: #facc15;
             font-size: 12px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             text-transform: uppercase;
         }
 
         .sens-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 12px;
             color: #d1d5db;
-            padding: 6px 0;
+            padding: 8px 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sens-info-col {
+            flex: 1;
+        }
+
+        .sens-value-col {
+            width: 45px;
+            text-align: right;
+            font-weight: 900;
+            color: #facc15;
+            font-size: 13px;
+        }
+
+        /* --- THANH NGANG ĐỘ NHẠY (SLIDER BAR) --- */
+        .slider-bar-bg {
+            width: 100%;
+            height: 5px;
+            background: #27272a;
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ca8a04, #facc15, #fef08a);
+            border-radius: 3px;
+            transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .btn-action {
@@ -352,7 +384,7 @@
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 14px;
             border: none;
             text-align: center;
         }
@@ -871,15 +903,57 @@
             <button class="btn-primary" onclick="playClickSound(); lookupSensitivity()" style="padding: 12px; font-size: 13px;">Lấy Thông Số Độ Nhạy</button>
             <div id="lookup-status" class="status-text"></div>
 
-            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY VỚI HIỆU ỨNG TRƯỢT MƯỢT NHƯ NƯỚC -->
+            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY CÓ THANH NGANG TRỰC QUAN & HIỆU ỨNG TRƯỢT SANG PHẢI -->
             <div id="sens-result" class="sens-result-box">
                 <h5 id="result-title">Thông Số Độ Nhạy</h5>
-                <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
-                <div class="sens-row"><span>Cận cảnh (Red Dot):</span> <b id="r-reddot">0</b></div>
-                <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="r-scope2">0</b></div>
-                <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="r-scope4">0</b></div>
-                <div class="sens-row"><span>AWM:</span> <b id="r-awm">0</b></div>
-                <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="r-btn-size">45%</b></div>
+                
+                <div class="sens-row">
+                    <div class="sens-info-col">
+                        <span>Nhìn xung quanh:</span>
+                        <div class="slider-bar-bg"><div id="bar-general" class="slider-bar-fill"></div></div>
+                    </div>
+                    <div class="sens-value-col" id="r-general">0</div>
+                </div>
+
+                <div class="sens-row">
+                    <div class="sens-info-col">
+                        <span>Cận cảnh (Red Dot):</span>
+                        <div class="slider-bar-bg"><div id="bar-reddot" class="slider-bar-fill"></div></div>
+                    </div>
+                    <div class="sens-value-col" id="r-reddot">0</div>
+                </div>
+
+                <div class="sens-row">
+                    <div class="sens-info-col">
+                        <span>Ống Ngắm 2x:</span>
+                        <div class="slider-bar-bg"><div id="bar-scope2" class="slider-bar-fill"></div></div>
+                    </div>
+                    <div class="sens-value-col" id="r-scope2">0</div>
+                </div>
+
+                <div class="sens-row">
+                    <div class="sens-info-col">
+                        <span>Ống Ngắm 4x:</span>
+                        <div class="slider-bar-bg"><div id="bar-scope4" class="slider-bar-fill"></div></div>
+                    </div>
+                    <div class="sens-value-col" id="r-scope4">0</div>
+                </div>
+
+                <div class="sens-row">
+                    <div class="sens-info-col">
+                        <span>AWM:</span>
+                        <div class="slider-bar-bg"><div id="bar-awm" class="slider-bar-fill"></div></div>
+                    </div>
+                    <div class="sens-value-col" id="r-awm">0</div>
+                </div>
+
+                <div class="sens-row" style="border-bottom: none;">
+                    <div class="sens-info-col">
+                        <span>Nút bắn tối ưu:</span>
+                    </div>
+                    <div class="sens-value-col" id="r-btn-size" style="color: #4ade80;">45%</div>
+                </div>
+
                 <button class="btn-action btn-copy" onclick="playClickSound(); copySens()">📋 Sao chép độ nhạy</button>
             </div>
 
@@ -1003,7 +1077,7 @@
 
             <div class="footer">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Pro v20.7</span>
+                <span>Pro v20.8</span>
             </div>
         </div>
 
@@ -1397,7 +1471,6 @@
             status.innerText = 'Đang tìm thông số độ nhạy theo máy...';
             status.style.color = '#facc15';
 
-            // Reset hiệu ứng trượt để mỗi lần bấm tra cứu đều chạy lại hiệu ứng mượt mà
             resultBox.classList.remove('show');
 
             try {
@@ -1424,12 +1497,23 @@
                 }
 
                 document.getElementById('result-title').innerText = `Thông Số Độ Nhạy - ${sensData.deviceName.toUpperCase()} (${sensData.os})`;
+                
+                // Gán giá trị số
                 document.getElementById('r-general').innerText = sensData.general;
                 document.getElementById('r-reddot').innerText = sensData.redDot;
                 document.getElementById('r-scope2').innerText = sensData.scope2;
                 document.getElementById('r-scope4').innerText = sensData.scope4;
                 document.getElementById('r-awm').innerText = sensData.awm;
                 document.getElementById('r-btn-size').innerText = sensData.btnSize;
+
+                // Cập nhật độ dài thanh ngang (Max = 200)
+                setTimeout(() => {
+                    document.getElementById('bar-general').style.width = Math.min((sensData.general / 200) * 100, 100) + '%';
+                    document.getElementById('bar-reddot').style.width = Math.min((sensData.redDot / 200) * 100, 100) + '%';
+                    document.getElementById('bar-scope2').style.width = Math.min((sensData.scope2 / 200) * 100, 100) + '%';
+                    document.getElementById('bar-scope4').style.width = Math.min((sensData.scope4 / 200) * 100, 100) + '%';
+                    document.getElementById('bar-awm').style.width = Math.min((sensData.awm / 200) * 100, 100) + '%';
+                }, 100);
 
                 // Kích hoạt hiệu ứng trượt mượt mà sang phải
                 setTimeout(() => {
