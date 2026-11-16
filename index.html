@@ -34,6 +34,7 @@
             padding: 24px 20px;
             box-shadow: 0 0 60px rgba(250, 204, 21, 0.15), inset 0 0 20px rgba(250, 204, 21, 0.05);
             position: relative;
+            overflow: hidden;
         }
 
         .header-title {
@@ -309,6 +310,7 @@
             box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
         }
 
+        /* --- HIỆU ỨNG TRƯỢT SANG PHẢI NHƯ DÒNG NƯỚC (SLIDE IN FROM LEFT) --- */
         .sens-result-box {
             background: #18181b;
             border: 1px solid #27272a;
@@ -316,6 +318,15 @@
             padding: 16px;
             margin-top: 14px;
             display: none;
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .sens-result-box.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .sens-result-box h5 {
@@ -572,7 +583,7 @@
             60% {transform: translateY(-3px);}
         }
 
-        /* --- STYLING CHO MODAL THÔNG BÁO XỊN XÒ --- */
+        /* --- STYLING CHO MODAL THÔNG BÁO --- */
         #notice-modal {
             display: none;
             position: fixed;
@@ -583,12 +594,6 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
-            animation: fadeInModal 0.25s ease;
-        }
-
-        @keyframes fadeInModal {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .modal-content {
@@ -618,11 +623,6 @@
             justify-content: center;
         }
 
-        .modal-close-x:hover {
-            color: #fff;
-            background: #27272a;
-        }
-
         .modal-header-icon {
             width: 60px; height: 60px;
             background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -642,7 +642,6 @@
             color: #ffffff;
             margin-bottom: 2px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .modal-subtitle {
@@ -661,7 +660,6 @@
             max-height: 260px;
             overflow-y: auto;
             margin-bottom: 16px;
-            padding-right: 2px;
         }
 
         .modal-link-item {
@@ -704,11 +702,6 @@
             text-align: center;
         }
 
-        .btn-modal-remind:hover {
-            background: #27272a;
-            color: #ffffff;
-        }
-
         .btn-modal-understand {
             flex: 1.2;
             background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -722,15 +715,11 @@
             text-align: center;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
         }
-
-        .btn-modal-understand:hover {
-            filter: brightness(1.1);
-        }
     </style>
 </head>
 <body>
 
-    <!-- BẢNG POPUP THÔNG BÁO XỊN XÒ -->
+    <!-- BẢNG POPUP THÔNG BÁO -->
     <div id="notice-modal">
         <div class="modal-content">
             <button class="modal-close-x" onclick="playClickSound(); closeNoticeModal()">×</button>
@@ -882,6 +871,7 @@
             <button class="btn-primary" onclick="playClickSound(); lookupSensitivity()" style="padding: 12px; font-size: 13px;">Lấy Thông Số Độ Nhạy</button>
             <div id="lookup-status" class="status-text"></div>
 
+            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY VỚI HIỆU ỨNG TRƯỢT MƯỢT NHƯ NƯỚC -->
             <div id="sens-result" class="sens-result-box">
                 <h5 id="result-title">Thông Số Độ Nhạy</h5>
                 <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
@@ -1013,7 +1003,7 @@
 
             <div class="footer">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Pro v20.6</span>
+                <span>Pro v20.7</span>
             </div>
         </div>
 
@@ -1197,7 +1187,7 @@
                     }
 
                     updateQRCode();
-                    showNoticeModal(); // HIỆN THÔNG BÁO KHI VÀO ACC
+                    showNoticeModal();
                 }
             }
         };
@@ -1393,6 +1383,7 @@
         async function lookupSensitivity() {
             let deviceName = document.getElementById('device-name-input').value.trim();
             let status = document.getElementById('lookup-status');
+            let resultBox = document.getElementById('sens-result');
 
             if (!deviceName) {
                 status.innerText = 'Vui lòng nhập tên thiết bị của bạn!';
@@ -1405,6 +1396,9 @@
 
             status.innerText = 'Đang tìm thông số độ nhạy theo máy...';
             status.style.color = '#facc15';
+
+            // Reset hiệu ứng trượt để mỗi lần bấm tra cứu đều chạy lại hiệu ứng mượt mà
+            resultBox.classList.remove('show');
 
             try {
                 let res = await fetch(dbPath);
@@ -1429,7 +1423,7 @@
                     });
                 }
 
-                document.getElementById('result-title').innerText = `Thông Số Độ Nhạy - ${sensData.deviceName} (${sensData.os})`;
+                document.getElementById('result-title').innerText = `Thông Số Độ Nhạy - ${sensData.deviceName.toUpperCase()} (${sensData.os})`;
                 document.getElementById('r-general').innerText = sensData.general;
                 document.getElementById('r-reddot').innerText = sensData.redDot;
                 document.getElementById('r-scope2').innerText = sensData.scope2;
@@ -1437,7 +1431,11 @@
                 document.getElementById('r-awm').innerText = sensData.awm;
                 document.getElementById('r-btn-size').innerText = sensData.btnSize;
 
-                document.getElementById('sens-result').style.display = 'block';
+                // Kích hoạt hiệu ứng trượt mượt mà sang phải
+                setTimeout(() => {
+                    resultBox.classList.add('show');
+                }, 50);
+
                 status.innerText = 'Đã tìm thấy độ nhạy phù hợp!';
                 status.style.color = '#4ade80';
 
@@ -1674,7 +1672,7 @@
                         }
 
                         updateQRCode();
-                        showNoticeModal(); // HIỆN BẢNG THÔNG BÁO KHI VÀO ACC
+                        showNoticeModal();
                     }, 600);
                 } else {
                     status.innerText = 'Sai tài khoản hoặc mật khẩu!';
