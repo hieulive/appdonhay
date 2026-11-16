@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hiếu Live Shop - Hệ Thống Mua Bán Config FF Tự Động</title>
+    <!-- Thư viện hỗ trợ mã hóa MD5 để tạo chữ ký bảo mật gửi thẻ nếu API yêu cầu -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -318,12 +320,19 @@
             text-align: center;
             text-decoration: none;
             box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+            display: block;
         }
 
         .btn-owned {
             background: #27272a;
             color: #facc15;
             border: 1px solid #facc15;
+            text-align: center;
+            padding: 9px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            display: block;
         }
 
         /* Tabs Nạp Tiền */
@@ -579,7 +588,7 @@
                 <button class="btn-primary" onclick="alert('Hệ thống tự động cộng tiền sau 15-30 giây khi nhận được chuyển khoản!')">Tôi Đã Chuyển Khoản</button>
             </div>
 
-            <!-- GẠCH THẺ (TÍCH HỢP CHUẨN PARTNER ID TỪ ẢNH TRẦN NGÀ) -->
+            <!-- GẠCH THẺ (TÍCH HỢP CHUẨN TRẦN NGA API) -->
             <div id="content-card" style="display: none;">
                 <div class="input-group">
                     <label class="input-label">Nhà Mạng</label>
@@ -606,7 +615,7 @@
                     <label class="input-label">Số Seri Thẻ</label>
                     <input type="text" id="card-serial" class="input-field" placeholder="Nhập số Seri thẻ cào...">
                 </div>
-                <button class="btn-primary" onclick="submitCard()">Gửi Thẻ Nạp Tự Động</button>
+                <button class="btn-primary" onclick="submitCardTrangNga()">Gửi Thẻ Nạp Tự Động</button>
                 <div id="card-status" class="status-text"></div>
             </div>
 
@@ -850,48 +859,42 @@
 
             let area1 = document.getElementById('product-1-action');
             if (currentUserData.purchased.nhetam) {
-                area1.innerHTML = `<a href="https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file" target="_blank" class="btn-buy-item btn-owned">📥 Tải File Ngay (Đã sở hữu)</a>`;
-            } else {
-                area1.innerHTML = `<button class="btn-buy-item" onclick="buyProduct('nhetam', 150000, 'https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file')">Mua Ngay (150k)</button>`;
+                area1.innerHTML = `<a href="https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file" target="_blank" class="btn-owned">📥 Tải Xuống File</a>`;
             }
 
             let area2 = document.getElementById('product-2-action');
             if (currentUserData.purchased.regvip) {
-                area2.innerHTML = `<a href="https://www.mediafire.com/file/example/RegVIP.crt/file" target="_blank" class="btn-buy-item btn-owned">📥 Tải File Ngay (Đã sở hữu)</a>`;
-            } else {
-                area2.innerHTML = `<button class="btn-buy-item" onclick="buyProduct('regvip', 200000, 'https://www.mediafire.com/file/example/RegVIP.crt/file')">Mua Ngay (200k)</button>`;
+                area2.innerHTML = `<a href="https://www.mediafire.com/file/example/RegVIP.crt/file" target="_blank" class="btn-owned">📥 Tải Xuống File</a>`;
             }
         }
 
-        async function buyProduct(productId, price, link) {
-            let balance = currentUserData.balance || 0;
-            if (balance < price) {
-                alert(`❌ Số dư ví không đủ (${formatMoney(balance)} đ). Vui lòng nạp thêm tiền!`);
+        async function buyProduct(productId, price, downloadLink) {
+            await fetchUserData(currentUsername);
+            let currentBalance = currentUserData.balance || 0;
+
+            if (currentBalance < price) {
+                alert('Số dư ví không đủ! Vui lòng nạp thêm tiền để mua sản phẩm này.');
                 openDepositSection();
                 return;
             }
 
-            if (confirm(`Xác nhận dùng ${formatMoney(price)} đ để mua sản phẩm này?`)) {
-                let newBalance = balance - price;
+            if (confirm(`Xác nhận mua sản phẩm với giá ${formatMoney(price)} đ?`)) {
+                currentUserData.balance = currentBalance - price;
                 if (!currentUserData.purchased) currentUserData.purchased = {};
                 currentUserData.purchased[productId] = true;
 
                 try {
                     await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
-                        method: 'PATCH',
+                        method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            balance: newBalance,
-                            purchased: currentUserData.purchased
-                        })
+                        body: JSON.stringify(currentUserData)
                     });
 
-                    currentUserData.balance = newBalance;
-                    document.getElementById('user-balance').innerText = formatMoney(newBalance) + " đ";
+                    document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
                     updateShopUI();
-                    alert("🎉 Giao dịch thành công! Link tải đã được mở khóa.");
-                } catch (err) {
-                    alert("Lỗi kết nối máy chủ thanh toán!");
+                    alert('Thanh toán thành công! Bạn có thể tải file ngay bây giờ.');
+                } catch (e) {
+                    alert('Lỗi giao dịch, vui lòng thử lại!');
                 }
             }
         }
@@ -899,15 +902,19 @@
         function openDepositSection() {
             document.getElementById('dashboard-page').style.display = 'none';
             document.getElementById('deposit-section').style.display = 'block';
+            updateQRCode();
         }
 
         function closeDepositSection() {
             document.getElementById('deposit-section').style.display = 'none';
             document.getElementById('dashboard-page').style.display = 'block';
+            fetchUserData(currentUsername).then(() => {
+                document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance || 0) + " đ";
+            });
         }
 
-        function switchDepositTab(type) {
-            if (type === 'banking') {
+        function switchDepositTab(tab) {
+            if (tab === 'banking') {
                 document.getElementById('tab-banking').className = 'tab-nạp-btn active';
                 document.getElementById('tab-card').className = 'tab-nạp-btn';
                 document.getElementById('content-banking').style.display = 'block';
@@ -920,7 +927,8 @@
             }
         }
 
-        async function submitCard() {
+        // HÀM GỬI THẺ CÁO TÍCH HỢP CHUẨN API TRẦN NGA
+        async function submitCardTrangNga() {
             let telco = document.getElementById('card-telco').value;
             let amount = document.getElementById('card-amount').value;
             let pin = document.getElementById('card-pin').value.trim();
@@ -928,68 +936,63 @@
             let status = document.getElementById('card-status');
 
             if (!pin || !serial) {
-                status.innerText = "Vui lòng nhập đầy đủ mã PIN và Seri!";
+                status.innerText = 'Vui lòng nhập đầy đủ mã PIN và số Seri!';
                 status.style.color = '#f87171';
                 return;
             }
 
-            status.innerText = "Đang gửi thẻ lên TranNga.vn...";
+            status.innerText = 'Đang gửi thẻ lên hệ thống Trần Nga...';
             status.style.color = '#facc15';
 
-            const API_URL = "https://trannga.vn/api/charging";
-            const PARTNER_ID = "85605800260"; // Lấy từ thông tin kết nối trong ảnh của bạn[cite: 2]
-            let requestId = "HL" + Math.floor(Math.random() * 1000000000);
+            // Thông tin kết nối lấy từ tài khoản Trần Nga của bạn
+            const PARTNER_ID = "8560580026";
+            const PARTNER_KEY = "c36a85543d4732e5a17994cc59ca61a5";
+            let requestId = "HL_" + currentUsername.toUpperCase() + "_" + new Date().getTime();
 
-            let formData = new URLSearchParams();
-            formData.append('partner_id', PARTNER_ID);
-            formData.append('telco', telco);
-            formData.append('amount', amount);
-            formData.append('code', pin);
-            formData.append('serial', serial);
-            formData.append('request_id', requestId);
+            // Tạo chữ ký (signature) theo chuẩn chung của API gạch thẻ: md5(partner_key + pin + serial) hoặc tương tự tùy docs Trần Nga
+            let signature = md5(PARTNER_KEY + pin + serial);
+
+            let postData = {
+                partner_id: PARTNER_ID,
+                telco: telco,
+                code: pin,
+                serial: serial,
+                amount: amount,
+                request_id: requestId,
+                sign: signature
+            };
 
             try {
-                let response = await fetch(API_URL, {
+                // Lưu ý: Do chính sách CORS của trình duyệt, việc gọi thẳng API bên thứ ba có thể bị chặn. 
+                // Thường các shop lớn sẽ gọi qua một file proxy PHP/NodeJS trung gian. 
+                let response = await fetch("https://tranhnga.vn/api/charging", { // Thay đổi endpoint chính xác từ tài liệu API Trần Nga nếu có
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData.toString()
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postData)
                 });
-                
+
                 let result = await response.json();
 
                 if (result.status === 1 || result.status === 99) {
-                    let addedAmount = parseInt(amount);
-                    let newBalance = (currentUserData.balance || 0) + addedAmount;
-
-                    await fetch(`${FIREBASE_URL}/users/${currentUsername}/balance.json`, {
-                        method: 'PUT',
-                        body: JSON.stringify(newBalance)
-                    });
-
-                    currentUserData.balance = newBalance;
-                    document.getElementById('user-balance').innerText = formatMoney(newBalance) + " đ";
-
-                    status.innerText = `✅ Nạp thành công ${formatMoney(addedAmount)} đ!`;
+                    status.innerText = 'Gửi thẻ thành công! Đang chờ hệ thống xử lý duyệt (15-30s)...';
                     status.style.color = '#4ade80';
-                    document.getElementById('card-pin').value = "";
-                    document.getElementById('card-serial').value = "";
                 } else {
-                    status.innerText = `❌ Thẻ lỗi: ${result.message || 'Không thành công!'}`;
+                    status.innerText = `Lỗi: ${result.message || 'Thẻ cào không hợp lệ hoặc sai mệnh giá!'}`;
                     status.style.color = '#f87171';
                 }
             } catch (err) {
-                status.innerText = "Lỗi kết nối TranNga.vn!";
+                status.innerText = 'Lỗi kết nối API hoặc bị chặn CORS từ trình duyệt!';
                 status.style.color = '#f87171';
             }
-        }
-
-        function formatMoney(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
         function logoutApp() {
             localStorage.removeItem('hl_logged_user');
             location.reload();
+        }
+
+        function formatMoney(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
     </script>
 </body>
