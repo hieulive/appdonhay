@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Độ Nhạy Hiếu Live - Đăng Nhập</title>
+    <title>App Độ Nhạy Hiếu Live - Cloud System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -83,10 +83,6 @@
             box-shadow: 0 0 10px rgba(234, 179, 8, 0.2);
         }
 
-        .input-field::placeholder {
-            color: #6b7280;
-        }
-
         .btn-primary {
             width: 100%;
             background: linear-gradient(135deg, #eab308, #ca8a04);
@@ -104,7 +100,6 @@
 
         .btn-primary:hover {
             opacity: 0.9;
-            box-shadow: 0 6px 20px rgba(234, 179, 8, 0.6);
         }
 
         .status-text {
@@ -112,6 +107,7 @@
             font-size: 13px;
             color: #9ca3af;
             margin: 16px 0;
+            min-height: 18px;
         }
 
         .switch-auth {
@@ -126,10 +122,6 @@
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
-        }
-
-        .switch-auth a:hover {
-            text-decoration: underline;
         }
 
         .footer {
@@ -148,12 +140,11 @@
             text-decoration: none;
         }
 
-        /* --- CÁC TRANG ẨN/HIỆN --- */
         #register-section, #dashboard-page {
             display: none;
         }
 
-        /* --- TRANG 2: DASHBOARD CHÍNH --- */
+        /* Dashboard */
         .dash-header {
             display: flex;
             justify-content: space-between;
@@ -199,7 +190,6 @@
             margin-top: 10px;
         }
 
-        /* Toggle Switch */
         .switch {
             position: relative;
             display: inline-block;
@@ -207,11 +197,7 @@
             height: 24px;
         }
 
-        .switch input { 
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .switch input { opacity: 0; width: 0; height: 0; }
 
         .slider {
             position: absolute;
@@ -234,13 +220,8 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
-            background-color: #eab308;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(24px);
-        }
+        input:checked + .slider { background-color: #eab308; }
+        input:checked + .slider:before { transform: translateX(24px); }
     </style>
 </head>
 <body>
@@ -264,7 +245,6 @@
             </div>
 
             <button class="btn-primary" onclick="handleLogin()">Đăng Nhập</button>
-
             <div id="login-status" class="status-text"></div>
 
             <div class="switch-auth">
@@ -272,7 +252,7 @@
             </div>
 
             <div class="footer">
-                <span>HIẾU LIVE SYSTEM</span>
+                <span>HIẾU LIVE CLOUD</span>
                 <a href="#" onclick="alert('Liên hệ Admin qua Telegram để được hỗ trợ!')">Hỗ trợ</a>
             </div>
         </div>
@@ -281,12 +261,12 @@
         <div id="register-section">
             <div class="header-title">
                 <h2>Đăng Ký Tài Khoản</h2>
-                <p>Tạo tài khoản sử dụng phần mềm</p>
+                <p>Lưu trữ đồng bộ trên tất cả thiết bị</p>
             </div>
 
             <div class="input-group">
-                <label class="input-label">Tài khoản mới</label>
-                <input type="text" id="reg-user" class="input-field" placeholder="Chọn tên tài khoản...">
+                <label class="input-label">Tài khoản mới (viết liền không dấu)</label>
+                <input type="text" id="reg-user" class="input-field" placeholder="Ví dụ: hieulive99">
             </div>
 
             <div class="input-group">
@@ -295,7 +275,6 @@
             </div>
 
             <button class="btn-primary" onclick="handleRegister()">Đăng Ký</button>
-
             <div id="reg-status" class="status-text"></div>
 
             <div class="switch-auth">
@@ -303,19 +282,19 @@
             </div>
 
             <div class="footer">
-                <span>HIẾU LIVE SYSTEM</span>
+                <span>HIẾU LIVE CLOUD</span>
                 <a href="#" onclick="alert('Liên hệ Admin qua Telegram để được hỗ trợ!')">Hỗ trợ</a>
             </div>
         </div>
 
-        <!-- 3. TRANG DASHBOARD CHÍNH (Sau khi đăng nhập) -->
+        <!-- 3. TRANG DASHBOARD CHÍNH -->
         <div id="dashboard-page">
             <div class="dash-header">
                 <h3>Hiếu Live Dashboard</h3>
                 <button class="logout-btn" onclick="logoutApp()">Đăng xuất</button>
             </div>
 
-            <div class="status-text" style="color: #4ade80; margin-bottom: 15px;">🟢 Đăng nhập thành công</div>
+            <div class="status-text" style="color: #4ade80; margin-bottom: 15px;">🟢 Đã kết nối máy chủ Cloud</div>
 
             <div class="input-group" style="margin-bottom: 12px;">
                 <label class="input-label">Mã thiết bị của bạn (Duy nhất)</label>
@@ -346,13 +325,16 @@
 
             <div class="footer">
                 <span>HIẾU LIVE SYSTEM</span>
-                <span>Phiên bản v3.0</span>
+                <span>Phiên bản Cloud v4.0</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Chuyển qua lại form Đăng nhập / Đăng ký
+        // ================= CẤU HÌNH FIREBASE =================
+        const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
+        // =====================================================
+
         function showRegister() {
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('register-section').style.display = 'block';
@@ -365,15 +347,9 @@
             document.getElementById('login-status').innerText = '';
         }
 
-        // Lấy danh sách tài khoản đã lưu từ bộ nhớ trình duyệt
-        function getSavedAccounts() {
-            let accounts = localStorage.getItem('hl_accounts');
-            return accounts ? JSON.parse(accounts) : {};
-        }
-
-        // Xử lý Đăng ký tài khoản mới
-        function handleRegister() {
-            let user = document.getElementById('reg-user').value.trim();
+        // Xử lý Đăng ký lên Firebase
+        async function handleRegister() {
+            let user = document.getElementById('reg-user').value.trim().toLowerCase();
             let pass = document.getElementById('reg-pass').value.trim();
             let status = document.getElementById('reg-status');
 
@@ -383,30 +359,48 @@
                 return;
             }
 
-            let accounts = getSavedAccounts();
-
-            if (accounts[user]) {
-                status.innerText = 'Tài khoản này đã tồn tại, vui lòng chọn tên khác!';
+            if (!/^[a-z0-9_]+$/.test(user)) {
+                status.innerText = 'Tài khoản chỉ được dùng chữ cái thường, số và dấu gạch dưới!';
                 status.style.color = '#f87171';
                 return;
             }
 
-            // Lưu tài khoản mới vào danh sách
-            accounts[user] = pass;
-            localStorage.setItem('hl_accounts', JSON.stringify(accounts));
+            status.innerText = 'Đang kiểm tra và tạo tài khoản...';
+            status.style.color = '#facc15';
 
-            status.innerText = 'Đăng ký thành công! Đang chuyển hướng...';
-            status.style.color = '#4ade80';
+            try {
+                let checkRes = await fetch(`${FIREBASE_URL}/users/${user}.json`);
+                let existingUser = await checkRes.json();
 
-            setTimeout(() => {
-                showLogin();
-                document.getElementById('login-user').value = user;
-            }, 1000);
+                if (existingUser) {
+                    status.innerText = 'Tài khoản này đã có người dùng!';
+                    status.style.color = '#f87171';
+                    return;
+                }
+
+                await fetch(`${FIREBASE_URL}/users/${user}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: pass, createdAt: new Date().toISOString() })
+                });
+
+                status.innerText = 'Đăng ký thành công! Đang chuyển sang đăng nhập...';
+                status.style.color = '#4ade80';
+
+                setTimeout(() => {
+                    showLogin();
+                    document.getElementById('login-user').value = user;
+                }, 1000);
+
+            } catch (error) {
+                status.innerText = 'Lỗi kết nối máy chủ! Kiểm tra lại link Firebase.';
+                status.style.color = '#f87171';
+            }
         }
 
-        // Xử lý Đăng nhập
-        function handleLogin() {
-            let user = document.getElementById('login-user').value.trim();
+        // Xử lý Đăng nhập từ Firebase
+        async function handleLogin() {
+            let user = document.getElementById('login-user').value.trim().toLowerCase();
             let pass = document.getElementById('login-pass').value.trim();
             let status = document.getElementById('login-status');
 
@@ -416,26 +410,32 @@
                 return;
             }
 
-            let accounts = getSavedAccounts();
+            status.innerText = 'Đang xác thực tài khoản...';
+            status.style.color = '#facc15';
 
-            // Kiểm tra tài khoản có tồn tại và khớp mật khẩu không
-            if (accounts[user] && accounts[user] === pass) {
-                status.innerText = 'Đăng nhập thành công!';
-                status.style.color = '#4ade80';
+            try {
+                let res = await fetch(`${FIREBASE_URL}/users/${user}.json`);
+                let userData = await res.json();
 
-                setTimeout(() => {
-                    // Chuyển sang trang Dashboard
-                    document.getElementById('login-section').style.display = 'none';
-                    document.getElementById('dashboard-page').style.display = 'block';
-                    loadDeviceID();
-                }, 800);
-            } else {
-                status.innerText = 'Sai tài khoản hoặc mật khẩu!';
+                if (userData && userData.password === pass) {
+                    status.innerText = 'Đăng nhập thành công!';
+                    status.style.color = '#4ade80';
+
+                    setTimeout(() => {
+                        document.getElementById('login-section').style.display = 'none';
+                        document.getElementById('dashboard-page').style.display = 'block';
+                        loadDeviceID();
+                    }, 800);
+                } else {
+                    status.innerText = 'Sai tài khoản hoặc mật khẩu!';
+                    status.style.color = '#f87171';
+                }
+            } catch (error) {
+                status.innerText = 'Lỗi kết nối máy chủ!';
                 status.style.color = '#f87171';
             }
         }
 
-        // Tạo hoặc lấy mã thiết bị riêng biệt cho từng máy
         function loadDeviceID() {
             let deviceId = localStorage.getItem('hl_device_id');
             if (!deviceId) {
@@ -447,7 +447,6 @@
             document.getElementById('device-id').value = deviceId;
         }
 
-        // Đăng xuất quay lại màn hình đăng nhập
         function logoutApp() {
             document.getElementById('dashboard-page').style.display = 'none';
             document.getElementById('login-section').style.display = 'block';
