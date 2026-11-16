@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Độ Nhạy Hiếu Live - FF Cloud System</title>
+    <title>App Độ Nhạy Hiếu Live - VIP System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -144,7 +144,7 @@
             display: none;
         }
 
-        /* --- Dashboard & Kho Độ Nhạy FF (100-200) --- */
+        /* --- Dashboard & VIP System --- */
         .dash-header {
             display: flex;
             justify-content: space-between;
@@ -155,7 +155,7 @@
         }
 
         .dash-header h3 {
-            font-size: 16px;
+            font-size: 15px;
             color: #facc15;
         }
 
@@ -245,10 +245,41 @@
             cursor: pointer;
             margin-top: 8px;
             box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            text-decoration: none;
+            display: block;
+            text-align: center;
         }
 
-        .btn-download-file:hover {
-            opacity: 0.9;
+        /* Khung nhập mã kích hoạt VIP ngay trên Dashboard */
+        .vip-activate-box {
+            background: rgba(234, 179, 8, 0.08);
+            border: 1px dashed rgba(234, 179, 8, 0.5);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .vip-activate-box p {
+            font-size: 12px;
+            color: #fde047;
+            margin-bottom: 8px;
+        }
+
+        .vip-input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-unlock {
+            background: #eab308;
+            color: #000;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -281,7 +312,7 @@
 
             <div class="footer">
                 <span>HIẾU LIVE CLOUD</span>
-                <a href="#" onclick="alert('Liên hệ Admin qua Telegram để được hỗ trợ!')">Hỗ trợ</a>
+                <a href="#" onclick="alert('Liên hệ Admin qua Telegram để mua VIP!')">Hỗ trợ / Mua VIP</a>
             </div>
         </div>
 
@@ -311,14 +342,14 @@
 
             <div class="footer">
                 <span>HIẾU LIVE CLOUD</span>
-                <a href="#" onclick="alert('Liên hệ Admin qua Telegram để được hỗ trợ!')">Hỗ trợ</a>
+                <a href="#" onclick="alert('Liên hệ Admin qua Telegram để mua VIP!')">Hỗ trợ / Mua VIP</a>
             </div>
         </div>
 
         <!-- 3. TRANG DASHBOARD CHÍNH -->
         <div id="dashboard-page">
             <div class="dash-header">
-                <h3>Kho Độ Nhạy Free Fire</h3>
+                <h3 id="welcome-user-title">Kho Độ Nhạy FF</h3>
                 <button class="logout-btn" onclick="logoutApp()">Đăng xuất</button>
             </div>
 
@@ -338,7 +369,7 @@
             <button class="btn-primary" onclick="lookupSensitivity()">🔍 Lấy Độ Nhạy </button>
             <div id="lookup-status" class="status-text"></div>
 
-            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY & TẢI FILE NHẸ TÂM -->
+            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY -->
             <div id="sens-result" class="sens-result-box">
                 <h5 id="result-title">Cấu Hình Độ Nhạy Free Fire</h5>
                 <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
@@ -350,26 +381,44 @@
                 <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="r-btn-size">45%</b></div>
                 
                 <button class="btn-copy-sens" onclick="copySens()">📋 Sao chép toàn bộ độ nhạy</button>
-                <button class="btn-download-file" onclick="downloadConfig()">📥 Tải File Nhẹ Tâm (Config)</button>
+                
+                <!-- Nút Tải File (Sẽ bị khóa nếu chưa lên VIP) -->
+                <div id="download-container" style="margin-top: 10px;">
+                    <a id="download-btn-link" href="#" onclick="checkVipDownload(event)" class="btn-download-file" style="background: #3f3f46; color: #a1a1aa;">🔒 Tải File Nhẹ Tâm (Cần VIP)</a>
+                </div>
+            </div>
+
+            <!-- Khung nhập mã kích hoạt VIP -->
+            <div class="vip-activate-box">
+                <p id="vip-status-msg">🔒 Tài khoản đang ở bản Thường. Nhập mã để mở khóa tải file!</p>
+                <div class="vip-input-row">
+                    <input type="text" id="vip-key-input" class="input-field" placeholder="Nhập mã VIP..." style="padding: 8px 10px; font-size: 12px; margin-bottom: 0;">
+                    <button class="btn-unlock" onclick="activateVip()">Kích hoạt</button>
+                </div>
             </div>
 
             <div class="footer" style="margin-top: 20px;">
                 <span>HIẾU LIVE SYSTEM</span>
-                <span>FF Sensi v9.0</span>
+                <span>FF Sensi v11.0 VIP</span>
             </div>
         </div>
     </div>
 
     <script>
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
+        const MEDIAFIRE_URL = "https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file";
         let selectedOS = "iOS";
-        let currentDeviceName = "";
+        let currentLoggedInUser = "";
 
-        window.onload = function() {
+        // Kiểm tra tự động đăng nhập khi mở trang
+        window.onload = async function() {
             let savedUser = localStorage.getItem('hl_logged_user');
             if (savedUser) {
+                currentLoggedInUser = savedUser;
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('dashboard-page').style.display = 'block';
+                document.getElementById('welcome-user-title').innerText = `Hi, ${savedUser}`;
+                await checkUserVipStatus(savedUser);
             }
         };
 
@@ -426,10 +475,11 @@
                     return;
                 }
 
+                // Đăng ký mới mặc định chưa có VIP (vipUnlocked: false)
                 await fetch(`${FIREBASE_URL}/users/${user}.json`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password: pass, createdAt: new Date().toISOString() })
+                    body: JSON.stringify({ password: pass, vipUnlocked: false, createdAt: new Date().toISOString() })
                 });
 
                 status.innerText = 'Đăng ký thành công! Đang chuyển đăng nhập...';
@@ -468,11 +518,14 @@
                     status.innerText = 'Đăng nhập thành công!';
                     status.style.color = '#4ade80';
 
+                    currentLoggedInUser = user;
                     localStorage.setItem('hl_logged_user', user);
 
-                    setTimeout(() => {
+                    setTimeout(async () => {
                         document.getElementById('login-section').style.display = 'none';
                         document.getElementById('dashboard-page').style.display = 'block';
+                        document.getElementById('welcome-user-title').innerText = `Hi, ${user}`;
+                        await checkUserVipStatus(user);
                     }, 800);
                 } else {
                     status.innerText = 'Sai tài khoản hoặc mật khẩu!';
@@ -481,6 +534,82 @@
             } catch (error) {
                 status.innerText = 'Lỗi kết nối máy chủ!';
                 status.style.color = '#f87171';
+            }
+        }
+
+        // Kiểm tra trạng thái VIP của tài khoản trên Firebase
+        async function checkUserVipStatus(username) {
+            try {
+                let res = await fetch(`${FIREBASE_URL}/users/${username}.json`);
+                let userData = await res.json();
+                
+                let downloadBtn = document.getElementById('download-btn-link');
+                let vipMsg = document.getElementById('vip-status-msg');
+
+                if (userData && userData.vipUnlocked === true) {
+                    // Nếu đã là VIP
+                    downloadBtn.href = MEDIAFIRE_URL;
+                    downloadBtn.style.background = "linear-gradient(135deg, #10b981, #059669)";
+                    downloadBtn.style.color = "#ffffff";
+                    downloadBtn.innerHTML = "📥 Tải File Nhẹ Tâm (MediaFire)";
+                    
+                    vipMsg.innerHTML = "👑 Tài khoản đã kích hoạt VIP thành công!";
+                    vipMsg.style.color = "#4ade80";
+                } else {
+                    // Nếu là bản Thường
+                    downloadBtn.href = "#";
+                    downloadBtn.style.background = "#3f3f46";
+                    downloadBtn.style.color = "#a1a1aa";
+                    downloadBtn.innerHTML = "🔒 Tải File Nhẹ Tâm (Cần VIP)";
+                    
+                    vipMsg.innerHTML = "🔒 Tài khoản đang ở bản Thường. Nhập mã để mở khóa tải file!";
+                    vipMsg.style.color = "#fde047";
+                }
+            } catch (err) {
+                console.log("Lỗi kiểm tra VIP");
+            }
+        }
+
+        // Xử lý khi bấm nút tải file
+        function checkVipDownload(event) {
+            let downloadBtn = document.getElementById('download-btn-link');
+            if (downloadBtn.getAttribute('href') === "#") {
+                event.preventDefault();
+                alert("❌ Bạn cần mua gói VIP để tải file Nhẹ Tâm! Vui lòng liên hệ Admin Hiếu Live để mua mã kích hoạt.");
+            }
+        }
+
+        // Kích hoạt mã VIP bằng Key nhập vào
+        async function activateVip() {
+            let key = document.getElementById('vip-key-input').value.trim().toUpperCase();
+            if (!key) {
+                alert("Vui lòng nhập mã kích hoạt VIP!");
+                return;
+            }
+
+            try {
+                // Kiểm tra key trên Firebase mục /vipKeys/[key]
+                let res = await fetch(`${FIREBASE_URL}/vipKeys/${key}.json`);
+                let isValid = await res.json();
+
+                if (isValid === true) {
+                    // Xóa key để tránh dùng lại
+                    await fetch(`${FIREBASE_URL}/vipKeys/${key}.json`, { method: 'DELETE' });
+
+                    // Set vipUnlocked = true cho user hiện tại
+                    await fetch(`${FIREBASE_URL}/users/${currentLoggedInUser}/vipUnlocked.json`, {
+                        method: 'PUT',
+                        body: JSON.stringify(true)
+                    });
+
+                    alert("🎉 Kích hoạt VIP thành công! Bạn đã có thể tải file.");
+                    await checkUserVipStatus(currentLoggedInUser);
+                    document.getElementById('vip-key-input').value = "";
+                } else {
+                    alert("❌ Mã kích hoạt không hợp lệ hoặc đã được sử dụng!");
+                }
+            } catch (err) {
+                alert("Lỗi kết nối máy chủ khi kiểm tra mã!");
             }
         }
 
@@ -494,7 +623,6 @@
                 return;
             }
 
-            currentDeviceName = deviceName;
             let deviceKey = deviceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
             let dbPath = `${FIREBASE_URL}/ff_sens/${selectedOS}_${deviceKey}.json`;
 
@@ -552,30 +680,9 @@
             alert('Đã sao chép thông số độ nhạy Free Fire thành công!');
         }
 
-        // Chức năng tải file nhẹ tâm trực tiếp về máy
-        function downloadConfig() {
-            let fileContent = `--- CONFIG NHẸ TÂM HIEULIVE ---
-Thiet_bi: ${currentDeviceName}
-He_dieu_hang: ${selectedOS}
-General: ${document.getElementById('r-general').innerText}
-RedDot: ${document.getElementById('r-reddot').innerText}
-Scope2x: ${document.getElementById('r-scope2').innerText}
-Scope4x: ${document.getElementById('r-scope4').innerText}
-AWM: ${document.getElementById('r-awm').innerText}
-Trang_thai: Đã tối ưu hóa tâm ảo, chống lố tâm max cấp!
-----------------------------------`;
-
-            let blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
-            let link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = `Nhẹ_Tâm_${currentDeviceName.replace(/\s+/g, '_')}_${selectedOS}.txt`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
         function logoutApp() {
             localStorage.removeItem('hl_logged_user');
+            currentLoggedInUser = "";
 
             document.getElementById('dashboard-page').style.display = 'none';
             document.getElementById('login-section').style.display = 'block';
