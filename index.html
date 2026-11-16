@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiếu Live Shop - Tra Cứu Độ Nhạy & Mua Config FF</title>
+    <title>Hiếu Live Shop - Hệ Thống Mua Bán Config FF Tự Động</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,7 +13,7 @@
         }
 
         body {
-            background-color: #070707;
+            background: radial-gradient(circle at center, #18181b 0%, #09090b 100%);
             color: #ffffff;
             display: flex;
             justify-content: center;
@@ -25,23 +25,27 @@
         .container {
             width: 100%;
             max-width: 440px;
-            background: #121212;
+            background: rgba(18, 18, 20, 0.9);
+            backdrop-filter: blur(16px);
             border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 24px;
-            padding: 24px 18px;
-            box-shadow: 0 0 35px rgba(234, 179, 8, 0.12);
+            border-radius: 28px;
+            padding: 24px 20px;
+            box-shadow: 0 0 50px rgba(234, 179, 8, 0.18);
             position: relative;
+            overflow: hidden;
         }
 
         .header-title {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .header-title h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #facc15;
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #facc15, #ca8a04);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: 1px;
             margin-bottom: 4px;
             text-transform: uppercase;
@@ -53,13 +57,13 @@
         }
 
         .input-group {
-            margin-bottom: 14px;
+            margin-bottom: 15px;
         }
 
         .input-label {
             display: block;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             color: #d1d5db;
             margin-bottom: 6px;
             text-transform: uppercase;
@@ -68,10 +72,10 @@
 
         .input-field {
             width: 100%;
-            background: #1a1a1a;
-            border: 1px solid #333333;
-            border-radius: 12px;
-            padding: 12px 16px;
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 14px;
+            padding: 13px 16px;
             color: #ffffff;
             font-size: 14px;
             outline: none;
@@ -80,26 +84,27 @@
 
         .input-field:focus {
             border-color: #facc15;
-            box-shadow: 0 0 10px rgba(234, 179, 8, 0.2);
+            box-shadow: 0 0 12px rgba(234, 179, 8, 0.25);
         }
 
         .btn-primary {
             width: 100%;
-            background: linear-gradient(135deg, #eab308, #ca8a04);
+            background: linear-gradient(135deg, #facc15, #ca8a04);
             border: none;
             color: #000000;
-            padding: 13px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 700;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
+            box-shadow: 0 4px 20px rgba(234, 179, 8, 0.35);
             margin-top: 6px;
             transition: all 0.3s ease;
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
+            transform: translateY(-1px);
+            opacity: 0.95;
         }
 
         .status-text {
@@ -114,13 +119,13 @@
             text-align: center;
             font-size: 13px;
             color: #9ca3af;
-            margin-top: 14px;
+            margin-top: 15px;
         }
 
         .switch-auth a {
             color: #facc15;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
         }
 
@@ -130,39 +135,34 @@
             align-items: center;
             font-size: 11px;
             color: #6b7280;
-            border-top: 1px solid #222222;
-            padding-top: 12px;
-            margin-top: 16px;
-        }
-
-        .footer a {
-            color: #facc15;
-            text-decoration: none;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 14px;
+            margin-top: 18px;
         }
 
         #register-section, #dashboard-page, #deposit-section {
             display: none;
         }
 
-        /* --- DASHBOARD SHOP & TRA CỨU ĐỘ NHẠY --- */
+        /* --- DASHBOARD SHOP PRO --- */
         .dash-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
-            border-bottom: 1px solid #222222;
-            padding-bottom: 10px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 12px;
         }
 
         .wallet-box {
-            background: linear-gradient(135deg, #1f1b10, #18181b);
-            border: 1px solid rgba(234, 179, 8, 0.4);
-            border-radius: 14px;
-            padding: 12px 14px;
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(24, 24, 27, 0.9));
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 16px;
+            padding: 14px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .wallet-info h4 {
@@ -172,20 +172,22 @@
         }
 
         .wallet-info h3 {
-            font-size: 17px;
+            font-size: 18px;
             color: #facc15;
             margin-top: 2px;
+            font-weight: 800;
         }
 
         .btn-deposit {
-            background: #eab308;
+            background: linear-gradient(135deg, #facc15, #ca8a04);
             color: #000000;
             border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
             cursor: pointer;
+            box-shadow: 0 2px 10px rgba(234, 179, 8, 0.3);
         }
 
         .os-selector {
@@ -196,12 +198,12 @@
 
         .os-btn {
             flex: 1;
-            background: #1a1a1a;
-            border: 1px solid #333333;
+            background: #18181b;
+            border: 1px solid #27272a;
             color: #9ca3af;
-            padding: 8px;
-            border-radius: 10px;
-            font-size: 11px;
+            padding: 9px;
+            border-radius: 12px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
@@ -216,62 +218,67 @@
 
         .sens-result-box {
             background: #18181b;
-            border: 1px solid #3f3f46;
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 12px;
+            border: 1px solid #27272a;
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 14px;
             display: none;
         }
 
         .sens-result-box h5 {
             color: #facc15;
             font-size: 12px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         .sens-row {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 12px;
             color: #d1d5db;
-            padding: 4px 0;
-            border-bottom: 1px solid #27272a;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
         }
 
         .btn-action {
             width: 100%;
-            padding: 9px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 10px;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 10px;
             border: none;
             text-align: center;
         }
 
         .btn-copy { background: #27272a; color: #facc15; border: 1px solid #facc15; }
 
-        /* Danh mục Shop */
+        /* Shop Cards */
         .shop-section-title {
             font-size: 12px;
             color: #facc15;
             text-transform: uppercase;
-            font-weight: 700;
-            margin: 16px 0 10px 0;
+            font-weight: 800;
+            margin: 18px 0 10px 0;
             letter-spacing: 0.5px;
         }
 
         .product-card {
             background: #18181b;
             border: 1px solid #27272a;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 10px;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .product-card:hover {
+            border-color: rgba(234, 179, 8, 0.4);
         }
 
         .product-info-top {
@@ -281,20 +288,21 @@
         }
 
         .product-name {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             color: #ffffff;
         }
 
         .product-price {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             color: #4ade80;
         }
 
         .product-desc {
             font-size: 11px;
             color: #9ca3af;
+            line-height: 1.4;
         }
 
         .btn-buy-item {
@@ -302,14 +310,14 @@
             background: linear-gradient(135deg, #10b981, #059669);
             color: #ffffff;
             border: none;
-            padding: 8px;
-            border-radius: 8px;
+            padding: 9px;
+            border-radius: 10px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            box-shadow: 0 3px 8px rgba(16, 185, 129, 0.25);
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
         }
 
         .btn-owned {
@@ -318,38 +326,38 @@
             border: 1px solid #facc15;
         }
 
-        /* Tabs nạp tiền */
+        /* Tabs Nạp Tiền */
         .tab-nạp {
             display: flex;
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .tab-nạp-btn {
             flex: 1;
-            background: #1a1a1a;
-            border: 1px solid #333333;
+            background: #18181b;
+            border: 1px solid #27272a;
             color: #9ca3af;
-            padding: 8px;
-            border-radius: 8px;
+            padding: 9px;
+            border-radius: 10px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
         }
 
         .tab-nạp-btn.active {
-            background: #27272a;
+            background: rgba(234, 179, 8, 0.15);
             color: #facc15;
             border-color: #facc15;
         }
 
         .qr-img-box {
             background: #ffffff;
-            padding: 6px;
-            border-radius: 10px;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 8px auto;
+            padding: 8px;
+            border-radius: 14px;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 10px auto;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -361,37 +369,52 @@
             object-fit: contain;
         }
 
-        /* KHUNG HỖ TRỢ NỔI (ZALO / HOTLINE) */
-        .support-box {
-            background: #18181b;
-            border: 1px solid #27272a;
-            border-radius: 12px;
-            padding: 10px;
-            margin-top: 15px;
+        /* --- NÚT ZALO NỔI --- */
+        .zalo-float-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #0068ff, #0084ff);
+            color: white;
+            border-radius: 30px;
+            padding: 10px 18px;
             display: flex;
-            justify-content: space-around;
             align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(0, 104, 255, 0.4);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+            z-index: 999;
+            transition: transform 0.2s;
+            animation: bounce 2s infinite;
         }
 
-        .support-item {
-            color: #facc15;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .zalo-float-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-3px);}
         }
     </style>
 </head>
 <body>
+
+    <!-- NÚT BONG BÓNG ZALO NỔI GÓC MÀN HÌNH -->
+    <a href="https://zalo.me/0918106821" target="_blank" class="zalo-float-btn">
+        <span style="background: white; color: #0068ff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 11px;">Zalo</span>
+        <span>Hỗ Trợ Nhanh</span>
+    </a>
 
     <div class="container">
         <!-- 1. TRANG ĐĂNG NHẬP -->
         <div id="login-section">
             <div class="header-title">
                 <h2>Hiếu Live Shop</h2>
-                <p>Tra Cứu Độ Nhạy & Mua Config FF</p>
+                <p>Hệ Thống Mua Bán Config Tự Động</p>
             </div>
 
             <div class="input-group">
@@ -411,14 +434,9 @@
                 Chưa có tài khoản? <a onclick="showRegister()">Đăng ký ngay</a>
             </div>
 
-            <div class="support-box">
-                <a href="tel:0918106821" class="support-item">📞 Gọi: 0918.106.821</a>
-                <a href="https://zalo.me/0918106821" target="_blank" class="support-item">💬 Zalo Hỗ Trợ</a>
-            </div>
-
             <div class="footer">
                 <span>HIẾU LIVE CLOUD</span>
-                <span>Hỗ trợ 24/7</span>
+                <span>Hotline: 0918.106.821</span>
             </div>
         </div>
 
@@ -446,22 +464,17 @@
                 Đã có tài khoản? <a onclick="showLogin()">Đăng nhập</a>
             </div>
 
-            <div class="support-box">
-                <a href="tel:0918106821" class="support-item">📞 Gọi: 0918.106.821</a>
-                <a href="https://zalo.me/0918106821" target="_blank" class="support-item">💬 Zalo Hỗ Trợ</a>
-            </div>
-
             <div class="footer">
                 <span>HIẾU LIVE CLOUD</span>
-                <span>Hỗ trợ 24/7</span>
+                <span>Hotline: 0918.106.821</span>
             </div>
         </div>
 
         <!-- 3. TRANG DASHBOARD SHOP CHÍNH -->
         <div id="dashboard-page">
             <div class="dash-header">
-                <h3 id="welcome-title" style="color: #facc15; font-size: 14px;">Shop Hiếu Live</h3>
-                <button class="logout-btn" onclick="logoutApp()" style="background:#ef4444; border:none; color:white; padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer;">Đăng xuất</button>
+                <h3 id="welcome-title" style="color: #facc15; font-size: 15px; font-weight: 800;">Shop Hiếu Live</h3>
+                <button class="logout-btn" onclick="logoutApp()" style="background:#ef4444; border:none; color:white; padding:5px 10px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">Đăng xuất</button>
             </div>
 
             <!-- VÍ TIỀN CÁ NHÂN -->
@@ -473,10 +486,10 @@
                 <button class="btn-deposit" onclick="openDepositSection()">💳 Nạp Tiền</button>
             </div>
 
-            <!-- PHẦN TRA CỨU ĐỘ NHẠY MIỄN PHÍ -->
+            <!-- TRA CỨU ĐỘ NHẠY FREE -->
             <div class="shop-section-title">🔍 Tra Cứu Độ Nhạy FF (Free)</div>
             <div class="input-group" style="margin-bottom: 8px;">
-                <label class="input-label">Chọn Hệ Điều Hành</label>
+                <label class="input-label">Hệ Điều Hành</label>
                 <div class="os-selector">
                     <div id="btn-ios" class="os-btn active" onclick="setOS('iOS')">📱 iOS</div>
                     <div id="btn-adr" class="os-btn" onclick="setOS('Android')">🤖 Android</div>
@@ -484,14 +497,13 @@
             </div>
 
             <div class="input-group" style="margin-bottom: 8px;">
-                <label class="input-label">Nhập tên thiết bị</label>
-                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 hoặc Samsung A52..." style="padding: 10px 14px;">
+                <label class="input-label">Tên Thiết Bị</label>
+                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 Pro..." style="padding: 10px 14px;">
             </div>
 
-            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 10px; font-size: 13px;">Lấy Độ Nhạy Chuẩn</button>
+            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 11px; font-size: 13px;">Lấy Thông Số Độ Nhạy</button>
             <div id="lookup-status" class="status-text"></div>
 
-            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY -->
             <div id="sens-result" class="sens-result-box">
                 <h5 id="result-title">Thông Số Độ Nhạy</h5>
                 <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
@@ -499,54 +511,46 @@
                 <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="r-scope2">0</b></div>
                 <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="r-scope4">0</b></div>
                 <div class="sens-row"><span>AWM:</span> <b id="r-awm">0</b></div>
-                <div class="sens-row"><span>Nút bắn:</span> <b id="r-btn-size">45%</b></div>
+                <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="r-btn-size">45%</b></div>
                 <button class="btn-action btn-copy" onclick="copySens()">📋 Sao chép độ nhạy</button>
             </div>
 
-            <!-- DANH MỤC SẢN PHẨM MUA BÁN -->
-            <div class="shop-section-title">🛒 Mua Config VIP Tự Động</div>
+            <!-- MUA CONFIG VIP -->
+            <div class="shop-section-title">🛒 Kho Sản Phẩm Config VIP</div>
 
-            <!-- Sản phẩm 1: File Nhẹ Tâm 150k -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">🔥 File Nhẹ Tâm VIP v1</span>
                     <span class="product-price">150.000 đ</span>
                 </div>
-                <p class="product-desc">Cấu hình hỗ trợ kéo tâm cực mượt, không khóa acc, update vĩnh viễn.</p>
+                <p class="product-desc">Cấu hình kéo tâm cực mượt, không khóa acc, update vĩnh viễn.</p>
                 <div id="product-1-action">
                     <button class="btn-buy-item" onclick="buyProduct('nhetam', 150000, 'https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file')">Mua Ngay</button>
                 </div>
             </div>
 
-            <!-- Sản phẩm 2: Reg VIP Cầm Chếch Tâm -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">⚡ Reg VIP Cầm Chếch Tâm</span>
                     <span class="product-price">200.000 đ</span>
                 </div>
-                <p class="product-desc">Bản tối ưu hóa độ nhạy đặc biệt chuyên dụng cho các dòng máy Android/iOS.</p>
+                <p class="product-desc">Bản tối ưu hóa đặc biệt chuyên dụng cho mọi dòng máy.</p>
                 <div id="product-2-action">
                     <button class="btn-buy-item" onclick="buyProduct('regvip', 200000, 'https://www.mediafire.com/file/example/RegVIP.crt/file')">Mua Ngay</button>
                 </div>
             </div>
 
-            <!-- KHUNG HỖ TRỢ ZALO / HOTLINE -->
-            <div class="support-box">
-                <a href="tel:0918106821" class="support-item">📞 Gọi: 0918.106.821</a>
-                <a href="https://zalo.me/0918106821" target="_blank" class="support-item">💬 Zalo Hỗ Trợ</a>
-            </div>
-
-            <div class="footer" style="margin-top: 15px;">
+            <div class="footer">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Auto 24/7 v18.0</span>
+                <span>Pro v20.0</span>
             </div>
         </div>
 
         <!-- 4. TRANG NẠP TIỀN -->
         <div id="deposit-section">
             <div class="dash-header">
-                <h3 style="font-size: 13px; color: #facc15;">Cổng Nạp Tiền Tự Động</h3>
-                <button onclick="closeDepositSection()" style="background:#333; border:none; color:white; padding:4px 8px; border-radius:6px; font-size:11px; cursor:pointer;">Quay lại</button>
+                <h3 style="font-size: 14px; color: #facc15; font-weight: 800;">Cổng Nạp Tiền Tự Động</h3>
+                <button onclick="closeDepositSection()" style="background:#27272a; border:none; color:white; padding:5px 10px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
             </div>
 
             <div class="tab-nạp">
@@ -556,26 +560,26 @@
 
             <!-- CHUYỂN KHOẢN QR -->
             <div id="content-banking" style="text-align: center;">
-                <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 11px; color: #facc15; font-weight: 700; margin-bottom: 8px;">QUÉT MÃ QR NẠP VÍ</p>
+                <div style="background: #18181b; border: 1px solid #27272a; border-radius: 14px; padding: 14px; margin-bottom: 12px;">
+                    <p style="font-size: 12px; color: #facc15; font-weight: 800; margin-bottom: 8px;">QUÉT MÃ QR NẠP VÍ</p>
                     
-                    <div class="input-group" style="text-align: left; margin-bottom: 8px;">
+                    <div class="input-group" style="text-align: left; margin-bottom: 10px;">
                         <label class="input-label" style="font-size: 10px;">Số tiền nạp (VNĐ)</label>
-                        <input type="number" id="deposit-amount-input" class="input-field" placeholder="150000" value="150000" oninput="updateQRCode()" style="padding: 8px 12px; font-size: 12px;">
+                        <input type="number" id="deposit-amount-input" class="input-field" placeholder="150000" value="150000" oninput="updateQRCode()" style="padding: 10px 14px; font-size: 13px;">
                     </div>
 
                     <div class="qr-img-box">
                         <img id="qr-code-img" src="" alt="Mã QR Chuyển Khoản">
                     </div>
 
-                    <p style="font-size: 11px; color: #d1d5db; margin: 3px 0;">MB Bank: <b style="color: #4ade80;">423345678</b></p>
-                    <p style="font-size: 10px; color: #9ca3af;">Nội dung CK:</p>
-                    <b id="qr-syntax" style="color: #000; font-size: 12px; background: #facc15; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px;">NAP HIEULIVE</b>
+                    <p style="font-size: 12px; color: #d1d5db; margin: 4px 0;">MB Bank: <b style="color: #4ade80;">423345678</b></p>
+                    <p style="font-size: 11px; color: #9ca3af;">Nội dung CK bắt buộc:</p>
+                    <b id="qr-syntax" style="color: #000; font-size: 13px; background: #facc15; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-top: 4px; font-weight: 800;">NAP HIEULIVE</b>
                 </div>
                 <button class="btn-primary" onclick="alert('Hệ thống tự động cộng tiền sau 15-30 giây khi nhận được chuyển khoản!')">Tôi Đã Chuyển Khoản</button>
             </div>
 
-            <!-- GẠCH THẺ TRANHGA.VN -->
+            <!-- GẠCH THẺ (TÍCH HỢP CHUẨN PARTNER ID TỪ ẢNH TRẦN NGÀ) -->
             <div id="content-card" style="display: none;">
                 <div class="input-group">
                     <label class="input-label">Nhà Mạng</label>
@@ -596,24 +600,19 @@
                 </div>
                 <div class="input-group">
                     <label class="input-label">Mã PIN Thẻ</label>
-                    <input type="text" id="card-pin" class="input-field" placeholder="Nhập mã PIN...">
+                    <input type="text" id="card-pin" class="input-field" placeholder="Nhập mã PIN thẻ cào...">
                 </div>
                 <div class="input-group">
                     <label class="input-label">Số Seri Thẻ</label>
-                    <input type="text" id="card-serial" class="input-field" placeholder="Nhập số Serial...">
+                    <input type="text" id="card-serial" class="input-field" placeholder="Nhập số Seri thẻ cào...">
                 </div>
                 <button class="btn-primary" onclick="submitCard()">Gửi Thẻ Nạp Tự Động</button>
                 <div id="card-status" class="status-text"></div>
             </div>
 
-            <div class="support-box">
-                <a href="tel:0918106821" class="support-item">📞 Gọi: 0918.106.821</a>
-                <a href="https://zalo.me/0918106821" target="_blank" class="support-item">💬 Zalo Hỗ Trợ</a>
-            </div>
-
-            <div class="footer" style="margin-top: 15px;">
-                <span>TRANHGA.VN API</span>
-                <span>An toàn tuyệt đối</span>
+            <div class="footer">
+                <span>TRANHNGA.VN API</span>
+                <span>Bảo mật 100%</span>
             </div>
         </div>
     </div>
@@ -938,9 +937,11 @@
             status.style.color = '#facc15';
 
             const API_URL = "https://trannga.vn/api/charging";
+            const PARTNER_ID = "85605800260"; // Lấy từ thông tin kết nối trong ảnh của bạn[cite: 2]
             let requestId = "HL" + Math.floor(Math.random() * 1000000000);
 
             let formData = new URLSearchParams();
+            formData.append('partner_id', PARTNER_ID);
             formData.append('telco', telco);
             formData.append('amount', amount);
             formData.append('code', pin);
