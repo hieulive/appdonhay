@@ -232,6 +232,24 @@
             cursor: pointer;
             margin-top: 12px;
         }
+
+        .btn-download-file {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-download-file:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -306,14 +324,12 @@
 
             <div class="status-text" style="color: #4ade80; margin-bottom: 10px;">🟢 Đã kết nối Cloud Hệ Thống</div>
 
-            <!-- CHỌN HỆ ĐIỀU HÀNH (IOS / ANDROID) -->
             <label class="input-label">Chọn Hệ Điều Hành</label>
             <div class="os-selector">
                 <div id="btn-ios" class="os-btn active" onclick="setOS('iOS')">📱 iOS (Apple)</div>
                 <div id="btn-adr" class="os-btn" onclick="setOS('Android')">🤖 Android (Adr)</div>
             </div>
 
-            <!-- NHẬP TÊN MÁY -->
             <div class="input-group">
                 <label class="input-label">Nhập tên máy của bạn</label>
                 <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 hoặc Samsung A52...">
@@ -322,7 +338,7 @@
             <button class="btn-primary" onclick="lookupSensitivity()">🔍 Lấy Độ Nhạy </button>
             <div id="lookup-status" class="status-text"></div>
 
-            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY -->
+            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY & TẢI FILE NHẸ TÂM -->
             <div id="sens-result" class="sens-result-box">
                 <h5 id="result-title">Cấu Hình Độ Nhạy Free Fire</h5>
                 <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
@@ -332,12 +348,14 @@
                 <div class="sens-row"><span>Ống Ngắm AWM:</span> <b id="r-awm">0</b></div>
                 <div class="sens-row"><span>Nhìn quanh xe:</span> <b id="r-free-look">0</b></div>
                 <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="r-btn-size">45%</b></div>
+                
                 <button class="btn-copy-sens" onclick="copySens()">📋 Sao chép toàn bộ độ nhạy</button>
+                <button class="btn-download-file" onclick="downloadConfig()">📥 Tải File Nhẹ Tâm (Config)</button>
             </div>
 
             <div class="footer" style="margin-top: 20px;">
                 <span>HIẾU LIVE SYSTEM</span>
-                <span>FF Sensi v7.0</span>
+                <span>FF Sensi v9.0</span>
             </div>
         </div>
     </div>
@@ -345,8 +363,8 @@
     <script>
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
         let selectedOS = "iOS";
+        let currentDeviceName = "";
 
-        // Tự động kiểm tra nếu đã đăng nhập trước đó thì giữ nguyên ở Dashboard khi F5
         window.onload = function() {
             let savedUser = localStorage.getItem('hl_logged_user');
             if (savedUser) {
@@ -450,7 +468,6 @@
                     status.innerText = 'Đăng nhập thành công!';
                     status.style.color = '#4ade80';
 
-                    // Lưu trạng thái đăng nhập vào máy
                     localStorage.setItem('hl_logged_user', user);
 
                     setTimeout(() => {
@@ -467,7 +484,6 @@
             }
         }
 
-        // HÀM TÌM KIẾM HOẶC TẠO MỚI & GHI NHỚ ĐỘ NHẠY TRÊN CLOUD (100 - 200)
         async function lookupSensitivity() {
             let deviceName = document.getElementById('device-name-input').value.trim();
             let status = document.getElementById('lookup-status');
@@ -478,6 +494,7 @@
                 return;
             }
 
+            currentDeviceName = deviceName;
             let deviceKey = deviceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
             let dbPath = `${FIREBASE_URL}/ff_sens/${selectedOS}_${deviceKey}.json`;
 
@@ -535,8 +552,29 @@
             alert('Đã sao chép thông số độ nhạy Free Fire thành công!');
         }
 
+        // Chức năng tải file nhẹ tâm trực tiếp về máy
+        function downloadConfig() {
+            let fileContent = `--- CONFIG NHẸ TÂM HIEULIVE ---
+Thiet_bi: ${currentDeviceName}
+He_dieu_hang: ${selectedOS}
+General: ${document.getElementById('r-general').innerText}
+RedDot: ${document.getElementById('r-reddot').innerText}
+Scope2x: ${document.getElementById('r-scope2').innerText}
+Scope4x: ${document.getElementById('r-scope4').innerText}
+AWM: ${document.getElementById('r-awm').innerText}
+Trang_thai: Đã tối ưu hóa tâm ảo, chống lố tâm max cấp!
+----------------------------------`;
+
+            let blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `Nhẹ_Tâm_${currentDeviceName.replace(/\s+/g, '_')}_${selectedOS}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
         function logoutApp() {
-            // Xóa bộ nhớ đăng nhập khi người dùng bấm nút Đăng xuất
             localStorage.removeItem('hl_logged_user');
 
             document.getElementById('dashboard-page').style.display = 'none';
