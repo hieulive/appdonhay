@@ -57,7 +57,7 @@
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .input-label {
@@ -75,7 +75,7 @@
             background: #18181b;
             border: 1px solid #27272a;
             border-radius: 14px;
-            padding: 13px 16px;
+            padding: 12px 16px;
             color: #ffffff;
             font-size: 14px;
             outline: none;
@@ -209,7 +209,7 @@
         .os-selector {
             display: flex;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .os-btn {
@@ -217,9 +217,9 @@
             background: #18181b;
             border: 1px solid #27272a;
             color: #9ca3af;
-            padding: 9px;
-            border-radius: 12px;
-            font-size: 12px;
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
@@ -289,7 +289,6 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            cursor: pointer;
         }
 
         .product-info-top {
@@ -321,7 +320,7 @@
             background: linear-gradient(135deg, #10b981, #059669);
             color: #ffffff;
             border: none;
-            padding: 9px;
+            padding: 10px;
             border-radius: 10px;
             font-size: 12px;
             font-weight: 800;
@@ -337,7 +336,7 @@
             color: #facc15;
             border: 1px solid #facc15;
             text-align: center;
-            padding: 9px;
+            padding: 10px;
             border-radius: 10px;
             font-size: 12px;
             font-weight: 800;
@@ -507,8 +506,8 @@
                 <button class="btn-deposit" onclick="openDepositSection()">💳 Nạp Tiền</button>
             </div>
 
-            <!-- NHẸ TÂM THEO MÁY / TRA CỨU ĐỘ NHẠY FREE -->
-            <div class="shop-section-title">🔍 Nhẹ Tâm Theo Máy (Độ Nhạy Free)</div>
+            <!-- TRA CỨU ĐỘ NHẠY FREE -->
+            <div class="shop-section-title">🔍 Tra Cứu Độ Nhạy FF (Free)</div>
             <div class="input-group" style="margin-bottom: 8px;">
                 <label class="input-label">Hệ Điều Hành</label>
                 <div class="os-selector">
@@ -519,14 +518,14 @@
 
             <div class="input-group" style="margin-bottom: 8px;">
                 <label class="input-label">Tên Thiết Bị Của Bạn</label>
-                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 Pro hoặc Samsung A52...">
+                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 Pro...">
             </div>
 
-            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 11px; font-size: 13px;">Lấy Thông Số Nhẹ Tâm Theo Máy</button>
+            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 11px; font-size: 13px;">Lấy Thông Số Độ Nhạy</button>
             <div id="lookup-status" class="status-text"></div>
 
             <div id="sens-result" class="sens-result-box">
-                <h5 id="result-title">Thông Số Nhẹ Tâm</h5>
+                <h5 id="result-title">Thông Số Độ Nhạy</h5>
                 <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
                 <div class="sens-row"><span>Cận cảnh (Red Dot):</span> <b id="r-reddot">0</b></div>
                 <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="r-scope2">0</b></div>
@@ -539,25 +538,58 @@
             <!-- MUA CONFIG VIP -->
             <div class="shop-section-title">🛒 Kho Sản Phẩm Config VIP</div>
 
+            <!-- SẢN PHẨM 1: FILE NHẸ TÂM THEO MÁY (CÓ CHỌN MÁY) -->
             <div class="product-card">
                 <div class="product-info-top">
-                    <span class="product-name">🔥 File Nhẹ Tâm VIP v1</span>
+                    <span class="product-name">🔥 File Nhẹ Tâm Theo Máy</span>
                     <span class="product-price">150.000 đ</span>
                 </div>
-                <p class="product-desc">Cấu hình kéo tâm cực mượt, không khóa acc, update vĩnh viễn.</p>
+                <p class="product-desc">Cấu hình nhẹ tâm tinh chỉnh chuẩn xác riêng theo từng dòng máy của bạn.</p>
+                
+                <div style="margin-top: 6px;">
+                    <label class="input-label" style="font-size: 9px; margin-bottom: 3px;">Chọn HĐH máy mua:</label>
+                    <div class="os-selector" style="margin-bottom: 6px;">
+                        <div id="buy-btn-ios" class="os-btn active" onclick="setBuyOS('iOS')">📱 iOS</div>
+                        <div id="buy-btn-adr" class="os-btn" onclick="setBuyOS('Android')">🤖 Android</div>
+                    </div>
+                    <input type="text" id="buy-device-input" class="input-field" placeholder="Nhập tên máy của bạn (VD: iPhone 13)..." style="padding: 10px 14px; font-size: 12px; margin-bottom: 6px;">
+                </div>
+
                 <div id="product-1-action">
-                    <button class="btn-buy-item" onclick="buyProduct('nhetam', 150000, 'https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file')">Mua Ngay</button>
+                    <button class="btn-buy-item" onclick="buyNheTam()">Mua Ngay File Nhẹ Tâm</button>
                 </div>
             </div>
 
             <div class="product-card">
                 <div class="product-info-top">
-                    <span class="product-name">🎯 File Aim (Aimneck - Aim Drag - Aim Body)</span>
+                    <span class="product-name">🎯 File Aimneck (Ngắm Cổ)</span>
                     <span class="product-price">100.000 đ</span>
                 </div>
-                <p class="product-desc">Định vị toàn diện: Ngắm cổ, kéo tâm siêu dính và định tâm thân người.</p>
+                <p class="product-desc">Cấu hình định tâm tự động bám sát vùng cổ cực dính.</p>
                 <div id="product-2-action">
-                    <button class="btn-buy-item" onclick="buyProduct('fileaim', 100000, 'https://www.mediafire.com/file/example/FileAim.crt/file')">Mua Ngay</button>
+                    <button class="btn-buy-item" onclick="buyProduct('aimneck', 100000)">Mua Ngay</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-info-top">
+                    <span class="product-name">⚡ File Aim Drag (Kéo Tâm)</span>
+                    <span class="product-price">100.000 đ</span>
+                </div>
+                <p class="product-desc">Hỗ trợ lực kéo tâm nhẹ nhàng, không bị bay tâm lên trời.</p>
+                <div id="product-3-action">
+                    <button class="btn-buy-item" onclick="buyProduct('aimdrag', 100000)">Mua Ngay</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-info-top">
+                    <span class="product-name">🛡️ File Aim Body (Thân Người)</span>
+                    <span class="product-price">100.000 đ</span>
+                </div>
+                <p class="product-desc">Chuyên dụng bắt trọn tâm vào thân người cực ổn định.</p>
+                <div id="product-4-action">
+                    <button class="btn-buy-item" onclick="buyProduct('aimbody', 100000)">Mua Ngay</button>
                 </div>
             </div>
 
@@ -643,6 +675,7 @@
     <script>
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
         let selectedOS = "iOS";
+        let buySelectedOS = "iOS";
         let currentUserData = null;
         let currentUsername = "";
 
@@ -680,6 +713,20 @@
                 document.getElementById('btn-ios').className = 'os-btn';
                 document.getElementById('btn-adr').className = 'os-btn active';
                 inputField.placeholder = "Ví dụ: Samsung A52, Redmi Note 10...";
+            }
+        }
+
+        function setBuyOS(os) {
+            buySelectedOS = os;
+            let inputField = document.getElementById('buy-device-input');
+            if (os === 'iOS') {
+                document.getElementById('buy-btn-ios').className = 'os-btn active';
+                document.getElementById('buy-btn-adr').className = 'os-btn';
+                inputField.placeholder = "Nhập tên máy iOS (VD: iPhone 13)...";
+            } else {
+                document.getElementById('buy-btn-ios').className = 'os-btn';
+                document.getElementById('buy-btn-adr').className = 'os-btn active';
+                inputField.placeholder = "Nhập tên máy Android (VD: Samsung A52)...";
             }
         }
 
@@ -810,7 +857,7 @@
                 let newUser = {
                     password: pass,
                     balance: 0,
-                    purchased: { nhetam: false, fileaim: false },
+                    purchased: { nhetam: false, aimneck: false, aimdrag: false, aimbody: false },
                     createdAt: new Date().toISOString()
                 };
 
@@ -886,18 +933,33 @@
         function updateShopUI() {
             if (!currentUserData.purchased) currentUserData.purchased = {};
 
-            let area1 = document.getElementById('product-1-action');
-            if (currentUserData.purchased.nhetam) {
-                area1.innerHTML = `<a href="https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file" target="_blank" class="btn-owned">📥 Tải Xuống File</a>`;
-            }
+            let pList = ['nhetam', 'aimneck', 'aimdrag', 'aimbody'];
+            let links = {
+                'nhetam': 'https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file',
+                'aimneck': 'https://www.mediafire.com/file/example/Aimneck.crt/file',
+                'aimdrag': 'https://www.mediafire.com/file/example/Aimdrag.crt/file',
+                'aimbody': 'https://www.mediafire.com/file/example/Aimbody.crt/file'
+            };
 
-            let area2 = document.getElementById('product-2-action');
-            if (currentUserData.purchased.fileaim) {
-                area2.innerHTML = `<a href="https://www.mediafire.com/file/example/FileAim.crt/file" target="_blank" class="btn-owned">📥 Tải Xuống File</a>`;
+            for (let i = 0; i < pList.length; i++) {
+                let pId = pList[i];
+                let area = document.getElementById(`product-${i+1}-action`);
+                if (area && currentUserData.purchased[pId]) {
+                    area.innerHTML = `<a href="${links[pId]}" target="_blank" class="btn-owned">📥 Tải Xuống File (${currentUserData.buyDevice || 'Đã tối ưu'})</a>`;
+                }
             }
         }
 
-        async function buyProduct(productId, price, downloadLink) {
+        async function buyNheTam() {
+            let deviceName = document.getElementById('buy-device-input').value.trim();
+            if (!deviceName) {
+                alert('Vui lòng nhập tên thiết bị của bạn để tạo file nhẹ tâm theo máy!');
+                return;
+            }
+            await buyProduct('nhetam', 150000, deviceName);
+        }
+
+        async function buyProduct(productId, price, deviceExtra = '') {
             await fetchUserData(currentUsername);
             let currentBalance = currentUserData.balance || 0;
 
@@ -907,10 +969,15 @@
                 return;
             }
 
-            if (confirm(`Xác nhận mua sản phẩm với giá ${formatMoney(price)} đ?`)) {
+            let confirmMsg = deviceExtra ? `Xác nhận mua File Nhẹ Tâm cho máy [${buySelectedOS} - ${deviceExtra}] với giá ${formatMoney(price)} đ?` : `Xác nhận mua sản phẩm với giá ${formatMoney(price)} đ?`;
+
+            if (confirm(confirmMsg)) {
                 currentUserData.balance = currentBalance - price;
                 if (!currentUserData.purchased) currentUserData.purchased = {};
                 currentUserData.purchased[productId] = true;
+                if (deviceExtra) {
+                    currentUserData.buyDevice = `${buySelectedOS} - ${deviceExtra}`;
+                }
 
                 try {
                     await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
@@ -1001,8 +1068,8 @@
 
                 status.innerText = `Đã cộng thành công ${formatMoney(amountToAdd)} đ cho tài khoản "${targetUser}"!`;
                 status.style.color = '#4ade80';
-                document.getElementById('admin-target-user').value = ``;
-                document.getElementById('admin-add-amount').value = ``;
+                document.getElementById('admin-target-user').value = '';
+                document.getElementById('admin-add-amount').value = '';
 
             } catch (err) {
                 status.innerText = 'Lỗi kết nối máy chủ!';
