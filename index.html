@@ -73,7 +73,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* FONT-SIZE >= 16PX ĐỂ NGĂN SAFARI ZOOM KHI FOCUS */
         .input-field {
             width: 100%;
             background: #18181b;
@@ -460,7 +459,6 @@
             font-size: 14px;
         }
 
-        /* Ô nhập số lượng gõ trực tiếp */
         .qty-input {
             width: 45px;
             background: #18181b;
@@ -573,9 +571,199 @@
             40% {transform: translateY(-6px);}
             60% {transform: translateY(-3px);}
         }
+
+        /* --- STYLING CHO MODAL THÔNG BÁO XỊN XÒ --- */
+        #notice-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            animation: fadeInModal 0.25s ease;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 380px;
+            background: #121216;
+            border: 1px solid rgba(250, 204, 21, 0.35);
+            border-radius: 24px;
+            padding: 22px 18px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(250, 204, 21, 0.15);
+            position: relative;
+        }
+
+        .modal-close-x {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: #1f1f23;
+            border: 1px solid #27272a;
+            color: #9ca3af;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close-x:hover {
+            color: #fff;
+            background: #27272a;
+        }
+
+        .modal-header-icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border-radius: 18px;
+            margin: 0 auto 12px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+            font-size: 28px;
+        }
+
+        .modal-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-subtitle {
+            text-align: center;
+            font-size: 11px;
+            color: #facc15;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .modal-link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 260px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+            padding-right: 2px;
+        }
+
+        .modal-link-item {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 11px 14px;
+            color: #e5e7eb;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .modal-link-item:hover {
+            border-color: #facc15;
+            background: rgba(250, 204, 21, 0.08);
+            color: #facc15;
+            transform: translateX(2px);
+        }
+
+        .modal-footer-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-modal-remind {
+            flex: 1;
+            background: #18181b;
+            border: 1px solid #27272a;
+            color: #9ca3af;
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-modal-remind:hover {
+            background: #27272a;
+            color: #ffffff;
+        }
+
+        .btn-modal-understand {
+            flex: 1.2;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border: none;
+            color: #ffffff;
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-modal-understand:hover {
+            filter: brightness(1.1);
+        }
     </style>
 </head>
 <body>
+
+    <!-- BẢNG POPUP THÔNG BÁO XỊN XÒ -->
+    <div id="notice-modal">
+        <div class="modal-content">
+            <button class="modal-close-x" onclick="playClickSound(); closeNoticeModal()">×</button>
+            
+            <div class="modal-header-icon">🔔</div>
+            <div class="modal-title">Thông báo</div>
+            <div class="modal-subtitle">HIEULIVESHOP.COM</div>
+
+            <div class="modal-link-list">
+                <a href="https://zalo.me/g/zhutscvdacogt2o528cx" target="_blank" class="modal-link-item" onclick="playClickSound()">
+                    <span>👉 Tham Gia Box Zalo 1 Tại Đây</span>
+                    <span style="color: #9ca3af;">›</span>
+                </a>
+                <a href="https://zalo.me/g/9oo9k70cyaer8n9xjhyf" target="_blank" class="modal-link-item" onclick="playClickSound()">
+                    <span>👉 Tham Gia Box Zalo 2 Tại Đây</span>
+                    <span style="color: #9ca3af;">›</span>
+                </a>
+                <a href="https://t.me/hieulivebox" target="_blank" class="modal-link-item" onclick="playClickSound()">
+                    <span>👉 Tham Gia Box TeleGram Tại Đây</span>
+                    <span style="color: #9ca3af;">›</span>
+                </a>
+                <a href="https://zalo.me/0918106821" target="_blank" class="modal-link-item" onclick="playClickSound()">
+                    <span>💬 Zalo hỗ trợ: 0918.106.821</span>
+                    <span style="color: #9ca3af;">›</span>
+                </a>
+            </div>
+
+            <div class="modal-footer-btns">
+                <button class="btn-modal-remind" onclick="playClickSound(); closeNoticeModal()">⏱ Nhắc sau (1h)</button>
+                <button class="btn-modal-understand" onclick="playClickSound(); closeNoticeModal()">✔ ĐÃ HIỂU</button>
+            </div>
+        </div>
+    </div>
 
     <a href="https://zalo.me/0918106821" target="_blank" class="zalo-float-btn" onclick="playClickSound()">
         <span style="background: white; color: #0068ff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 11px;">Zalo</span>
@@ -825,7 +1013,7 @@
 
             <div class="footer">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Pro v20.5</span>
+                <span>Pro v20.6</span>
             </div>
         </div>
 
@@ -1009,9 +1197,18 @@
                     }
 
                     updateQRCode();
+                    showNoticeModal(); // HIỆN THÔNG BÁO KHI VÀO ACC
                 }
             }
         };
+
+        function showNoticeModal() {
+            document.getElementById('notice-modal').style.display = 'flex';
+        }
+
+        function closeNoticeModal() {
+            document.getElementById('notice-modal').style.display = 'none';
+        }
 
         function toggleDropdownMenu(event) {
             event.stopPropagation();
@@ -1267,7 +1464,6 @@
             let qty = quantities['nhetam'];
             let price = unitPrices['nhetam'] * qty;
 
-            // BẢNG XÁC NHẬN TRƯỚC KHI MUA
             let confirmMsg = `🔔 XÁC NHẬN MUA HÀNG\n\n- Sản phẩm: File Nhẹ Tâm Theo Máy\n- Thiết bị: ${buySelectedOS} - ${deviceName}\n- Số lượng: ${qty}\n- Tổng tiền: ${formatMoney(price)} đ\n\nBạn có chắc chắn muốn thanh toán không?`;
             if (!confirm(confirmMsg)) return;
 
@@ -1309,7 +1505,6 @@
             let qty = quantities[productId];
             let price = basePrice * qty;
 
-            // BẢNG XÁC NHẬN TRƯỚC KHI MUA
             let confirmMsg = `🔔 XÁC NHẬN MUA HÀNG\n\n- Sản phẩm: ${productName}\n- Số lượng: ${qty}\n- Tổng tiền: ${formatMoney(price)} đ\n⚠️ Lưu ý: Mỗi file chỉ cài được đúng 1 máy duy nhất!\n\nBạn có chắc chắn muốn thanh toán không?`;
             if (!confirm(confirmMsg)) return;
 
@@ -1341,7 +1536,6 @@
                 document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
                 alert('Thanh toán thành công! Tải xuống tệp file ngay bên dưới.');
                 
-                // Mở link tải file tương ứng cho phép mua liên tục
                 let downloadLinks = {
                     'aimneck': 'https://www.mediafire.com/file/example/Aimneck.crt/file',
                     'aimdrag': 'https://www.mediafire.com/file/example/Aimdrag.crt/file',
@@ -1480,6 +1674,7 @@
                         }
 
                         updateQRCode();
+                        showNoticeModal(); // HIỆN BẢNG THÔNG BÁO KHI VÀO ACC
                     }, 600);
                 } else {
                     status.innerText = 'Sai tài khoản hoặc mật khẩu!';
