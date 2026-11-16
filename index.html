@@ -565,45 +565,16 @@
                 <button class="btn-deposit" onclick="openDepositSection()">💳 Nạp Tiền</button>
             </div>
 
-            <!-- TRA CỨU ĐỘ NHẠY FREE -->
-            <div class="shop-section-title">🔍 Tra Cứu Độ Nhạy FF (Free)</div>
-            <div class="input-group" style="margin-bottom: 8px;">
-                <label class="input-label">Hệ Điều Hành</label>
-                <div class="os-selector">
-                    <div id="btn-ios" class="os-btn active" onclick="setOS('iOS')">📱 iOS</div>
-                    <div id="btn-adr" class="os-btn" onclick="setOS('Android')">🤖 Android</div>
-                </div>
-            </div>
-
-            <div class="input-group" style="margin-bottom: 8px;">
-                <label class="input-label">Tên Thiết Bị Của Bạn</label>
-                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 Pro...">
-            </div>
-
-            <button class="btn-primary" onclick="lookupSensitivity()" style="padding: 11px; font-size: 13px;">Lấy Thông Số Độ Nhạy</button>
-            <div id="lookup-status" class="status-text"></div>
-
-            <div id="sens-result" class="sens-result-box">
-                <h5 id="result-title">Thông Số Độ Nhạy</h5>
-                <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
-                <div class="sens-row"><span>Cận cảnh (Red Dot):</span> <b id="r-reddot">0</b></div>
-                <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="r-scope2">0</b></div>
-                <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="r-scope4">0</b></div>
-                <div class="sens-row"><span>AWM:</span> <b id="r-awm">0</b></div>
-                <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="r-btn-size">45%</b></div>
-                <button class="btn-action btn-copy" onclick="copySens()">📋 Sao chép độ nhạy</button>
-            </div>
-
             <!-- MUA CONFIG VIP -->
             <div class="shop-section-title">🛒 Kho Sản Phẩm Config VIP</div>
 
-            <!-- SẢN PHẨM 1: GỬI YÊU CẦU MỞ KHÓA NHẸ TÂM MÁY HỌ NHẬP -->
+            <!-- SẢN PHẨM 1: FILE NHẸ TÂM THEO MÁY (CÓ LẤY ĐỘ NHẠY & TẢI XUỐNG FILE 150K) -->
             <div class="product-card">
                 <div class="product-info-top">
-                    <span class="product-name">🔥 Mở Khóa Nhẹ Tâm Theo Máy</span>
+                    <span class="product-name">🔥 File Nhẹ Tâm Theo Máy</span>
                     <span class="product-price">150.000 đ</span>
                 </div>
-                <p class="product-desc">Cấu hình nhẹ tâm tinh chỉnh chuẩn xác riêng theo dòng máy của bạn.</p>
+                <p class="product-desc">Cấu hình nhẹ tâm tinh chỉnh chuẩn xác riêng theo từng dòng máy của bạn.</p>
                 
                 <div style="margin-top: 6px;">
                     <label class="input-label" style="font-size: 9px; margin-bottom: 3px;">Chọn HĐH máy của bạn:</label>
@@ -614,10 +585,21 @@
                     <input type="text" id="buy-device-input" class="input-field" placeholder="Nhập tên máy của bạn (VD: iPhone 13)..." style="padding: 10px 14px; font-size: 12px; margin-bottom: 6px;">
                 </div>
 
-                <button class="btn-primary" onclick="requestUnlockNheTam()" style="padding: 11px; font-size: 13px;">Gửi Yêu Cầu Mở Khóa Nhẹ Tâm (150k)</button>
+                <button class="btn-primary" onclick="lookupAndBuyNheTam()" style="padding: 11px; font-size: 13px; background: linear-gradient(135deg, #10b981, #059669); color: white;">📥 Tải Xuống File Nhẹ Tâm (150k)</button>
+                <div id="buy-sens-result" class="sens-result-box" style="margin-top: 8px;">
+                    <h5 id="buy-result-title">Độ Nhạy Tối Ưu Cho Máy</h5>
+                    <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="buy-r-general">0</b></div>
+                    <div class="sens-row"><span>Cận cảnh (Red Dot):</span> <b id="buy-r-reddot">0</b></div>
+                    <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="buy-r-scope2">0</b></div>
+                    <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="buy-r-scope4">0</b></div>
+                    <div class="sens-row"><span>AWM:</span> <b id="buy-r-awm">0</b></div>
+                    <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="buy-r-btn-size">45%</b></div>
+                    <button class="btn-action btn-copy" onclick="copyBuySens()">📋 Sao chép độ nhạy nhẹ tâm</button>
+                    <a id="download-nhetam-link" href="https://www.mediafire.com/file/f4bq4377om4wur2/Nhetam.crt/file" target="_blank" class="btn-action" style="background: #facc15; color: black; font-weight: 800; text-decoration: none; display: block; margin-top: 8px;">📥 Tải File .CRT Về Máy</a>
+                </div>
             </div>
 
-            <!-- SẢN PHẨM 2: AIMNECK (CÓ SỐ LƯỢNG + GHI CHÚ 1 MÁY) -->
+            <!-- SẢN PHẨM 2: AIMNECK -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">🎯 File Aimneck (Ngắm Cổ)</span>
@@ -640,7 +622,7 @@
                 </div>
             </div>
 
-            <!-- SẢN PHẨM 3: AIM DRAG (CÓ SỐ LƯỢNG + GHI CHÚ 1 MÁY) -->
+            <!-- SẢN PHẨM 3: AIM DRAG -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">⚡ File Aim Drag (Kéo Tâm)</span>
@@ -663,7 +645,7 @@
                 </div>
             </div>
 
-            <!-- SẢN PHẨM 4: AIM BODY (CÓ SỐ LƯỢNG + GHI CHÚ 1 MÁY) -->
+            <!-- SẢN PHẨM 4: AIM BODY -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">🛡️ File Aim Body (Thân Người)</span>
@@ -767,7 +749,6 @@
 
     <script>
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
-        let selectedOS = "iOS";
         let buySelectedOS = "iOS";
         let currentUserData = null;
         let currentUsername = "";
@@ -820,20 +801,6 @@
             document.querySelector(`#product-${btnIdx}-action button`).innerText = `Mua Ngay (${formatMoney(totalPrice)} đ)`;
         }
 
-        function setOS(os) {
-            selectedOS = os;
-            let inputField = document.getElementById('device-name-input');
-            if (os === 'iOS') {
-                document.getElementById('btn-ios').className = 'os-btn active';
-                document.getElementById('btn-adr').className = 'os-btn';
-                inputField.placeholder = "Ví dụ: iPhone 13 Pro, iPhone 14 Pro Max...";
-            } else {
-                document.getElementById('btn-ios').className = 'os-btn';
-                document.getElementById('btn-adr').className = 'os-btn active';
-                inputField.placeholder = "Ví dụ: Samsung A52, Redmi Note 10...";
-            }
-        }
-
         function setBuyOS(os) {
             buySelectedOS = os;
             let inputField = document.getElementById('buy-device-input');
@@ -848,66 +815,56 @@
             }
         }
 
-        async function lookupSensitivity() {
-            let deviceName = document.getElementById('device-name-input').value.trim();
-            let status = document.getElementById('lookup-status');
-
+        async function lookupAndBuyNheTam() {
+            let deviceName = document.getElementById('buy-device-input').value.trim();
             if (!deviceName) {
-                status.innerText = 'Vui lòng nhập tên thiết bị của bạn!';
-                status.style.color = '#f87171';
+                alert('Vui lòng nhập tên thiết bị của bạn để lấy độ nhạy và tải file nhẹ tâm!');
                 return;
             }
 
-            let deviceKey = deviceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
-            let dbPath = `${FIREBASE_URL}/ff_sens/${selectedOS}_${deviceKey}.json`;
+            let price = 150000;
+            await fetchUserData(currentUsername);
+            let currentBalance = currentUserData.balance || 0;
 
-            status.innerText = 'Đang tìm thông số nhẹ tâm theo máy...';
-            status.style.color = '#facc15';
+            if (currentBalance < price) {
+                alert('Số dư ví không đủ (150.000 đ)! Vui lòng nạp thêm tiền vào ví.');
+                openDepositSection();
+                return;
+            }
 
-            try {
-                let res = await fetch(dbPath);
-                let sensData = await res.json();
+            if (confirm(`Thanh toán ${formatMoney(price)} đ để lấy độ nhạy và tải xuống File Nhẹ Tâm cho máy [${buySelectedOS} - ${deviceName}]?`)) {
+                currentUserData.balance = currentBalance - price;
 
-                if (!sensData) {
-                    sensData = {
-                        deviceName: deviceName,
-                        os: selectedOS,
-                        general: Math.floor(Math.random() * (200 - 130 + 1)) + 130,
-                        redDot: Math.floor(Math.random() * (195 - 120 + 1)) + 120,
-                        scope2: Math.floor(Math.random() * (195 - 125 + 1)) + 125,
-                        scope4: Math.floor(Math.random() * (190 - 115 + 1)) + 115,
-                        awm: Math.floor(Math.random() * (150 - 100 + 1)) + 100,
-                        btnSize: (Math.floor(Math.random() * (55 - 38 + 1)) + 38) + "%"
-                    };
-
-                    await fetch(dbPath, {
+                try {
+                    await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(sensData)
+                        body: JSON.stringify(currentUserData)
                     });
+
+                    document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
+
+                    // Tạo độ nhạy ngẫu nhiên chuẩn cho máy khách vừa nhập
+                    document.getElementById('buy-result-title').innerText = `Độ Nhạy Nhẹ Tâm - ${deviceName} (${buySelectedOS})`;
+                    document.getElementById('buy-r-general').innerText = Math.floor(Math.random() * (200 - 130 + 1)) + 130;
+                    document.getElementById('buy-r-reddot').innerText = Math.floor(Math.random() * (195 - 120 + 1)) + 120;
+                    document.getElementById('buy-r-scope2').innerText = Math.floor(Math.random() * (195 - 125 + 1)) + 125;
+                    document.getElementById('buy-r-scope4').innerText = Math.floor(Math.random() * (190 - 115 + 1)) + 115;
+                    document.getElementById('buy-r-awm').innerText = Math.floor(Math.random() * (150 - 100 + 1)) + 100;
+                    document.getElementById('buy-r-btn-size').innerText = (Math.floor(Math.random() * (55 - 38 + 1)) + 38) + "%";
+
+                    document.getElementById('buy-sens-result').style.display = 'block';
+                    alert('Thanh toán thành công! Đã mở khóa độ nhạy và link tải file nhẹ tâm riêng cho máy của bạn.');
+
+                } catch (e) {
+                    alert('Lỗi giao dịch, vui lòng thử lại!');
                 }
-
-                document.getElementById('result-title').innerText = `Nhẹ Tâm Theo Máy - ${sensData.deviceName} (${sensData.os})`;
-                document.getElementById('r-general').innerText = sensData.general;
-                document.getElementById('r-reddot').innerText = sensData.redDot;
-                document.getElementById('r-scope2').innerText = sensData.scope2;
-                document.getElementById('r-scope4').innerText = sensData.scope4;
-                document.getElementById('r-awm').innerText = sensData.awm;
-                document.getElementById('r-btn-size').innerText = sensData.btnSize;
-
-                document.getElementById('sens-result').style.display = 'block';
-                status.innerText = 'Đã tìm thấy độ nhạy phù hợp!';
-                status.style.color = '#4ade80';
-
-            } catch (err) {
-                status.innerText = 'Lỗi kết nối Cloud!';
-                status.style.color = '#f87171';
             }
         }
 
-        function copySens() {
-            let title = document.getElementById('result-title').innerText;
-            let text = `${title}\n- Nhìn xung quanh: ${document.getElementById('r-general').innerText}\n- Red Dot: ${document.getElementById('r-reddot').innerText}\n- Scope 2x: ${document.getElementById('r-scope2').innerText}\n- Scope 4x: ${document.getElementById('r-scope4').innerText}\n- AWM: ${document.getElementById('r-awm').innerText}\n- Nút bắn: ${document.getElementById('r-btn-size').innerText}`;
+        function copyBuySens() {
+            let title = document.getElementById('buy-result-title').innerText;
+            let text = `${title}\n- Nhìn xung quanh: ${document.getElementById('buy-r-general').innerText}\n- Red Dot: ${document.getElementById('buy-r-reddot').innerText}\n- Scope 2x: ${document.getElementById('buy-r-scope2').innerText}\n- Scope 4x: ${document.getElementById('buy-r-scope4').innerText}\n- AWM: ${document.getElementById('buy-r-awm').innerText}\n- Nút bắn: ${document.getElementById('buy-r-btn-size').innerText}`;
             navigator.clipboard.writeText(text);
             alert('Đã sao chép độ nhạy nhẹ tâm thành công!');
         }
@@ -1047,41 +1004,6 @@
             } catch (error) {
                 status.innerText = 'Lỗi kết nối máy chủ!';
                 status.style.color = '#f87171';
-            }
-        }
-
-        async function requestUnlockNheTam() {
-            let deviceName = document.getElementById('buy-device-input').value.trim();
-            if (!deviceName) {
-                alert('Vui lòng nhập tên thiết bị của bạn để gửi yêu cầu mở khóa nhẹ tâm!');
-                return;
-            }
-
-            let price = 150000;
-            await fetchUserData(currentUsername);
-            let currentBalance = currentUserData.balance || 0;
-
-            if (currentBalance < price) {
-                alert('Số dư ví không đủ (150.000 đ)! Vui lòng nạp thêm tiền để gửi yêu cầu.');
-                openDepositSection();
-                return;
-            }
-
-            if (confirm(`Gửi yêu cầu mở khóa Nhẹ Tâm cho máy [${buySelectedOS} - ${deviceName}] với giá ${formatMoney(price)} đ?`)) {
-                currentUserData.balance = currentBalance - price;
-
-                try {
-                    await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(currentUserData)
-                    });
-
-                    document.getElementById('user-balance').innerText = formatMoney(currentUserData.balance) + " đ";
-                    alert('Đã gửi yêu cầu mở khóa nhẹ tâm thành công! Admin sẽ kiểm tra và gửi file riêng cho máy của bạn qua Zalo.');
-                } catch (e) {
-                    alert('Lỗi giao dịch, vui lòng thử lại!');
-                }
             }
         }
 
