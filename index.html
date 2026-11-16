@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Độ Nhạy Hiếu Live - Cloud System</title>
+    <title>App Độ Nhạy Hiếu Live - FF Cloud System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -144,7 +144,7 @@
             display: none;
         }
 
-        /* --- Dashboard Mới & Chức năng Lấy Độ Nhạy --- */
+        /* --- Dashboard & Kho Độ Nhạy FF (100-200) --- */
         .dash-header {
             display: flex;
             justify-content: space-between;
@@ -169,93 +169,30 @@
             cursor: pointer;
         }
 
-        .feature-card {
-            background: #1a1a1a;
-            border: 1px solid #333333;
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 14px;
-        }
-
-        .feature-card h4 {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #e5e7eb;
-        }
-
-        .switch-container {
+        .os-selector {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 48px;
-            height: 24px;
-        }
-
-        .switch input { opacity: 0; width: 0; height: 0; }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #374151;
-            transition: .3s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .3s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider { background-color: #eab308; }
-        input:checked + .slider:before { transform: translateX(24px); }
-
-        /* Giao diện Lấy độ nhạy Free */
-        .sens-section-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #facc15;
-            text-transform: uppercase;
-            margin: 16px 0 10px 0;
-            letter-spacing: 0.5px;
-        }
-
-        .sens-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-bottom: 14px;
         }
 
-        .sens-btn {
+        .os-btn {
+            flex: 1;
             background: #1a1a1a;
             border: 1px solid #333333;
-            color: #ffffff;
-            padding: 12px;
-            border-radius: 12px;
+            color: #9ca3af;
+            padding: 10px;
+            border-radius: 10px;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
 
-        .sens-btn:hover {
+        .os-btn.active {
+            background: rgba(234, 179, 8, 0.15);
             border-color: #facc15;
-            background: #252525;
+            color: #facc15;
         }
 
         .sens-result-box {
@@ -263,7 +200,7 @@
             border: 1px solid #3f3f46;
             border-radius: 12px;
             padding: 14px;
-            margin-bottom: 14px;
+            margin-top: 14px;
             display: none;
         }
 
@@ -279,7 +216,7 @@
             justify-content: space-between;
             font-size: 12px;
             color: #d1d5db;
-            padding: 4px 0;
+            padding: 5px 0;
             border-bottom: 1px solid #27272a;
         }
 
@@ -288,12 +225,12 @@
             background: #27272a;
             color: #facc15;
             border: 1px solid #facc15;
-            padding: 8px;
+            padding: 9px;
             border-radius: 8px;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 12px;
         }
     </style>
 </head>
@@ -363,70 +300,62 @@
         <!-- 3. TRANG DASHBOARD CHÍNH -->
         <div id="dashboard-page">
             <div class="dash-header">
-                <h3>Hiếu Live Dashboard</h3>
+                <h3>Kho Độ Nhạy Free Fire</h3>
                 <button class="logout-btn" onclick="logoutApp()">Đăng xuất</button>
             </div>
 
-            <div class="status-text" style="color: #4ade80; margin-bottom: 12px;">🟢 Đã kết nối máy chủ Cloud</div>
+            <div class="status-text" style="color: #4ade80; margin-bottom: 10px;">🟢 Đã kết nối Cloud Hệ Thống</div>
 
-            <div class="input-group" style="margin-bottom: 12px;">
-                <label class="input-label">Mã thiết bị của bạn (Duy nhất)</label>
-                <input type="text" id="device-id" class="input-field" readonly style="font-size: 12px; color: #facc15;">
+            <!-- CHỌN HỆ ĐIỀU HÀNH (IOS / ANDROID) -->
+            <label class="input-label">Chọn Hệ Điều Hành</label>
+            <div class="os-selector">
+                <div id="btn-ios" class="os-btn active" onclick="setOS('iOS')">📱 iOS (Apple)</div>
+                <div id="btn-adr" class="os-btn" onclick="setOS('Android')">🤖 Android (Adr)</div>
             </div>
 
-            <!-- CÔNG CỤ LẤY ĐỘ NHẠY FREE -->
-            <div class="sens-section-title">⚡ Kho Lấy Độ Nhạy (Miễn Phí)</div>
-            <div class="sens-grid">
-                <button class="sens-btn" onclick="getSensitivity('freefire')">🔥 Free Fire Max</button>
-                <button class="sens-btn" onclick="getSensitivity('pubg')">🎯 PUBG Mobile</button>
-                <button class="sens-btn" onclick="getSensitivity('cod')">🔫 COD Mobile</button>
-                <button class="sens-btn" onclick="getSensitivity('iphone')">📱 Tổng hợp iPhone</button>
+            <!-- NHẬP TÊN MÁY -->
+            <div class="input-group">
+                <label class="input-label">Nhập tên máy của bạn</label>
+                <input type="text" id="device-name-input" class="input-field" placeholder="Ví dụ: iPhone 13 hoặc Samsung A52...">
             </div>
 
-            <!-- BẢNG HIỂN THỊ ĐỘ NHẠY -->
+            <button class="btn-primary" onclick="lookupSensitivity()">🔍 Lấy Độ Nhạy (100 - 200)</button>
+            <div id="lookup-status" class="status-text"></div>
+
+            <!-- BẢNG KẾT QUẢ ĐỘ NHẠY -->
             <div id="sens-result" class="sens-result-box">
-                <h5 id="sens-title">Độ Nhạy Free Fire</h5>
-                <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="s1">95</b></div>
-                <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="s2">88</b></div>
-                <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="s3">92</b></div>
-                <div class="sens-row"><span>Ống Ngắm AWM:</span> <b id="s4">50</b></div>
-                <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="s5">48%</b></div>
-                <button class="btn-copy-sens" onclick="copySensData()">📋 Sao chép độ nhạy</button>
+                <h5 id="result-title">Cấu Hình Độ Nhạy Free Fire</h5>
+                <div class="sens-row"><span>Nhìn xung quanh:</span> <b id="r-general">0</b></div>
+                <div class="sens-row"><span>Cận cảnh (Red Dot):</span> <b id="r-reddot">0</b></div>
+                <div class="sens-row"><span>Ống Ngắm 2x:</span> <b id="r-scope2">0</b></div>
+                <div class="sens-row"><span>Ống Ngắm 4x:</span> <b id="r-scope4">0</b></div>
+                <div class="sens-row"><span>Ống Ngắm AWM:</span> <b id="r-awm">0</b></div>
+                <div class="sens-row"><span>Nhìn quanh xe:</span> <b id="r-free-look">0</b></div>
+                <div class="sens-row"><span>Nút bắn tối ưu:</span> <b id="r-btn-size">45%</b></div>
+                <button class="btn-copy-sens" onclick="copySens()">📋 Sao chép toàn bộ độ nhạy</button>
             </div>
 
-            <div class="feature-card">
-                <h4>Điều chỉnh độ nhạy tối ưu (General Sensitivity)</h4>
-                <div class="switch-container">
-                    <span style="font-size: 13px; color: #9ca3af;">Trạng thái hoạt động</span>
-                    <label class="switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="feature-card">
-                <h4>Khóa tâm mượt mà (Smooth Aimlock)</h4>
-                <div class="switch-container">
-                    <span style="font-size: 13px; color: #9ca3af;">Trạng thái hoạt động</span>
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="footer">
+            <div class="footer" style="margin-top: 20px;">
                 <span>HIẾU LIVE SYSTEM</span>
-                <span>Phiên bản Cloud v4.1</span>
+                <span>FF Sensi v7.0</span>
             </div>
         </div>
     </div>
 
     <script>
-        // ================= CẤU HÌNH FIREBASE =================
         const FIREBASE_URL = "https://hieu-ac548-default-rtdb.asia-southeast1.firebasedatabase.app";
-        // =====================================================
+        let selectedOS = "iOS";
+
+        function setOS(os) {
+            selectedOS = os;
+            if (os === 'iOS') {
+                document.getElementById('btn-ios').className = 'os-btn active';
+                document.getElementById('btn-adr').className = 'os-btn';
+            } else {
+                document.getElementById('btn-ios').className = 'os-btn';
+                document.getElementById('btn-adr').className = 'os-btn active';
+            }
+        }
 
         function showRegister() {
             document.getElementById('login-section').style.display = 'none';
@@ -440,7 +369,6 @@
             document.getElementById('login-status').innerText = '';
         }
 
-        // Xử lý Đăng ký lên Firebase
         async function handleRegister() {
             let user = document.getElementById('reg-user').value.trim().toLowerCase();
             let pass = document.getElementById('reg-pass').value.trim();
@@ -453,12 +381,12 @@
             }
 
             if (!/^[a-z0-9_]+$/.test(user)) {
-                status.innerText = 'Tài khoản chỉ được dùng chữ cái thường, số và dấu gạch dưới!';
+                status.innerText = 'Tài khoản chỉ dùng chữ cái thường, số và gạch dưới!';
                 status.style.color = '#f87171';
                 return;
             }
 
-            status.innerText = 'Đang kiểm tra và tạo tài khoản...';
+            status.innerText = 'Đang tạo tài khoản...';
             status.style.color = '#facc15';
 
             try {
@@ -477,7 +405,7 @@
                     body: JSON.stringify({ password: pass, createdAt: new Date().toISOString() })
                 });
 
-                status.innerText = 'Đăng ký thành công! Đang chuyển sang đăng nhập...';
+                status.innerText = 'Đăng ký thành công! Đang chuyển đăng nhập...';
                 status.style.color = '#4ade80';
 
                 setTimeout(() => {
@@ -486,12 +414,11 @@
                 }, 1000);
 
             } catch (error) {
-                status.innerText = 'Lỗi kết nối máy chủ! Kiểm tra lại link Firebase.';
+                status.innerText = 'Lỗi kết nối máy chủ!';
                 status.style.color = '#f87171';
             }
         }
 
-        // Xử lý Đăng nhập từ Firebase
         async function handleLogin() {
             let user = document.getElementById('login-user').value.trim().toLowerCase();
             let pass = document.getElementById('login-pass').value.trim();
@@ -503,7 +430,7 @@
                 return;
             }
 
-            status.innerText = 'Đang xác thực tài khoản...';
+            status.innerText = 'Đang xác thực...';
             status.style.color = '#facc15';
 
             try {
@@ -517,7 +444,6 @@
                     setTimeout(() => {
                         document.getElementById('login-section').style.display = 'none';
                         document.getElementById('dashboard-page').style.display = 'block';
-                        loadDeviceID();
                     }, 800);
                 } else {
                     status.innerText = 'Sai tài khoản hoặc mật khẩu!';
@@ -529,67 +455,77 @@
             }
         }
 
-        // Chức năng lấy độ nhạy Free theo từng game
-        function getSensitivity(game) {
-            const box = document.getElementById('sens-result');
-            const title = document.getElementById('sens-title');
-            const s1 = document.getElementById('s1');
-            const s2 = document.getElementById('s2');
-            const s3 = document.getElementById('s3');
-            const s4 = document.getElementById('s4');
-            const s5 = document.getElementById('s5');
+        // HÀM TÌM KIẾM HOẶC TẠO MỚI & GHI NHỚ ĐỘ NHẠY TRÊN CLOUD (100 - 200)
+        async function lookupSensitivity() {
+            let deviceName = document.getElementById('device-name-input').value.trim();
+            let status = document.getElementById('lookup-status');
 
-            box.style.display = 'block';
+            if (!deviceName) {
+                status.innerText = 'Vui lòng nhập tên thiết bị của bạn!';
+                status.style.color = '#f87171';
+                return;
+            }
 
-            if (game === 'freefire') {
-                title.innerText = "🔥 Độ Nhạy Free Fire Max (Free)";
-                s1.innerText = "96 (Nhìn chung)";
-                s2.innerText = "89 (Red Dot)";
-                s3.innerText = "94 (Scope 2x/4x)";
-                s4.innerText = "55 (Ống ngắm AWM)";
-                s5.innerText = "46% (Nút bắn chuẩn)";
-            } else if (game === 'pubg') {
-                title.innerText = "🎯 Độ Nhạy PUBG Mobile (Free)";
-                s1.innerText = "110 (Camera tự do)";
-                s2.innerText = "95 (Red Dot)";
-                s3.innerText = "85 (Scope 3x/4x)";
-                s4.innerText = "40 (Scope 6x/8x)";
-                s5.innerText = "50% (Nút bắn chuẩn)";
-            } else if (game === 'cod') {
-                title.innerText = "🔫 Độ Nhạy COD Mobile (Free)";
-                s1.innerText = "90 (Góc nhìn)";
-                s2.innerText = "75 (Ngắm bắn)";
-                s3.innerText = "65 (Ống ngắm chiến thuật)";
-                s4.innerText = "45 (Ngắm sniper)";
-                s5.innerText = "48% (Nút bắn chuẩn)";
-            } else if (game === 'iphone') {
-                title.innerText = "📱 Độ Nhạy Tối Ưu iPhone (Free)";
-                s1.innerText = "99 (Mượt màn hình)";
-                s2.innerText = "90 (Red Dot)";
-                s3.innerText = "95 (Kéo tâm nhanh)";
-                s4.innerText = "50 (AWM)";
-                s5.innerText = "45% (Nút bắn chuẩn)";
+            // Chuẩn hóa tên thiết bị để lưu dạng key Firebase (không chứa ký tự đặc biệt)
+            let deviceKey = deviceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+            let dbPath = `${FIREBASE_URL}/ff_sens/${selectedOS}_${deviceKey}.json`;
+
+            status.innerText = 'Đang kiểm tra hệ thống Cloud...';
+            status.style.color = '#facc15';
+
+            try {
+                // Kiểm tra xem máy này đã từng có độ nhạy lưu trên Cloud chưa
+                let res = await fetch(dbPath);
+                let sensData = await res.json();
+
+                if (!sensData) {
+                    // Nếu chưa có, tạo ngẫu nhiên bộ độ nhạy chuẩn chuẩn chỉnh trong khoảng từ 100 đến 200
+                    sensData = {
+                        deviceName: deviceName,
+                        os: selectedOS,
+                        general: Math.floor(Math.random() * (200 - 130 + 1)) + 130,
+                        redDot: Math.floor(Math.random() * (195 - 120 + 1)) + 120,
+                        scope2: Math.floor(Math.random() * (195 - 125 + 1)) + 125,
+                        scope4: Math.floor(Math.random() * (190 - 115 + 1)) + 115,
+                        awm: Math.floor(Math.random() * (150 - 100 + 1)) + 100,
+                        freeLook: Math.floor(Math.random() * (180 - 110 + 1)) + 110,
+                        btnSize: (Math.floor(Math.random() * (55 - 38 + 1)) + 38) + "%"
+                    };
+
+                    // Lưu vĩnh viễn lên Firebase để các lần sau ai nhập tên máy này cũng ra y hệt
+                    await fetch(dbPath, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(sensData)
+                    });
+                }
+
+                // Hiển thị kết quả độ nhạy ra giao diện
+                document.getElementById('result-title').innerText = `Độ Nhạy Free Fire - ${sensData.deviceName} (${sensData.os})`;
+                document.getElementById('r-general').innerText = sensData.general;
+                document.getElementById('r-reddot').innerText = sensData.redDot;
+                document.getElementById('r-scope2').innerText = sensData.scope2;
+                document.getElementById('r-scope4').innerText = sensData.scope4;
+                document.getElementById('r-awm').innerText = sensData.awm;
+                document.getElementById('r-free-look').innerText = sensData.freeLook;
+                document.getElementById('r-btn-size').innerText = sensData.btnSize;
+
+                document.getElementById('sens-result').style.display = 'block';
+                status.innerText = 'Đã tải thành công độ nhạy chuẩn xác!';
+                status.style.color = '#4ade80';
+
+            } catch (err) {
+                status.innerText = 'Lỗi kết nối Cloud!';
+                status.style.color = '#f87171';
             }
         }
 
-        // Sao chép thông tin độ nhạy
-        function copySensData() {
-            const title = document.getElementById('sens-title').innerText;
-            const text = `${title}\n- ${document.getElementById('s1').previousSibling.textContent}: ${document.getElementById('s1').innerText}\n- ${document.getElementById('s2').previousSibling.textContent}: ${document.getElementById('s2').innerText}\n- ${document.getElementById('s3').previousSibling.textContent}: ${document.getElementById('s3').innerText}\n- ${document.getElementById('s4').previousSibling.textContent}: ${document.getElementById('s4').innerText}\n- Nút bắn: ${document.getElementById('s5').innerText}`;
+        function copySens() {
+            let title = document.getElementById('result-title').innerText;
+            let text = `${title}\n- Nhìn xung quanh: ${document.getElementById('r-general').innerText}\n- Red Dot: ${document.getElementById('r-reddot').innerText}\n- Scope 2x: ${document.getElementById('r-scope2').innerText}\n- Scope 4x: ${document.getElementById('r-scope4').innerText}\n- Scope AWM: ${document.getElementById('r-awm').innerText}\n- Nhìn quanh xe: ${document.getElementById('r-free-look').innerText}\n- Nút bắn: ${document.getElementById('r-btn-size').innerText}`;
             
             navigator.clipboard.writeText(text);
-            alert('Đã sao chép cấu hình độ nhạy thành công!');
-        }
-
-        function loadDeviceID() {
-            let deviceId = localStorage.getItem('hl_device_id');
-            if (!deviceId) {
-                const randomPart = Math.random().toString(36).substring(2, 10).toUpperCase();
-                const timePart = Date.now().toString().slice(-8);
-                deviceId = `HL-${randomPart}-${timePart}`;
-                localStorage.setItem('hl_device_id', deviceId);
-            }
-            document.getElementById('device-id').value = deviceId;
+            alert('Đã sao chép thông số độ nhạy Free Fire thành công!');
         }
 
         function logoutApp() {
@@ -599,6 +535,7 @@
             document.getElementById('login-pass').value = '';
             document.getElementById('login-status').innerText = '';
             document.getElementById('sens-result').style.display = 'none';
+            document.getElementById('device-name-input').value = '';
         }
     </script>
 </body>
