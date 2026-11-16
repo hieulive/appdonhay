@@ -89,7 +89,6 @@
             background: #202024;
         }
 
-        /* --- HIỆU ỨNG CHẠM BẬP BÊNH & NEON --- */
         .btn-primary, .btn-buy-item, .product-card, .os-btn, .tab-nạp-btn, .btn-deposit, .menu-toggle-btn, .dropdown-item, #admin-menu-btn, .qty-btn {
             transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background 0.2s ease;
         }
@@ -160,11 +159,10 @@
             margin-top: 18px;
         }
 
-        #register-section, #dashboard-page, #deposit-section, #account-section, #admin-panel {
+        #register-section, #dashboard-page, #deposit-section, #account-section, #history-section, #admin-panel {
             display: none;
         }
 
-        /* --- DASHBOARD HEADER & 3 GẠCH --- */
         .dash-header {
             display: flex;
             justify-content: space-between;
@@ -209,7 +207,7 @@
             border: 1px solid rgba(250, 204, 21, 0.4);
             border-radius: 16px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            width: 170px;
+            width: 180px;
             z-index: 9999;
             overflow: hidden;
             animation: fadeInMenu 0.2s ease;
@@ -348,7 +346,6 @@
 
         .btn-copy { background: #27272a; color: #facc15; border: 1px solid #facc15; }
 
-        /* Shop Cards */
         .shop-section-title {
             font-size: 12px;
             color: #facc15;
@@ -388,7 +385,6 @@
             text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
         }
 
-        /* Danh sách tính năng tick xanh */
         .feature-list {
             list-style: none;
             margin: 4px 0;
@@ -419,7 +415,6 @@
             100% { transform: rotate(360deg) scale(1); }
         }
 
-        /* Chọn số lượng sản phẩm */
         .qty-box {
             display: flex;
             align-items: center;
@@ -466,9 +461,10 @@
             outline: none;
         }
 
+        /* --- ĐỔI NÚT MUA NGAY SANG MÀU CAM LỬA RỰC RỠ --- */
         .btn-buy-item {
             width: 100%;
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: linear-gradient(135deg, #f97316, #ea580c);
             color: #ffffff;
             border: none;
             padding: 12px;
@@ -478,8 +474,13 @@
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
             display: block;
+        }
+
+        .btn-buy-item:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.6);
         }
 
         .btn-owned {
@@ -494,7 +495,6 @@
             display: block;
         }
 
-        /* Tabs Nạp Tiền */
         .tab-nạp {
             display: flex;
             gap: 8px;
@@ -538,7 +538,17 @@
             object-fit: contain;
         }
 
-        /* --- NÚT ZALO NỔI --- */
+        .history-card {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .zalo-float-btn {
             position: fixed;
             bottom: 20px;
@@ -567,7 +577,6 @@
 </head>
 <body>
 
-    <!-- NÚT ZALO NỔI -->
     <a href="https://zalo.me/0918106821" target="_blank" class="zalo-float-btn" onclick="playClickSound()">
         <span style="background: white; color: #0068ff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 11px;">Zalo</span>
         <span>Hỗ Trợ Nhanh</span>
@@ -653,13 +662,13 @@
                             <a class="dropdown-item" onclick="playClickSound(); goHome()">🏠 Trang Chủ</a>
                             <a class="dropdown-item" onclick="playClickSound(); goAccount()">👤 Tài Khoản</a>
                             <a class="dropdown-item" onclick="playClickSound(); goDeposit()">💳 Nạp Tiền</a>
+                            <a class="dropdown-item" onclick="playClickSound(); goHistory()">📜 Lịch Sử Giao Dịch</a>
                             <a class="dropdown-item danger" onclick="playClickSound(); logoutApp()">🚪 Đăng Xuất</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- VÍ TIỀN CÁ NHÂN -->
             <div class="wallet-box">
                 <div class="wallet-info">
                     <h4>Số dư ví của bạn</h4>
@@ -668,7 +677,6 @@
                 <button class="btn-deposit" onclick="playClickSound(); goDeposit()">💳 Nạp Tiền</button>
             </div>
 
-            <!-- TRA CỨU ĐỘ NHẠY FREE -->
             <div class="shop-section-title">🔍 Tra Cứu Độ Nhạy FF (Free)</div>
             <div class="input-group" style="margin-bottom: 8px;">
                 <label class="input-label">Hệ Điều Hành</label>
@@ -697,10 +705,9 @@
                 <button class="btn-action btn-copy" onclick="playClickSound(); copySens()">📋 Sao chép độ nhạy</button>
             </div>
 
-            <!-- MUA CONFIG VIP -->
             <div class="shop-section-title">🛒 Kho Sản Phẩm Config VIP</div>
 
-            <!-- SẢN PHẨM 1: FILE NHẸ TÂM THEO MÁY -->
+            <!-- SẢN PHẨM 1 -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">🔥 File Nhẹ Tâm Theo Máy</span>
@@ -712,7 +719,6 @@
                     <li><span class="tick-icon">✔️</span> Không kéo là máu vàng</li>
                     <li><span class="tick-icon">✔️</span> Kéo tâm là máu đỏ</li>
                     <li><span class="tick-icon">✔️</span> Nhẹ tâm hơn, bám đầu hơn</li>
-                    <li><span class="tick-icon">✔️</span> Sử dụng là vĩnh viễn, an toàn 100%</li>
                 </ul>
 
                 <div style="margin-top: 6px;">
@@ -733,21 +739,19 @@
                     </div>
                 </div>
 
-                <button class="btn-primary" onclick="playClickSound(); buyNheTam()" style="padding: 12px; font-size: 13px; background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);">📥 Tải Xuống File Nhẹ Tâm (150k)</button>
+                <button class="btn-primary" onclick="playClickSound(); buyNheTam()" style="padding: 12px; font-size: 13px; background: linear-gradient(135deg, #10b981, #059669); color: white;">📥 Tải Xuống File Nhẹ Tâm (150k)</button>
             </div>
 
-            <!-- SẢN PHẨM 2: AIMNECK -->
+            <!-- SẢN PHẨM 2 -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">🎯 File Aimneck (Ngắm Cổ)</span>
-                    <span class="product-price" id="price-aimneck">100.000 đ</span>
+                    <span class="product-price">100.000 đ</span>
                 </div>
                 
                 <ul class="feature-list">
                     <li><span class="tick-icon">✔️</span> Định tâm tự động bám sát vùng cổ</li>
                     <li><span class="tick-icon">✔️</span> Chống khóa acc, an toàn tuyệt đối</li>
-                    <li><span class="tick-icon">✔️</span> Cập nhật phiên bản vĩnh viễn</li>
-                    <li><span class="tick-icon">✔️</span> Lưu ý: Mỗi file chỉ cài được 1 máy</li>
                 </ul>
                 
                 <div class="qty-box">
@@ -760,22 +764,20 @@
                 </div>
 
                 <div id="product-2-action">
-                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimneck', 100000)">Mua Ngay (100.000 đ)</button>
+                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimneck', 'File Aimneck (Ngắm Cổ)', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
 
-            <!-- SẢN PHẨM 3: AIM DRAG -->
+            <!-- SẢN PHẨM 3 -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">⚡ File Aim Drag (Kéo Tâm)</span>
-                    <span class="product-price" id="price-aimdrag">100.000 đ</span>
+                    <span class="product-price">100.000 đ</span>
                 </div>
                 
                 <ul class="feature-list">
                     <li><span class="tick-icon">✔️</span> Hỗ trợ lực kéo tâm nhẹ nhàng</li>
                     <li><span class="tick-icon">✔️</span> Không bị bay tâm lên trời</li>
-                    <li><span class="tick-icon">✔️</span> Mượt mà trên mọi dòng máy</li>
-                    <li><span class="tick-icon">✔️</span> Lưu ý: Mỗi file chỉ cài được 1 máy</li>
                 </ul>
                 
                 <div class="qty-box">
@@ -788,22 +790,20 @@
                 </div>
 
                 <div id="product-3-action">
-                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimdrag', 100000)">Mua Ngay (100.000 đ)</button>
+                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimdrag', 'File Aim Drag (Kéo Tâm)', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
 
-            <!-- SẢN PHẨM 4: AIM BODY -->
+            <!-- SẢN PHẨM 4 -->
             <div class="product-card">
                 <div class="product-info-top">
                     <span class="product-name">🛡️ File Aim Body (Thân Người)</span>
-                    <span class="product-price" id="price-aimbody">100.000 đ</span>
+                    <span class="product-price">100.000 đ</span>
                 </div>
                 
                 <ul class="feature-list">
                     <li><span class="tick-icon">✔️</span> Chuyên dụng bắt trọn tâm vào thân</li>
                     <li><span class="tick-icon">✔️</span> Cực kỳ ổn định và bền bỉ</li>
-                    <li><span class="tick-icon">✔️</span> Không sợ lật tâm khi sấy giáp lá cà</li>
-                    <li><span class="tick-icon">✔️</span> Lưu ý: Mỗi file chỉ cài được 1 máy</li>
                 </ul>
                 
                 <div class="qty-box">
@@ -816,13 +816,13 @@
                 </div>
 
                 <div id="product-4-action">
-                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimbody', 100000)">Mua Ngay (100.000 đ)</button>
+                    <button class="btn-buy-item" onclick="playClickSound(); buyProduct('aimbody', 'File Aim Body (Thân Người)', 100000)">Mua Ngay (100.000 đ)</button>
                 </div>
             </div>
 
             <div class="footer">
                 <span>HIẾU LIVE SHOP</span>
-                <span>Pro v20.2</span>
+                <span>Pro v20.4</span>
             </div>
         </div>
 
@@ -857,7 +857,24 @@
             </div>
         </div>
 
-        <!-- 5. TRANG NẠP TIỀN -->
+        <!-- 5. TRANG LỊCH SỬ GIAO DỊCH -->
+        <div id="history-section">
+            <div class="dash-header">
+                <h3 style="font-size: 14px; color: #facc15; font-weight: 900;">Lịch Sử Giao Dịch Đã Mua</h3>
+                <button onclick="playClickSound(); goHome()" style="background:#27272a; border:none; color:white; padding:6px 12px; border-radius:10px; font-size:11px; cursor:pointer; font-weight:700;">Quay lại</button>
+            </div>
+
+            <div id="history-list-container" style="max-height: 380px; overflow-y: auto;">
+                <p style="text-align: center; color: #9ca3af; font-size: 13px; margin-top: 30px;">Chưa có giao dịch mua hàng nào.</p>
+            </div>
+
+            <div class="footer">
+                <span>HIẾU LIVE LOGS</span>
+                <span>An toàn tuyệt đối</span>
+            </div>
+        </div>
+
+        <!-- 6. TRANG NẠP TIỀN -->
         <div id="deposit-section">
             <div class="dash-header">
                 <h3 style="font-size: 14px; color: #facc15; font-weight: 900;">Cổng Nạp Tiền Tự Động</h3>
@@ -905,7 +922,7 @@
             </div>
         </div>
 
-        <!-- 6. BẢNG ADMIN -->
+        <!-- 7. BẢNG ADMIN -->
         <div id="admin-panel">
             <div class="dash-header">
                 <h3 style="font-size: 14px; color: #facc15; font-weight: 900;">Bảng Quản Trị Admin</h3>
@@ -951,28 +968,26 @@
 
         const ADMIN_USERNAME = "hieuadmin"; 
 
-        // --- ÂM THANH KHI BẤM NÚT (WEB AUDIO API) ---
+        // --- ÂM THANH POP XỊN XÒ (WEB AUDIO API) ---
         function playClickSound() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
                 
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(580, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(220, audioCtx.currentTime + 0.08);
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(450, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(850, audioCtx.currentTime + 0.06);
                 
-                gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
                 
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
                 
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.08);
-            } catch (e) {
-                // Trình duyệt chặn âm thanh tự động nếu chưa tương tác
-            }
+                osc.stop(audioCtx.currentTime + 0.06);
+            } catch (e) {}
         }
 
         window.onload = async function() {
@@ -1032,6 +1047,12 @@
             updateQRCode();
         }
 
+        function goHistory() {
+            hideAllSections();
+            document.getElementById('history-section').style.display = 'block';
+            renderHistoryList();
+        }
+
         function openAdminPanel() {
             hideAllSections();
             document.getElementById('admin-panel').style.display = 'block';
@@ -1042,7 +1063,34 @@
             document.getElementById('dashboard-page').style.display = 'none';
             document.getElementById('deposit-section').style.display = 'none';
             document.getElementById('account-section').style.display = 'none';
+            document.getElementById('history-section').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        function renderHistoryList() {
+            let container = document.getElementById('history-list-container');
+            if (!currentUserData || !currentUserData.history || currentUserData.history.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #9ca3af; font-size: 13px; margin-top: 30px;">Chưa có giao dịch mua hàng nào.</p>`;
+                return;
+            }
+
+            let html = '';
+            let sortedHistory = [...currentUserData.history].reverse();
+            sortedHistory.forEach(item => {
+                html += `
+                    <div class="history-card">
+                        <div>
+                            <p style="font-size: 13px; font-weight: 800; color: #ffffff;">${item.productName}</p>
+                            <p style="font-size: 11px; color: #9ca3af; margin-top: 2px;">SL: ${item.qty} | ${item.date}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-size: 13px; font-weight: 900; color: #f97316;">-${formatMoney(item.price)} đ</p>
+                            <span style="font-size: 10px; background: rgba(249, 115, 22, 0.15); color: #f97316; padding: 2px 6px; border-radius: 6px; font-weight: 700;">Đã mua</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
         }
 
         async function handleChangePassword() {
@@ -1213,6 +1261,13 @@
 
             if (confirm(`Xác nhận thanh toán ${formatMoney(price)} đ để tải File Nhẹ Tâm [SL: ${qty}] cho máy [${buySelectedOS} - ${deviceName}]?`)) {
                 currentUserData.balance = currentBalance - price;
+                if (!currentUserData.history) currentUserData.history = [];
+                currentUserData.history.push({
+                    productName: `File Nhẹ Tâm (${buySelectedOS} - ${deviceName})`,
+                    qty: qty,
+                    price: price,
+                    date: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN')
+                });
 
                 try {
                     await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
@@ -1231,7 +1286,7 @@
             }
         }
 
-        async function buyProduct(productId, basePrice) {
+        async function buyProduct(productId, productName, basePrice) {
             let qty = quantities[productId];
             let price = basePrice * qty;
 
@@ -1244,10 +1299,18 @@
                 return;
             }
 
-            if (confirm(`Xác nhận mua [SL: ${qty}] sản phẩm với tổng giá ${formatMoney(price)} đ?\n(Lưu ý: Mỗi file chỉ cài được 1 máy duy nhất)`)) {
+            if (confirm(`Xác nhận mua [SL: ${qty}] ${productName} với tổng giá ${formatMoney(price)} đ?\n(Lưu ý: Mỗi file chỉ cài được 1 máy duy nhất)`)) {
                 currentUserData.balance = currentBalance - price;
                 if (!currentUserData.purchased) currentUserData.purchased = {};
                 currentUserData.purchased[productId] = true;
+
+                if (!currentUserData.history) currentUserData.history = [];
+                currentUserData.history.push({
+                    productName: productName,
+                    qty: qty,
+                    price: price,
+                    date: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN')
+                });
 
                 try {
                     await fetch(`${FIREBASE_URL}/users/${currentUsername}.json`, {
@@ -1350,6 +1413,7 @@
                     password: pass,
                     balance: 0,
                     purchased: { aimneck: false, aimdrag: false, aimbody: false },
+                    history: [],
                     createdAt: new Date().toISOString()
                 };
 
@@ -1461,6 +1525,13 @@
                 }
 
                 targetData.balance = (targetData.balance || 0) + amountToAdd;
+                if (!targetData.history) targetData.history = [];
+                targetData.history.push({
+                    productName: `Nạp tiền vào ví (Admin cộng)`,
+                    qty: 1,
+                    price: -amountToAdd,
+                    date: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN')
+                });
 
                 await fetch(`${FIREBASE_URL}/users/${targetUser}.json`, {
                     method: 'PUT',
